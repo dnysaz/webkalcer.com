@@ -49,8 +49,8 @@ export default function Hero() {
 
   return (
     <section className="relative overflow-hidden px-4 pt-32 pb-20 sm:px-6 sm:pt-36 sm:pb-28">
-      <div className="pointer-events-none absolute -top-40 -right-40 h-96 w-96 rounded-full bg-pink/10 blur-3xl" />
-      <div className="pointer-events-none absolute -bottom-40 -left-40 h-96 w-96 rounded-full bg-orange/10 blur-3xl" />
+      <div className="pointer-events-none absolute -top-40 -right-40 h-96 w-96 rounded-full bg-pink/10 blur-2xl" />
+      <div className="pointer-events-none absolute -bottom-40 -left-40 h-96 w-96 rounded-full bg-orange/10 blur-2xl" />
 
       <span className="pointer-events-none absolute left-[10%] top-[20%] animate-float text-4xl opacity-20">✨</span>
       <span className="pointer-events-none absolute right-[15%] top-[15%] animate-float text-3xl opacity-20" style={{ animationDelay: "1s" }}>🚀</span>
@@ -63,7 +63,7 @@ export default function Hero() {
               ✨ Jual website, bukan jasa koding
             </div>
 
-            <div ref={ref} style={{ transform: "rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg))", transition: "transform 0.15s ease-out" }}>
+            <div ref={ref} style={{ transform: "rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg))", transition: "transform 0.15s ease-out", willChange: "transform" }}>
               <h1 className="text-5xl font-black leading-tight tracking-tighter sm:text-6xl lg:text-7xl">
                 Ingin punya website
                 <br />
@@ -82,7 +82,7 @@ export default function Hero() {
             <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row lg:justify-start">
               <a
                 href="#price"
-                className="rounded-full bg-pink px-8 py-4 text-lg font-bold text-white shadow-lg transition-all hover:bg-pink-dark hover:scale-105 hover:shadow-xl active:scale-95"
+                className="rounded-full bg-pink px-8 py-4 text-lg font-bold text-white shadow-lg transition-transform hover:bg-pink-dark hover:scale-105 hover:shadow-xl active:scale-95"
               >
                 Mulai dari 300rb ↓
               </a>
@@ -90,7 +90,7 @@ export default function Hero() {
                 href={WA_URL}
                 target="_blank"
                 rel="noopener"
-                className="rounded-full border-2 border-pink/30 bg-white px-8 py-4 text-lg font-bold text-dark shadow-sm transition-all hover:border-pink hover:shadow-lg hover:scale-105 active:scale-95"
+                className="rounded-full border-2 border-pink/30 bg-white px-8 py-4 text-lg font-bold text-dark shadow-sm transition-transform hover:border-pink hover:shadow-lg hover:scale-105 active:scale-95"
               >
                 Konsultasi Gratis
               </a>

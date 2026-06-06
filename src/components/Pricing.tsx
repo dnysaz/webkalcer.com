@@ -85,7 +85,7 @@ export default function Pricing() {
             href={WA_URL}
             target="_blank"
             rel="noopener"
-            className="rounded-full bg-pink px-8 py-4 text-base font-bold text-white shadow-lg transition-all hover:bg-pink-dark hover:scale-105 hover:shadow-xl active:scale-95"
+            className="rounded-full bg-pink px-8 py-4 text-base font-bold text-white shadow-lg transition-transform hover:bg-pink-dark hover:scale-105 hover:shadow-xl active:scale-95"
           >
             Tanya Harga Kak ✨
           </a>
@@ -93,7 +93,7 @@ export default function Pricing() {
             href={WA_URL}
             target="_blank"
             rel="noopener"
-            className="rounded-full border-2 border-pink/30 bg-white px-8 py-4 text-base font-bold text-dark shadow-sm transition-all hover:border-pink hover:shadow-lg hover:scale-105 active:scale-95"
+            className="rounded-full border-2 border-pink/30 bg-white px-8 py-4 text-base font-bold text-dark shadow-sm transition-transform hover:border-pink hover:shadow-lg hover:scale-105 active:scale-95"
           >
             Konsultasi Gratis
           </a>

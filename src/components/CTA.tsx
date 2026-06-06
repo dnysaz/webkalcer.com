@@ -48,14 +48,14 @@ export default function CTA() {
           href={WA_URL}
           target="_blank"
           rel="noopener"
-          className="group mt-6 inline-flex items-center gap-2 rounded-full bg-pink px-10 py-4 text-base font-bold text-white shadow-lg transition-all hover:bg-pink-dark hover:scale-105 hover:shadow-xl active:scale-95"
+          className="group mt-6 inline-flex items-center gap-2 rounded-full bg-pink px-10 py-4 text-base font-bold text-white shadow-lg transition-transform hover:bg-pink-dark hover:scale-105 hover:shadow-xl active:scale-95"
         >
           Chat WhatsApp Kak
           <span className="text-xl transition-transform group-hover:translate-x-1">→</span>
         </a>
           <a
             href={`mailto:${EMAIL}`}
-            className="group mt-4 inline-flex items-center gap-2 rounded-full border-2 border-white/50 bg-white/80 px-8 py-3 text-base font-bold text-dark shadow-sm backdrop-blur-sm transition-all hover:bg-white hover:scale-105 hover:shadow-lg active:scale-95"
+            className="group mt-4 inline-flex items-center gap-2 rounded-full border-2 border-white/50 bg-white px-8 py-3 text-base font-bold text-dark shadow-sm transition-transform hover:bg-white hover:scale-105 hover:shadow-lg active:scale-95"
           >
             {EMAIL} ✉️
           </a>
