@@ -39,6 +39,7 @@ const steps = [
   { number: "01", title: "KIRIM KONTEN", desc: "Foto, teks, logo — kirim aja lewat WhatsApp kakak. Ga ribet." },
   { number: "02", title: "KAMI BIKININ", desc: "Kami urus coding, domain, SSL, hosting. Kakak tinggal santai." },
   { number: "03", title: "WEBSITE ONLINE", desc: "Max 1-2 hari websitenya udah online. Tinggal kakak pake." },
+  { number: "04", title: "BAYAR DI AKHIR", desc: "Websitenya udah jadi? Bayar diakhir. Gampang banget kakak." },
 ];
 
 export default function HowItWorks() {
@@ -56,9 +57,9 @@ export default function HowItWorks() {
           <h2 className="text-4xl font-black uppercase tracking-tighter text-white sm:text-5xl">
             GINI <span className="text-yellow">CARANYA</span>
           </h2>
-          <p className="mt-2 text-base font-bold text-zinc-200">Tiga langkah doang, websitenya jadi kakak.</p>
+          <p className="mt-2 text-base font-bold text-zinc-200">Empat langkah doang, websitenya jadi kakak.</p>
         </div>
-        <div className="mt-12 grid gap-6 sm:grid-cols-3">
+        <div className="mt-12 grid gap-6 sm:grid-cols-4">
           {steps.map((step, i) => (
             <StepCard key={step.number} {...step} index={i} />
           ))}
