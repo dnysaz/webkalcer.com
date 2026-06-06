@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { WA_URL } from "@/lib/config";
 
 function Mockup() {
   return (
@@ -86,7 +87,7 @@ export default function Hero() {
                 Mulai dari 300rb ↓
               </a>
               <a
-                href="https://wa.me/6285792721649?text=Halo%20kak%2C%20saya%20mau%20buat%20website%20di%20webkalcer.com%20%2C%20bisa%20dibantu%3F"
+                href={WA_URL}
                 target="_blank"
                 rel="noopener"
                 className="rounded-full border-2 border-pink/30 bg-white px-8 py-4 text-lg font-bold text-dark shadow-sm transition-all hover:border-pink hover:shadow-lg hover:scale-105 active:scale-95"

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { EMAIL, WA_URL } from "@/lib/config";
 
 export default function CTA() {
   const ref = useRef<HTMLDivElement>(null);
@@ -44,7 +45,7 @@ export default function CTA() {
           Chat aja lewat WhatsApp atau email kakak. Konsultasi gratis, ga ada kewajiban beli.
         </p>
         <a
-          href="https://wa.me/6285792721649?text=Halo%20kak%2C%20saya%20mau%20buat%20website%20di%20webkalcer.com%20%2C%20bisa%20dibantu%3F"
+          href={WA_URL}
           target="_blank"
           rel="noopener"
           className="group mt-6 inline-flex items-center gap-2 rounded-full bg-pink px-10 py-4 text-base font-bold text-white shadow-lg transition-all hover:bg-pink-dark hover:scale-105 hover:shadow-xl active:scale-95"
@@ -53,10 +54,10 @@ export default function CTA() {
           <span className="text-xl transition-transform group-hover:translate-x-1">→</span>
         </a>
           <a
-            href="mailto:halo@webkalcer.com"
+            href={`mailto:${EMAIL}`}
             className="group mt-4 inline-flex items-center gap-2 rounded-full border-2 border-white/50 bg-white/80 px-8 py-3 text-base font-bold text-dark shadow-sm backdrop-blur-sm transition-all hover:bg-white hover:scale-105 hover:shadow-lg active:scale-95"
           >
-            halo@webkalcer.com ✉️
+            {EMAIL} ✉️
           </a>
       </div>
     </section>

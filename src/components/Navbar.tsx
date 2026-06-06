@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { WA_URL } from "@/lib/config";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -34,7 +35,7 @@ export default function Navbar() {
             <span className="text-pink">↓</span>
           </a>
           <a
-            href="https://wa.me/6285792721649?text=Halo%20kak%2C%20saya%20mau%20buat%20website%20di%20webkalcer.com%20%2C%20bisa%20dibantu%3F"
+            href={WA_URL}
             target="_blank"
             rel="noopener"
             className="animate-pulse-glow rounded-full bg-pink px-6 py-2.5 text-sm font-bold text-white transition-all hover:bg-pink-dark hover:scale-105"

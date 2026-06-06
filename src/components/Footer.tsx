@@ -1,3 +1,5 @@
+import { EMAIL } from "@/lib/config";
+
 export default function Footer() {
   return (
     <footer className="bg-dark px-4 py-12 sm:px-6">
@@ -8,10 +10,10 @@ export default function Footer() {
         </a>
         <div className="flex flex-col items-center gap-1 text-center sm:items-end">
           <a
-            href="mailto:halo@webkalcer.com"
+            href={`mailto:${EMAIL}`}
             className="font-bold text-zinc-400 underline underline-offset-2 hover:text-pink transition-colors"
           >
-            halo@webkalcer.com
+            {EMAIL}
           </a>
           <p className="font-bold text-zinc-500">
             Jual website, bukan jasa koding kakak. &copy; {new Date().getFullYear()}
