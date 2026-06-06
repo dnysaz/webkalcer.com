@@ -48,7 +48,7 @@ export default function HowItWorks() {
       <div className="pointer-events-none absolute -top-20 -left-20 h-72 w-72 rounded-full bg-pink/5 blur-3xl" />
       <div className="pointer-events-none absolute -bottom-20 -right-20 h-72 w-72 rounded-full bg-teal/5 blur-3xl" />
 
-      <div className="relative mx-auto max-w-4xl">
+      <div className="relative mx-auto max-w-6xl">
         <div className="text-center">
           <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-white/10 px-5 py-2 text-sm font-bold text-zinc-100 backdrop-blur-sm">
             <span className="h-2 w-2 animate-pulse rounded-full bg-lime" />
