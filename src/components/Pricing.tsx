@@ -116,36 +116,12 @@ export default function Pricing() {
           </p>
           <div className="grid gap-3 sm:grid-cols-2">
             {[
-              "Website profil / landing page — dari 300rb",
-              "Website + admin panel — tinggal login, isi konten sendiri",
-              "Web app custom (booking, kasir, database) — diskusi dulu",
-              "Maintenance bulanan — backup, update, aman",
+              "Jasa website murah Rp300rb — landing page 1 halaman, free domain setahun, SSL gratis, online 1×24 jam",
+              "Website UMKM & profil bisnis — pasang tombol WA, galeri produk, alamat, dan testimoni kakak",
+              "Website personal branding & portofolio — cocok buat freelancer & content creator biar makin kredibel",
+              "Jasa optimasi SEO & maintenance — backup rutin, update konten, bantu website kakak muncul di Google",
             ].map((item, i) => (
               <ServiceItem key={item} text={item} index={i} />
-            ))}
-          </div>
-        </div>
-
-        <div className="mt-12 rounded-3xl bg-yellow p-8 text-left shadow-xl sm:p-10">
-          <p className="mb-5 flex items-center gap-2 text-sm font-black uppercase text-dark/60">
-            <span>🤔</span> Yang sering ditanya kakak:
-          </p>
-          <div className="space-y-2">
-            {[
-              { q: "Ga ngerti coding kakak, bisa?", a: "Justru itu pointnya kakak. Kakak tinggal kirim konten, kita urus sisanya." },
-              { q: "Bisa revisi kakak?", a: "Bisa kakak. Revisi minor gratis. Mau ganti total? beda level, beda harga." },
-              { q: "Ada admin panel kakak?", a: "Ada kakak di paket 1jt+. Buat profil aja? 300rb udah cukup kok." },
-            ].map((faq) => (
-              <details
-                key={faq.q}
-                className="group rounded-2xl border-2 border-white/50 bg-white/80 backdrop-blur-sm transition hover:bg-white"
-              >
-                <summary className="flex cursor-pointer items-center justify-between bg-transparent p-4 text-sm font-bold tracking-tight text-dark">
-                  {faq.q}
-                  <span className="text-xl font-bold text-pink transition group-open:rotate-45">+</span>
-                </summary>
-                <div className="border-t border-orange/20 p-4 text-sm font-bold text-dark/70">{faq.a}</div>
-              </details>
             ))}
           </div>
         </div>
