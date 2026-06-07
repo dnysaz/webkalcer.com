@@ -10,7 +10,7 @@ const baloo = Baloo_Bhai_2({
 
 const title = "Webkalcer — Jasa Website Murah untuk UMKM & Personal Branding";
 const desc =
-  "Jasa website murah Rp300ribu aja! Free domain, SSL, hosting. Tinggal chat, websitemu online 1x24 jam. Untuk UMKM, personal branding, portofolio. Ga perlu ngoding.";
+  "Jasa website murah Rp300ribu aja! Free domain, SSL, hosting. Tinggal chat, websitemu online. Untuk UMKM, personal branding, portofolio. Ga perlu ngoding.";
 
 export const metadata: Metadata = {
   title,

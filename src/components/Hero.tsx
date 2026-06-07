@@ -103,9 +103,7 @@ export default function Hero() {
               <div className="flex items-center gap-2">
                 <span className="text-lime">✓</span> SSL Gratis
               </div>
-              <div className="flex items-center gap-2">
-                <span className="text-lime">✓</span> 1x24 Jam
-              </div>
+
             </div>
           </div>
 

@@ -35,7 +35,6 @@ function StatCard({ num, label, index }: { num: string; label: string; index: nu
 const stats = [
   { num: "50+", label: "Website Jadi" },
   { num: "98%", label: "Kepuasan Pelanggan" },
-  { num: "1×24", label: "Jam Online" },
   { num: "100%", label: "Tanpa Ribet Coding" },
 ];
 
@@ -55,7 +54,7 @@ export default function Stats() {
             ANGKA <span className="text-pink">BICARA</span>
           </h2>
         </div>
-        <div className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-4">
+        <div className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-3">
           {stats.map((s, i) => (
             <StatCard key={s.label} {...s} index={i} />
           ))}

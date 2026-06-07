@@ -102,7 +102,7 @@ export default function Pricing() {
         <div className="mt-12 grid grid-cols-2 gap-3 text-left sm:grid-cols-4">
           {[
             { icon: "🎨", label: "FREE DOMAIN", desc: "domain gratis 1 thn" },
-            { icon: "🚀", label: "LANGSUNG ONLINE", desc: "max 1x24 jam" },
+            { icon: "🚀", label: "LANGSUNG ONLINE", desc: "max 2x24 jam" },
             { icon: "🔒", label: "SSL GRATIS", desc: "HTTPS aman" },
             { icon: "📱", label: "RESPONSIVE", desc: "buka di HP/PC" },
           ].map((item, i) => (
@@ -116,7 +116,7 @@ export default function Pricing() {
           </p>
           <div className="grid gap-3 sm:grid-cols-2">
             {[
-              "Jasa website murah Rp300rb — landing page 1 halaman, free domain setahun, SSL gratis, online 1×24 jam",
+              "Jasa website murah Rp300rb — landing page 1 halaman, free domain setahun, SSL gratis, online 2×24 jam",
               "Website UMKM & profil bisnis — pasang tombol WA, galeri produk, alamat, dan testimoni kakak",
               "Website personal branding & portofolio — cocok buat freelancer & content creator biar makin kredibel",
               "Jasa optimasi SEO & maintenance — backup rutin, update konten, bantu website kakak muncul di Google",

@@ -35,7 +35,6 @@ function GaransiCard({ icon, title, desc, index }: { icon: string; title: string
 const garansi = [
   { icon: "🔒", title: "Garansi Uang Kembali", desc: "Kalau websitenya batal jadi, uang kakak kembali 100%. Tenang aja." },
   { icon: "🔧", title: "Revisi Minor Gratis", desc: "Ganti teks, warna, atau foto kakak — gratis, ga pake ribet." },
-  { icon: "⏱", title: "Online 1×24 Jam", desc: "Dijamin maksimal 1 hari websitenya udah online dan bisa diakses." },
   { icon: "🤝", title: "Support Santai", desc: "Bebas tanya kapan aja lewat WhatsApp. Kakak ga bakal diemin." },
 ];
 
@@ -56,7 +55,7 @@ export default function Garansi() {
           </h2>
           <p className="mt-2 text-base font-bold text-dark/60">Kakak ga perlu khawatir, kita jamin semuanya beres.</p>
         </div>
-        <div className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-4">
+        <div className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-3">
           {garansi.map((g, i) => (
             <GaransiCard key={g.title} {...g} index={i} />
           ))}
