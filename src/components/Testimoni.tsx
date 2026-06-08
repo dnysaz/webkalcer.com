@@ -43,14 +43,9 @@ function TestiCard({ quote, name, role, index }: { quote: string; name: string; 
   );
 }
 
-const testimonials = [
-  { quote: "Makasih kak webkalcer, websitenya keren banget! Baru 1 hari udah online. Pelayanannya ramah banget.", name: "Andi", role: "Pemilik Toko Online" },
-  { quote: "Ga nyangka semudah ini bikin website. Tinggal kirim konten, besoknya jadi. Recomended banget kakak.", name: "Sari", role: "Freelancer" },
-  { quote: "Harga murah, kualitas premium. Domain + SSL gratis. Pelayanannya super santai dan ga ribet.", name: "Budi", role: "Pemilik Kedai Kopi" },
-  { quote: "Website portofolioku jadi kelihatan profesional banget. Makin gampang dapet klien baru. Makasih kak!", name: "Rina", role: "Content Creator" },
-];
-
-export default function Testimoni() {
+export default function Testimoni({ items }: { items?: { id: number; quote: string; name: string; role: string }[] }) {
+  const testimonials = items?.length ? items : [];
+  if (!testimonials.length) return null;
   return (
     <section id="testimoni" className="relative overflow-hidden bg-dark px-4 py-24 sm:px-6">
       <div className="pointer-events-none absolute -top-20 -right-20 h-72 w-72 rounded-full bg-pink/5 blur-3xl" />
@@ -69,7 +64,7 @@ export default function Testimoni() {
         </div>
         <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {testimonials.map((t, i) => (
-            <TestiCard key={t.name} {...t} index={i} />
+            <TestiCard key={t.id} quote={t.quote} name={t.name} role={t.role} index={i} />
           ))}
         </div>
       </div>

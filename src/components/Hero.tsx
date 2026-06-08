@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { WA_URL } from "@/lib/config";
+import { buildWaUrl } from "@/lib/config";
 
 function Mockup() {
   return (
@@ -31,8 +31,9 @@ function Mockup() {
   );
 }
 
-export default function Hero() {
+export default function Hero({ hero, phone, waMessage }: { hero?: { badge_text?: string; headline?: string; subheadline_text?: string; cta_text?: string } | null; phone?: string; waMessage?: string }) {
   const ref = useRef<HTMLDivElement>(null);
+  const waUrl = buildWaUrl(phone, waMessage);
 
   useEffect(() => {
     const el = ref.current;
@@ -60,21 +61,18 @@ export default function Hero() {
         <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
           <div className="text-center lg:text-left">
             <div className="mb-6 inline-block animate-float rounded-full bg-pink px-6 py-2 text-sm font-bold uppercase tracking-wide text-white shadow-lg">
-              ✨ Jual website, bukan jasa koding
+              {hero?.badge_text || "✨ Jual website, bukan jasa koding"}
             </div>
 
             <div ref={ref} style={{ transform: "rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg))", transition: "transform 0.15s ease-out", willChange: "transform" }}>
               <h1 className="text-5xl font-black leading-tight tracking-tighter sm:text-6xl lg:text-7xl">
-                Ingin punya website
-                <br />
-                pribadi / usaha
-                <br />
-                tapi
-                <span className="text-pink"> ga mau ribet</span>?
+                {hero?.headline ? hero.headline.split("\\n").map((line, i) => <span key={i}>{i > 0 && <br />}{line}</span>) : (
+                  <>Ingin punya website<br />pribadi / usaha<br />tapi<span className="text-pink"> ga mau ribet</span>?</>
+                )}
               </h1>
               <p className="mx-auto mt-4 max-w-md text-xl font-bold leading-relaxed text-dark/70 sm:text-2xl lg:mx-0">
                 <span className="mt-2 inline-block -rotate-1 rounded-3xl bg-pink px-6 text-white shadow-xl sm:px-10">
-                  order di webkalcer aja! 🤙
+                  {hero?.subheadline_text || "order di webkalcer aja! 🤙"}
                 </span>
               </p>
             </div>
@@ -84,12 +82,13 @@ export default function Hero() {
                 href="#price"
                 className="rounded-full bg-pink px-8 py-4 text-lg font-bold text-white shadow-lg transition-transform hover:bg-pink-dark hover:scale-105 hover:shadow-xl active:scale-95"
               >
-                Mulai dari 300rb ↓
+                {hero?.cta_text || "Mulai dari 300rb ↓"}
               </a>
               <a
-                href={WA_URL}
+                href={waUrl}
                 target="_blank"
                 rel="noopener"
+                onClick={() => fetch("/api/track", { method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({eventType:"wa_click"}) }).catch(()=>{})}
                 className="rounded-full border-2 border-pink/30 bg-white px-8 py-4 text-lg font-bold text-dark shadow-sm transition-transform hover:border-pink hover:shadow-lg hover:scale-105 active:scale-95"
               >
                 Konsultasi Gratis

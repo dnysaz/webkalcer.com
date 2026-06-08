@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 
-function PortfolioCard({ title, tag, index }: { title: string; tag: string; index: number }) {
+function PortfolioCard({ title, tag, url, index }: { title: string; tag: string; url?: string; index: number }) {
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
 
@@ -18,6 +18,9 @@ function PortfolioCard({ title, tag, index }: { title: string; tag: string; inde
     return () => { observer.disconnect(); clearTimeout(timeout); };
   }, []);
 
+  const Wrapper = url ? "a" : "div";
+  const wrapperProps = url ? { href: url, target: "_blank", rel: "noopener" } : {};
+
   return (
     <div
       ref={ref}
@@ -26,7 +29,7 @@ function PortfolioCard({ title, tag, index }: { title: string; tag: string; inde
       }`}
       style={{ transitionDelay: `${index * 150}ms` }}
     >
-      <div className="relative overflow-hidden rounded-2xl border-4 border-zinc-800 bg-white shadow-xl transition-transform group-hover:-translate-y-2 group-hover:shadow-2xl">
+      <Wrapper {...wrapperProps} className={`relative overflow-hidden rounded-2xl border-4 border-zinc-800 bg-white shadow-xl transition-transform group-hover:-translate-y-2 group-hover:shadow-2xl block ${url ? "cursor-pointer hover:border-pink" : ""}`}>
         <div className="flex items-center gap-1.5 border-b border-zinc-200 bg-zinc-50 px-4 py-3">
           <div className="h-3 w-3 rounded-full bg-red-400" />
           <div className="h-3 w-3 rounded-full bg-yellow-400" />
@@ -41,20 +44,15 @@ function PortfolioCard({ title, tag, index }: { title: string; tag: string; inde
             {tag}
           </div>
         </div>
-      </div>
+      </Wrapper>
       <p className="mt-3 text-center text-sm font-black text-dark">{title}</p>
     </div>
   );
 }
 
-const portfolios = [
-  { title: "Toko Online — Baju Muslim", tag: "UMKM" },
-  { title: "Portofolio — Fotografer", tag: "Personal Branding" },
-  { title: "Profil — Klinik Gigi", tag: "Bisnis" },
-  { title: "Landing Page — Catering", tag: "UMKM" },
-];
-
-export default function Portofolio() {
+export default function Portofolio({ items }: { items?: { id: number; title: string; tag: string; url?: string }[] }) {
+  const portfolios = items?.length ? items : [];
+  if (!portfolios.length) return null;
   return (
     <section id="portfolio" className="relative overflow-hidden px-4 py-24 sm:px-6">
       <div className="pointer-events-none absolute top-1/3 -right-40 h-80 w-80 rounded-full bg-yellow/10 blur-3xl" />
@@ -73,7 +71,7 @@ export default function Portofolio() {
         </div>
         <div className="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
           {portfolios.map((p, i) => (
-            <PortfolioCard key={p.title} {...p} index={i} />
+            <PortfolioCard key={p.id} title={p.title} tag={p.tag} url={p.url} index={i} />
           ))}
         </div>
       </div>

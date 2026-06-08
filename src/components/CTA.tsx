@@ -1,9 +1,11 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { EMAIL, WA_URL } from "@/lib/config";
+import { EMAIL, buildWaUrl } from "@/lib/config";
 
-export default function CTA() {
+export default function CTA({ phone, email, waMessage }: { phone?: string; email?: string; waMessage?: string }) {
+  const waUrl = buildWaUrl(phone, waMessage);
+  const contactEmail = email || EMAIL;
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
 
@@ -45,19 +47,21 @@ export default function CTA() {
           Chat aja lewat WhatsApp atau email kakak. Konsultasi gratis, ga ada kewajiban beli.
         </p>
         <a
-          href={WA_URL}
+          href={waUrl}
           target="_blank"
           rel="noopener"
+          onClick={() => fetch("/api/track", { method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({eventType:"wa_click"}) }).catch(()=>{})}
           className="group mt-6 inline-flex items-center gap-2 rounded-full bg-pink px-10 py-4 text-base font-bold text-white shadow-lg transition-transform hover:bg-pink-dark hover:scale-105 hover:shadow-xl active:scale-95"
         >
           Chat WhatsApp Kak
           <span className="text-xl transition-transform group-hover:translate-x-1">→</span>
         </a>
           <a
-            href={`mailto:${EMAIL}`}
+            href={`mailto:${contactEmail}`}
+            onClick={() => fetch("/api/track", { method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({eventType:"email_click"}) }).catch(()=>{})}
             className="group mt-4 inline-flex items-center gap-2 rounded-full border-2 border-white/50 bg-white px-8 py-3 text-base font-bold text-dark shadow-sm transition-transform hover:bg-white hover:scale-105 hover:shadow-lg active:scale-95"
           >
-            {EMAIL} ✉️
+            {contactEmail} ✉️
           </a>
       </div>
     </section>

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { WA_URL } from "@/lib/config";
+import { buildWaUrl } from "@/lib/config";
 
 const links = [
   { href: "#how", label: "Cara Kerja" },
@@ -12,7 +12,8 @@ const links = [
   { href: "#garansi", label: "Jaminan" },
 ];
 
-export default function Navbar() {
+export default function Navbar({ phone, waMessage }: { phone?: string; waMessage?: string }) {
+  const waUrl = buildWaUrl(phone, waMessage);
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -59,9 +60,10 @@ export default function Navbar() {
             </a>
           ))}
           <a
-            href={WA_URL}
+            href={waUrl}
             target="_blank"
             rel="noopener"
+            onClick={() => fetch("/api/track", { method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({eventType:"wa_click"}) }).catch(()=>{})}
             className="ml-2 animate-pulse-glow rounded-full bg-pink px-6 py-2.5 text-sm font-bold text-white transition-transform hover:bg-pink-dark hover:scale-105"
           >
             Chat Kak
@@ -71,9 +73,10 @@ export default function Navbar() {
         {/* Mobile hamburger */}
         <div className="flex items-center gap-2 sm:hidden">
           <a
-            href={WA_URL}
+            href={waUrl}
             target="_blank"
             rel="noopener"
+            onClick={() => fetch("/api/track", { method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({eventType:"wa_click"}) }).catch(()=>{})}
             className="animate-pulse-glow rounded-full bg-pink px-4 py-2 text-xs font-bold text-white transition-transform hover:bg-pink-dark"
           >
             Chat Kak

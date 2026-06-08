@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { WA_URL } from "@/lib/config";
+import { buildWaUrl } from "@/lib/config";
 
 function OfferCard({ icon, label, desc, index }: { icon: string; label: string; desc: string; index: number }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -50,7 +50,8 @@ function ServiceItem({ text, index }: { text: string; index: number }) {
   );
 }
 
-export default function Pricing() {
+export default function Pricing({ phone, waMessage }: { phone?: string; waMessage?: string }) {
+  const waUrl = buildWaUrl(phone, waMessage);
   return (
     <section id="price" className="relative overflow-hidden px-4 py-24 sm:px-6">
       <div className="pointer-events-none absolute top-1/3 -right-40 h-80 w-80 rounded-full bg-yellow/10 blur-3xl" />
@@ -82,17 +83,19 @@ export default function Pricing() {
 
         <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
           <a
-            href={WA_URL}
+            href={waUrl}
             target="_blank"
             rel="noopener"
+            onClick={() => fetch("/api/track", { method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({eventType:"wa_click"}) }).catch(()=>{})}
             className="rounded-full bg-pink px-8 py-4 text-base font-bold text-white shadow-lg transition-transform hover:bg-pink-dark hover:scale-105 hover:shadow-xl active:scale-95"
           >
             Tanya Harga Kak ✨
           </a>
           <a
-            href={WA_URL}
+            href={waUrl}
             target="_blank"
             rel="noopener"
+            onClick={() => fetch("/api/track", { method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({eventType:"wa_click"}) }).catch(()=>{})}
             className="rounded-full border-2 border-pink/30 bg-white px-8 py-4 text-base font-bold text-dark shadow-sm transition-transform hover:border-pink hover:shadow-lg hover:scale-105 active:scale-95"
           >
             Konsultasi Gratis
@@ -129,9 +132,10 @@ export default function Pricing() {
         <p className="mt-10 text-sm font-bold text-zinc-400">
           Mau tanya2 dulu kakak?{" "}
           <a
-            href={WA_URL}
+            href={waUrl}
             target="_blank"
             rel="noopener"
+            onClick={() => fetch("/api/track", { method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({eventType:"wa_click"}) }).catch(()=>{})}
             className="inline-flex items-center gap-1 text-pink font-black underline underline-offset-4"
           >
             Chat aja santai kakak ✨
