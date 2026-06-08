@@ -2,14 +2,15 @@ import crypto from "crypto";
 
 const ALGORITHM = "aes-256-cbc";
 
-function getKey(): Buffer {
+function getKey(): Buffer | null {
   const key = process.env.APP_ENCRYPTION_KEY;
-  if (!key) throw new Error("APP_ENCRYPTION_KEY is not set");
+  if (!key) return null;
   return crypto.scryptSync(key, "salt", 32);
 }
 
 export function encrypt(text: string): string {
   const key = getKey();
+  if (!key) return "";
   const iv = crypto.randomBytes(16);
   const cipher = crypto.createCipheriv(ALGORITHM, key, iv);
   const encrypted = Buffer.concat([cipher.update(text, "utf8"), cipher.final()]);
@@ -18,6 +19,7 @@ export function encrypt(text: string): string {
 
 export function decrypt(encrypted: string): string {
   const key = getKey();
+  if (!key) return "";
   const parts = encrypted.split(":");
   if (parts.length !== 2) return "";
   const iv = Buffer.from(parts[0], "hex");

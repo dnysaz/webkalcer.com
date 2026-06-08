@@ -36,8 +36,14 @@ export async function saveSeo(_prev: unknown, formData: FormData): Promise<{ suc
       updated_at: new Date().toISOString(),
     };
 
-    if (serverKey) updates.midtrans_server_key_enc = encrypt(serverKey);
-    if (clientKey) updates.midtrans_client_key_enc = encrypt(clientKey);
+    if (serverKey) {
+      const enc = encrypt(serverKey);
+      if (enc) updates.midtrans_server_key_enc = enc;
+    }
+    if (clientKey) {
+      const enc = encrypt(clientKey);
+      if (enc) updates.midtrans_client_key_enc = enc;
+    }
 
     const { error } = await supabase.from("seo_settings").update(updates).eq("page", "home");
     if (error) return { error: error.message || JSON.stringify(error) };
