@@ -81,6 +81,21 @@ export default function Pricing({ phone, waMessage }: { phone?: string; waMessag
           lebih murah dari biaya nongkrong kakak di mall loh 🛍️
         </p>
 
+        <div className="mt-6 flex flex-wrap justify-center gap-x-8 gap-y-2 text-sm font-bold text-dark">
+          <span className="flex items-center gap-1.5">
+            <span className="flex h-5 w-5 items-center justify-center rounded-full bg-lime text-xs font-black text-dark">✓</span>
+            Free Domain
+          </span>
+          <span className="flex items-center gap-1.5">
+            <span className="flex h-5 w-5 items-center justify-center rounded-full bg-lime text-xs font-black text-dark">✓</span>
+            SSL Gratis
+          </span>
+          <span className="flex items-center gap-1.5">
+            <span className="flex h-5 w-5 items-center justify-center rounded-full bg-lime text-xs font-black text-dark">✓</span>
+            SEO Maksimal
+          </span>
+        </div>
+
         <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
           <a
             href={waUrl}
