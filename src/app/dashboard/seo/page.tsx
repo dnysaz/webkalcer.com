@@ -13,11 +13,20 @@ function maskKey(key: string | null | undefined): string {
 }
 
 export default async function SeoPage({ searchParams }: { searchParams: Promise<{ toast?: string }> }) {
-  const seo = await getSeo();
-  const { toast } = await searchParams;
+  let seo: Record<string, unknown> | null = null;
+  let toast: string | undefined;
+  let serverKeyHint = "";
+  let clientKeyHint = "";
 
-  const serverKeyHint = maskKey(seo?.midtrans_server_key_enc);
-  const clientKeyHint = maskKey(seo?.midtrans_client_key_enc);
+  try {
+    seo = await getSeo();
+    const sp = await searchParams;
+    toast = sp.toast;
+    serverKeyHint = maskKey(seo?.midtrans_server_key_enc as string | null | undefined);
+    clientKeyHint = maskKey(seo?.midtrans_client_key_enc as string | null | undefined);
+  } catch (e) {
+    console.error("SeoPage error:", e);
+  }
 
   return (
     <div className="mx-auto max-w-4xl">
@@ -25,7 +34,7 @@ export default async function SeoPage({ searchParams }: { searchParams: Promise<
       <h1 className="text-2xl font-black tracking-tighter text-dark">SEO & Settings</h1>
       <p className="mt-1 mb-10 text-sm font-bold text-zinc-400">Manage meta tags, Google Tag, favicon, OG image, Midtrans, and Invoice.</p>
       <Suspense fallback={<div className="h-96" />}>
-        <SeoForm seo={seo} serverKeyHint={serverKeyHint} clientKeyHint={clientKeyHint} />
+        <SeoForm seo={seo as never} serverKeyHint={serverKeyHint} clientKeyHint={clientKeyHint} />
       </Suspense>
     </div>
   );
