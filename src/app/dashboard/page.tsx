@@ -85,7 +85,7 @@ export default async function DashboardHome() {
       <h1 className="text-xl font-black tracking-tighter text-dark sm:text-2xl">
         Dashboard
       </h1>
-      <p className="mt-1 mb-6 text-xs font-bold text-zinc-400 sm:mb-8 sm:text-sm">
+      <p className="mt-1 mb-6 text-xs font-bold text-zinc-300 sm:mb-8 sm:text-sm">
         Welcome back, {user?.email}
       </p>
 
@@ -93,34 +93,34 @@ export default async function DashboardHome() {
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4">
         <div className="rounded-2xl border-2 border-orange/20 bg-white p-4 shadow-sm sm:p-5">
           <div className="text-2xl font-black text-pink sm:text-3xl">{packageCount ?? 0}</div>
-          <div className="mt-1 text-xs font-bold text-zinc-500 sm:text-sm">Total Packages</div>
+          <div className="mt-1 text-xs font-bold text-zinc-600 sm:text-sm">Total Packages</div>
         </div>
         <div className="rounded-2xl border-2 border-orange/20 bg-white p-4 shadow-sm sm:p-5">
           <div className="text-2xl font-black text-blue-500 sm:text-3xl">{visitCount}</div>
-          <div className="mt-1 text-xs font-bold text-zinc-500 sm:text-sm">Total Visits</div>
+          <div className="mt-1 text-xs font-bold text-zinc-600 sm:text-sm">Total Visits</div>
         </div>
         <div className="col-span-2 rounded-2xl border-2 border-orange/20 bg-white p-4 shadow-sm sm:col-span-1 sm:p-5">
           <div className="text-2xl font-black text-green-500 sm:text-3xl">{formatPrice(totalRevenue)}</div>
-          <div className="mt-1 text-xs font-bold text-zinc-500 sm:text-sm">Total Revenue</div>
+          <div className="mt-1 text-xs font-bold text-zinc-600 sm:text-sm">Total Revenue</div>
         </div>
       </div>
 
       {/* Invoice Status */}
       <div className="mt-4 grid grid-cols-2 gap-3 sm:mt-6 sm:grid-cols-4 sm:gap-4">
         <div className="rounded-xl border-2 border-zinc-200 bg-white px-4 py-3 sm:px-5 sm:py-4">
-          <div className="text-xs font-bold text-zinc-400 sm:text-sm">Draft</div>
+          <div className="text-xs font-bold text-zinc-300 sm:text-sm">Draft</div>
           <div className="text-xl font-black text-dark sm:text-2xl">{draftCount ?? 0}</div>
         </div>
         <div className="rounded-xl border-2 border-yellow/30 bg-white px-4 py-3 sm:px-5 sm:py-4">
-          <div className="text-xs font-bold text-zinc-400 sm:text-sm">Pending</div>
+          <div className="text-xs font-bold text-zinc-300 sm:text-sm">Pending</div>
           <div className="text-xl font-black text-yellow-700 sm:text-2xl">{pendingCount ?? 0}</div>
         </div>
         <div className="rounded-xl border-2 border-green-200 bg-white px-4 py-3 sm:px-5 sm:py-4">
-          <div className="text-xs font-bold text-zinc-400 sm:text-sm">Paid</div>
+          <div className="text-xs font-bold text-zinc-300 sm:text-sm">Paid</div>
           <div className="text-xl font-black text-green-600 sm:text-2xl">{paidCount ?? 0}</div>
         </div>
         <div className="rounded-xl border-2 border-red-200 bg-white px-4 py-3 sm:px-5 sm:py-4">
-          <div className="text-xs font-bold text-zinc-400 sm:text-sm">Cancelled</div>
+          <div className="text-xs font-bold text-zinc-300 sm:text-sm">Cancelled</div>
           <div className="text-xl font-black text-red-400 sm:text-2xl">{cancelledCount ?? 0}</div>
         </div>
       </div>

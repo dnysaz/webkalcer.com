@@ -12,7 +12,7 @@ export default async function NewInvoicePage() {
   return (
     <div className="mx-auto max-w-4xl">
       <h1 className="text-2xl font-black tracking-tighter text-dark">Create Invoice</h1>
-      <p className="mt-1 mb-10 text-sm font-bold text-zinc-400">Fill in customer data and invoice items.</p>
+      <p className="mt-1 mb-10 text-sm font-bold text-zinc-300">Fill in customer data and invoice items.</p>
       <InvoiceForm packages={packages ?? []} />
     </div>
   );

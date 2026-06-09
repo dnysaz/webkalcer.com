@@ -11,7 +11,7 @@ export default async function HeroPage({ searchParams }: { searchParams: Promise
     <div className="mx-auto max-w-4xl">
       <PageToast toast={toast} />
       <h1 className="text-2xl font-black tracking-tighter text-dark">Edit Hero</h1>
-      <p className="mt-1 mb-10 text-sm font-bold text-zinc-400">Edit text on the homepage hero section.</p>
+      <p className="mt-1 mb-10 text-sm font-bold text-zinc-500">Edit text on the homepage hero section.</p>
 
       <form action={saveHero} className="space-y-5">
         <div className="rounded-2xl border-2 border-zinc-200 bg-white p-6">
@@ -24,7 +24,7 @@ export default async function HeroPage({ searchParams }: { searchParams: Promise
             <div>
               <label className="mb-1 block text-sm font-bold text-zinc-600">Headline</label>
               <textarea name="headline" rows={4} defaultValue={hero?.headline ?? ""} className="w-full rounded-xl border-2 border-zinc-200 px-4 py-3 text-sm font-bold outline-none transition focus:border-pink" />
-              <p className="mt-1 text-xs text-zinc-400">Use \n for new line</p>
+              <p className="mt-1 text-xs text-zinc-500">Use \n for new line</p>
             </div>
             <div>
               <label className="mb-1 block text-sm font-bold text-zinc-600">Subheadline</label>

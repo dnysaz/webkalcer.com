@@ -15,7 +15,7 @@ export default function Footer({ email }: { email?: string }) {
           <a
             href={`mailto:${contactEmail}`}
             onClick={() => fetch("/api/track", { method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({eventType:"email_click"}) }).catch(()=>{})}
-            className="font-bold text-zinc-400 underline underline-offset-2 hover:text-pink transition-colors"
+            className="font-bold text-zinc-300 underline underline-offset-2 hover:text-pink transition-colors"
           >
             {contactEmail}
           </a>

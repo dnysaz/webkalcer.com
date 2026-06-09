@@ -80,8 +80,6 @@ export async function generateMetadata(): Promise<Metadata> {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  maximumScale: 1,
-  userScalable: false,
   themeColor: "#ff3366",
 };
 
@@ -120,8 +118,11 @@ export default async function RootLayout({
         <link rel="apple-touch-icon" href="/icon-192.svg" />
       </head>
       <body className="min-h-full flex flex-col bg-white text-zinc-900 font-sans">
+        <a className="skip-link" href="#main">Lewati ke konten</a>
         <PwaRegister />
-        {children}
+        <main id="main" className="flex-1">
+          {children}
+        </main>
       </body>
     </html>
   );

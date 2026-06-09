@@ -64,7 +64,7 @@ export default function HowItWorks() {
             <StepCard key={step.number} {...step} index={i} />
           ))}
         </div>
-        <p className="mt-4 text-center text-xs font-bold text-zinc-400">
+        <p className="mt-4 text-center text-xs font-bold text-zinc-500">
           *Bayar di akhir setelah jadi hanya berlaku untuk website yang berharga Rp300.000.
         </p>
       </div>

@@ -56,7 +56,7 @@ export default async function AnalyticsPage() {
   return (
     <div className="mx-auto max-w-4xl">
       <h1 className="text-2xl font-black tracking-tighter text-dark">Analytics</h1>
-      <p className="mt-1 mb-10 text-sm font-bold text-zinc-400">Monitor homepage visits and interactions.</p>
+      <p className="mt-1 mb-10 text-sm font-bold text-zinc-300">Monitor homepage visits and interactions.</p>
 
       <div className="grid gap-4 sm:grid-cols-3">
         <div className="rounded-2xl border-2 border-orange/20 bg-white p-6 shadow-sm">
@@ -79,14 +79,14 @@ export default async function AnalyticsPage() {
 
       <div className="mt-8">
         <h2 className="text-base font-black text-dark">Recent Visits</h2>
-        {visits.length === 0 && <p className="mt-4 text-sm font-bold text-zinc-400">No visits yet.</p>}
+        {visits.length === 0 && <p className="mt-4 text-sm font-bold text-zinc-500">No visits yet.</p>}
         <div className="mt-4 space-y-2">
           {visits.map((v, i) => (
             <div key={v.id} className="flex items-center justify-between rounded-xl border-2 border-zinc-100 bg-white px-5 py-3 text-sm">
               <span className="font-bold text-zinc-600">#{i + 1}</span>
               <span className="text-xs text-zinc-500">{v.visitor_id || "—"}</span>
-              <span className="text-xs text-zinc-400">{v.country ? `🌍 ${v.country}` : ""}</span>
-              <span className="text-xs text-zinc-400">{new Date(v.visited_at).toLocaleString("id-ID")}</span>
+              <span className="text-xs text-zinc-300">{v.country ? `🌍 ${v.country}` : ""}</span>
+              <span className="text-xs text-zinc-300">{new Date(v.visited_at).toLocaleString("id-ID")}</span>
             </div>
           ))}
         </div>

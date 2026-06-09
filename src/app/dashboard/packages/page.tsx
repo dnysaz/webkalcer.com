@@ -18,7 +18,7 @@ export default async function PackagesPage({ searchParams }: { searchParams: Pro
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-black tracking-tighter text-dark">Package</h1>
-          <p className="mt-1 text-sm font-bold text-zinc-400">Manage offer packages for clients.</p>
+          <p className="mt-1 text-sm font-bold text-zinc-500">Manage offer packages for clients.</p>
         </div>
         <Link href="/dashboard/packages/new" className="rounded-full bg-pink px-6 py-2.5 text-sm font-bold text-white shadow-lg transition hover:bg-pink-dark">
           + Add
@@ -26,7 +26,7 @@ export default async function PackagesPage({ searchParams }: { searchParams: Pro
       </div>
 
       <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {packages.length === 0 && <p className="col-span-full text-sm font-bold text-zinc-400">No packages yet.</p>}
+        {packages.length === 0 && <p className="col-span-full text-sm font-bold text-zinc-500">No packages yet.</p>}
         {packages.map((p) => (
           <div key={p.id} className="flex flex-col rounded-2xl border-2 border-zinc-200 bg-white shadow-sm">
             {p.thumbnail_url && (
@@ -39,7 +39,7 @@ export default async function PackagesPage({ searchParams }: { searchParams: Pro
                 <h3 className="text-base font-black text-dark">{p.name}</h3>
                 {!p.is_active && <span className="shrink-0 rounded-full bg-red-100 px-2 py-0.5 text-[11px] font-bold text-red-400">inactive</span>}
               </div>
-              {p.description && <p className="mt-1 line-clamp-2 text-xs font-bold text-zinc-400">{p.description}</p>}
+              {p.description && <p className="mt-1 line-clamp-2 text-xs font-bold text-zinc-500">{p.description}</p>}
               <div className="mt-3 space-y-1">
                 <p className="text-lg font-black text-dark">{formatPrice(p.price)}</p>
                 {Number(p.promo) > 0 && <p className="text-sm font-bold text-pink">Promo: {formatPrice(p.promo)}</p>}

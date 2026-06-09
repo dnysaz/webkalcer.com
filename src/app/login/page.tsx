@@ -15,7 +15,7 @@ export default function LoginPage() {
               <span className="text-yellow">🤙</span>
               <span><span className="text-white">web</span><span className="rounded-lg bg-yellow text-dark">kalcer</span></span>
             </a>
-            <p className="mt-2 text-sm font-bold text-zinc-400">Login admin</p>
+             <p className="mt-2 text-sm font-bold text-zinc-300">Login admin</p>
           </div>
 
           <form action={action} className="space-y-4">

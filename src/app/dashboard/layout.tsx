@@ -46,7 +46,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
           ))}
         </nav>
         <div className="border-t border-zinc-200 p-4">
-          <div className="mb-2 truncate text-xs font-bold text-zinc-400">{userEmail}</div>
+          <div className="mb-2 truncate text-xs font-bold text-zinc-300">{userEmail}</div>
           <form action={logout}>
             <SubmitButton className="w-full rounded-full border-2 border-zinc-200 px-4 py-2 text-sm font-bold text-zinc-600 transition hover:border-pink hover:text-pink">
               Logout

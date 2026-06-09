@@ -32,7 +32,7 @@ export default async function InvoicesPage({ searchParams }: { searchParams: Pro
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-xl font-black tracking-tighter text-dark sm:text-2xl">Invoice</h1>
-          <p className="mt-1 text-xs font-bold text-zinc-400 sm:text-sm">Manage invoices and payments.</p>
+          <p className="mt-1 text-xs font-bold text-zinc-300 sm:text-sm">Manage invoices and payments.</p>
         </div>
         <Link href="/dashboard/invoices/new" className="inline-flex self-start rounded-full bg-pink px-5 py-2 text-sm font-bold text-white shadow-lg transition hover:bg-pink-dark sm:self-auto">
           + Create Invoice
@@ -51,8 +51,8 @@ export default async function InvoicesPage({ searchParams }: { searchParams: Pro
                 </span>
               </div>
               <p className="mt-1 text-sm font-bold text-zinc-600">{inv.customer_name}</p>
-              <p className="text-xs font-bold text-zinc-400">
-                {new Date(inv.created_at).toLocaleDateString("id-ID")} &middot; {formatPrice(inv.grand_total)}
+              <p className="text-xs font-bold text-zinc-300">
+                {new Date(inv.created_at).toLocaleDateString("id-ID")} · {formatPrice(inv.grand_total)}
               </p>
             </div>
             <div className="flex items-center gap-2">

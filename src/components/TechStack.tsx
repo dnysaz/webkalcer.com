@@ -58,7 +58,7 @@ function TechCard({ name, icon, isSvg, desc, index }: Tech & { index: number }) 
         )}
       </div>
       <span className="mt-2 text-sm font-black tracking-tight text-white">{name}</span>
-      <span className="mt-0.5 text-[11px] font-bold text-zinc-500">{desc}</span>
+      <span className="mt-0.5 text-[11px] font-bold text-zinc-300">{desc}</span>
     </div>
   );
 }
@@ -78,7 +78,7 @@ export default function TechStack() {
           <h2 className="text-4xl font-black uppercase tracking-tighter text-white sm:text-5xl">
             Teknologi <span className="text-pink">Kami</span>
           </h2>
-          <p className="mx-auto mt-3 max-w-xl text-base font-bold leading-relaxed text-zinc-400">
+          <p className="mx-auto mt-3 max-w-xl text-base font-bold leading-relaxed text-zinc-300">
             Dari frontend sampai hosting, kami pake teknologi yang udah teruji biar hasilnya maksimal.
           </p>
         </div>

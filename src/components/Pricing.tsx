@@ -28,7 +28,7 @@ function OfferCard({ icon, label, desc, index }: { icon: string; label: string; 
     >
       <div className="text-3xl transition-transform group-hover:scale-110">{icon}</div>
       <div className="mt-2 text-sm font-black tracking-tight text-dark">{label}</div>
-      <div className="text-xs font-bold text-zinc-500">{desc}</div>
+        <div className="text-xs font-bold text-zinc-600">{desc}</div>
     </div>
   );
 }
@@ -144,7 +144,7 @@ export default function Pricing({ phone, waMessage }: { phone?: string; waMessag
           </div>
         </div>
 
-        <p className="mt-10 text-sm font-bold text-zinc-400">
+        <p className="mt-10 text-sm font-bold text-zinc-300">
           Mau tanya2 dulu kakak?{" "}
           <a
             href={waUrl}

@@ -31,7 +31,7 @@ export default async function SeoPage({ searchParams }: { searchParams: Promise<
     <div className="mx-auto max-w-4xl">
       <PageToast toast={toast} />
       <h1 className="text-2xl font-black tracking-tighter text-dark">SEO & Settings</h1>
-      <p className="mt-1 mb-10 text-sm font-bold text-zinc-400">Manage meta tags, Google Tag, favicon, OG image, Midtrans, and Invoice.</p>
+      <p className="mt-1 mb-10 text-sm font-bold text-zinc-500">Manage meta tags, Google Tag, favicon, OG image, Midtrans, and Invoice.</p>
         <SeoForm seo={seo as never} serverKeyHint={serverKeyHint} clientKeyHint={clientKeyHint} />
     </div>
   );

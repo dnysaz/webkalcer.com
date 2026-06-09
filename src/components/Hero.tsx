@@ -95,7 +95,7 @@ export default function Hero({ hero, phone, waMessage }: { hero?: { badge_text?:
               </a>
             </div>
 
-            <div className="mt-6 flex items-center gap-6 text-sm font-bold text-zinc-400 lg:justify-start">
+            <div className="mt-6 flex items-center gap-6 text-sm font-bold text-zinc-300 lg:justify-start">
               <div className="flex items-center gap-2">
                 <span className="text-lime">✓</span> Free Domain
               </div>

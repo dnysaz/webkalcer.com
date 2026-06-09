@@ -131,7 +131,7 @@ export default function InvoiceForm({ packages }: { packages: Package[] }) {
           </div>
         </div>
         <div className="mt-4 space-y-3">
-          {items.length === 0 && <p className="text-sm font-bold text-zinc-400">No items yet.</p>}
+          {items.length === 0 && <p className="text-sm font-bold text-zinc-500">No items yet.</p>}
           {items.map((item, i) => (
             <div key={i} className="flex items-center gap-3">
               {item.type === "package" ? (
@@ -149,7 +149,7 @@ export default function InvoiceForm({ packages }: { packages: Package[] }) {
                 />
               )}
               <div className="relative w-36 sm:w-48">
-                <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-sm font-bold text-zinc-400">Rp</span>
+                <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-sm font-bold text-zinc-500">Rp</span>
                 <input
                   value={item.price ? formatPrice(item.price).replace(/^Rp\s?/, "") : ""}
                   onChange={(e) => item.type === "manual" && updateItem(i, "price", e.target.value)}
@@ -196,9 +196,9 @@ export default function InvoiceForm({ packages }: { packages: Package[] }) {
                   placeholder="0"
                   className="w-full rounded-xl border-2 border-zinc-200 px-4 py-2.5 text-right text-sm font-bold outline-none transition focus:border-pink"
                 />
-                <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-sm font-bold text-zinc-400">%</span>
+                <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-sm font-bold text-zinc-500">%</span>
               </div>
-              <span className="text-sm font-bold text-zinc-400">{formatPrice(taxNominal)}</span>
+              <span className="text-sm font-bold text-zinc-300">{formatPrice(taxNominal)}</span>
             </div>
           </div>
           <div className="border-t border-zinc-200 pt-3">

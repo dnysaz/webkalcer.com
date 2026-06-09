@@ -36,7 +36,7 @@ function TestiCard({ quote, name, role, index }: { quote: string; name: string; 
         </div>
         <div>
           <div className="text-sm font-black text-white">{name}</div>
-          <div className="text-xs font-bold text-zinc-400">{role}</div>
+          <div className="text-xs font-bold text-zinc-300">{role}</div>
         </div>
       </div>
     </div>

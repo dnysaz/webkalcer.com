@@ -5,7 +5,7 @@ export default function NewPackagePage() {
   return (
     <div className="mx-auto max-w-4xl">
       <h1 className="text-2xl font-black tracking-tighter text-dark">Add Package</h1>
-      <p className="mt-1 mb-10 text-sm font-bold text-zinc-400">Create an offer package for clients.</p>
+      <p className="mt-1 mb-10 text-sm font-bold text-zinc-500">Create an offer package for clients.</p>
 
       <form action={createPackage} className="space-y-5">
         <div className="rounded-2xl border-2 border-zinc-200 bg-white p-6">
@@ -34,7 +34,7 @@ export default function NewPackagePage() {
 
         <div className="rounded-2xl border-2 border-zinc-200 bg-white p-6">
           <h2 className="text-base font-black text-dark">Catalog &amp; Thumbnail</h2>
-          <p className="mb-4 mt-1 text-xs font-bold text-zinc-400">Upload catalog (PDF) and package thumbnail.</p>
+          <p className="mb-4 mt-1 text-xs font-bold text-zinc-500">Upload catalog (PDF) and package thumbnail.</p>
           <div className="space-y-4">
             <div>
               <label className="mb-1 block text-sm font-bold text-zinc-600">Catalog (PDF)</label>

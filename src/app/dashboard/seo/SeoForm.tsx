@@ -89,10 +89,10 @@ function ImageUploadField({ name, defaultValue, label, hint, folder }: {
           />
           <input name={name} type="hidden" value={url} />
           {url && (
-            <p className="truncate text-xs font-bold text-zinc-400">{url}</p>
+            <p className="truncate text-xs font-bold text-zinc-500">{url}</p>
           )}
           {error && <p className="text-xs font-bold text-red-400">{error}</p>}
-          {hint && !error && <p className="text-xs font-bold text-zinc-400">{hint}</p>}
+          {hint && !error && <p className="text-xs font-bold text-zinc-500">{hint}</p>}
         </div>
       </div>
     </div>
@@ -224,7 +224,7 @@ export default function SeoForm({ seo, serverKeyHint, clientKeyHint }: { seo: Se
       <div className={tab === "midtrans" ? "block" : "hidden"}>
         <div className="rounded-2xl border-2 border-zinc-200 bg-white p-6">
           <h2 className="text-base font-black text-dark">Midtrans</h2>
-          <p className="mb-6 mt-1 text-sm font-bold text-zinc-400">
+          <p className="mb-6 mt-1 text-sm font-bold text-zinc-500">
             Midtrans payment gateway configuration. Data will be stored encrypted.
           </p>
           <div className="space-y-4">
@@ -240,7 +240,7 @@ export default function SeoForm({ seo, serverKeyHint, clientKeyHint }: { seo: Se
                 className="w-full rounded-xl border-2 border-zinc-200 px-4 py-3 text-sm font-bold outline-none transition focus:border-pink"
               />
               {serverKeyHint && (
-                <p className="mt-1 text-xs font-bold text-zinc-400">Leave empty to keep current key.</p>
+                <p className="mt-1 text-xs font-bold text-zinc-600">Leave empty to keep current key.</p>
               )}
             </div>
             <div>
@@ -255,7 +255,7 @@ export default function SeoForm({ seo, serverKeyHint, clientKeyHint }: { seo: Se
                 className="w-full rounded-xl border-2 border-zinc-200 px-4 py-3 text-sm font-bold outline-none transition focus:border-pink"
               />
               {clientKeyHint && (
-                <p className="mt-1 text-xs font-bold text-zinc-400">Leave empty to keep current key.</p>
+                <p className="mt-1 text-xs font-bold text-zinc-600">Leave empty to keep current key.</p>
               )}
             </div>
             <div>
@@ -268,7 +268,7 @@ export default function SeoForm({ seo, serverKeyHint, clientKeyHint }: { seo: Se
                 />
                 Production Mode
               </label>
-              <p className="mt-1 text-xs font-bold text-zinc-400">Check if using production keys (not sandbox).</p>
+              <p className="mt-1 text-xs font-bold text-zinc-500">Check if using production keys (not sandbox).</p>
             </div>
           </div>
         </div>
@@ -278,7 +278,7 @@ export default function SeoForm({ seo, serverKeyHint, clientKeyHint }: { seo: Se
       <div className={tab === "invoice" ? "block" : "hidden"}>
         <div className="rounded-2xl border-2 border-zinc-200 bg-white p-6">
           <h2 className="text-base font-black text-dark">Invoice</h2>
-          <p className="mb-6 mt-1 text-sm font-bold text-zinc-400">
+          <p className="mb-6 mt-1 text-sm font-bold text-zinc-600">
             Company info used in invoice header (kop).
           </p>
           <div className="space-y-4">
@@ -290,7 +290,7 @@ export default function SeoForm({ seo, serverKeyHint, clientKeyHint }: { seo: Se
                 placeholder="Webkalcer"
                 className="w-full rounded-xl border-2 border-zinc-200 px-4 py-3 text-sm font-bold outline-none transition focus:border-pink"
               />
-              <p className="mt-1 text-xs font-bold text-zinc-400">Nama yang tampil di kop invoice (terpisah dari SEO title).</p>
+              <p className="mt-1 text-xs font-bold text-zinc-600">Nama yang tampil di kop invoice (terpisah dari SEO title).</p>
             </div>
             <ImageUploadField
               name="logo_url"
@@ -307,7 +307,7 @@ export default function SeoForm({ seo, serverKeyHint, clientKeyHint }: { seo: Se
       <div className={tab === "google-tag" ? "block" : "hidden"}>
         <div className="rounded-2xl border-2 border-zinc-200 bg-white p-6">
           <h2 className="text-base font-black text-dark">Google Tag & Head Scripts</h2>
-          <p className="mt-1 text-xs font-bold text-zinc-400">These scripts will be inserted into the &lt;head&gt; tag.</p>
+          <p className="mt-1 text-xs font-bold text-zinc-600">These scripts will be inserted into the &lt;head&gt; tag.</p>
           <div className="mt-4 space-y-4">
             <div>
               <label className="mb-1 block text-sm font-bold text-zinc-600">Google Tag ID (e.g. G-XXXXXXXXXX)</label>
@@ -316,7 +316,7 @@ export default function SeoForm({ seo, serverKeyHint, clientKeyHint }: { seo: Se
             <div>
               <label className="mb-1 block text-sm font-bold text-zinc-600">Custom Head Scripts</label>
               <textarea name="head_scripts" rows={4} defaultValue={seo?.head_scripts ?? ""} placeholder="<script>...</script>" className="w-full rounded-xl border-2 border-zinc-200 px-4 py-3 text-sm font-bold font-mono outline-none transition focus:border-pink" />
-              <p className="mt-1 text-xs text-zinc-400">Will be inserted into &lt;head&gt; before &lt;/head&gt;.</p>
+              <p className="mt-1 text-xs text-zinc-600">Will be inserted into &lt;head&gt; before &lt;/head&gt;.</p>
             </div>
           </div>
         </div>

@@ -49,7 +49,7 @@ export default async function InvoiceDetailPage({ params }: { params: Promise<{ 
 
       {/* Customer Info */}
       <div className="mb-4 rounded-2xl border-2 border-zinc-200 bg-white p-5 sm:mb-6 sm:p-6">
-        <h2 className="text-xs font-bold uppercase tracking-wider text-zinc-400">Customer</h2>
+        <h2 className="text-xs font-bold uppercase tracking-wider text-zinc-300">Customer</h2>
         <p className="mt-2 text-lg font-black text-dark">{invoice.customer_name}</p>
         {invoice.customer_email && <p className="text-sm font-bold text-zinc-500">{invoice.customer_email}</p>}
         {invoice.customer_phone && <p className="text-sm font-bold text-zinc-500">{invoice.customer_phone}</p>}
@@ -58,11 +58,11 @@ export default async function InvoiceDetailPage({ params }: { params: Promise<{ 
       {/* Items */}
       <div className="mb-4 rounded-2xl border-2 border-zinc-200 bg-white sm:mb-6">
         <div className="border-b border-zinc-200 px-5 py-4 sm:px-6">
-          <h2 className="text-xs font-bold uppercase tracking-wider text-zinc-400">Item</h2>
+          <h2 className="text-xs font-bold uppercase tracking-wider text-zinc-300">Item</h2>
         </div>
         <div className="divide-y divide-zinc-100">
           {!invoice.items || invoice.items.length === 0 ? (
-            <div className="px-5 py-8 text-center text-sm font-bold text-zinc-400 sm:px-6">
+            <div className="px-5 py-8 text-center text-sm font-bold text-zinc-300 sm:px-6">
               No items yet. This invoice may need to be edited or recreated.
             </div>
           ) : (
@@ -128,7 +128,7 @@ export default async function InvoiceDetailPage({ params }: { params: Promise<{ 
 
       {invoice.notes && (
         <div className="mt-6 rounded-2xl border-2 border-zinc-200 bg-white p-6">
-          <h2 className="text-xs font-bold uppercase tracking-wider text-zinc-400">Notes</h2>
+          <h2 className="text-xs font-bold uppercase tracking-wider text-zinc-300">Notes</h2>
           <p className="mt-2 text-sm font-bold text-zinc-600">{invoice.notes}</p>
         </div>
       )}
