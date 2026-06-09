@@ -64,34 +64,35 @@ export default function MobileSidebar({ links, userEmail }: { links: NavLink[]; 
 
       {/* Mobile sidebar panel */}
       <aside
-        className={`fixed inset-y-0 left-0 z-50 w-72 border-r border-zinc-200 bg-white shadow-2xl transition-transform duration-300 md:hidden ${
+        className={`fixed inset-y-0 left-0 z-50 flex w-72 flex-col border-r border-zinc-200 bg-white shadow-2xl transition-transform duration-300 md:hidden ${
           open ? "translate-x-0" : "-translate-x-full"
         }`}
       >
-        <div className="flex h-14 items-center gap-2 border-b border-zinc-200 px-6">
+        <div className="flex h-14 shrink-0 items-center gap-2 border-b border-zinc-200 px-6">
           <span className="text-yellow text-xl">🤙</span>
           <span className="text-base font-black tracking-tighter text-dark">dashboard</span>
         </div>
-        <nav className="space-y-1 overflow-y-auto p-4" style={{ height: "calc(100% - 3.5rem - 120px)" }}>
+        <nav className="flex-1 space-y-1 overflow-y-auto p-4">
           {links.map((l) => {
             const isActive = pathname === l.href || (l.href !== "/dashboard" && pathname.startsWith(l.href));
             return (
               <Link
                 key={l.href}
                 href={l.href}
-                className={`flex items-center gap-3 rounded-xl px-4 py-2.5 text-sm font-bold transition ${
+                onClick={() => setOpen(false)}
+                className={`flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-bold transition ${
                   isActive
                     ? "bg-pink/10 text-pink"
                     : "text-zinc-600 hover:bg-pink/5 hover:text-pink"
                 }`}
               >
-                <span>{l.icon}</span>
+                <span className="text-lg">{l.icon}</span>
                 {l.label}
               </Link>
             );
           })}
         </nav>
-        <div className="absolute bottom-0 left-0 right-0 border-t border-zinc-200 p-4">
+        <div className="shrink-0 border-t border-zinc-200 p-4">
           <div className="mb-2 truncate text-xs font-bold text-zinc-400">{userEmail}</div>
           <form action={logout}>
             <SubmitButton className="w-full rounded-full border-2 border-zinc-200 px-4 py-2 text-sm font-bold text-zinc-600 transition hover:border-pink hover:text-pink">
