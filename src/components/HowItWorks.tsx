@@ -4,7 +4,7 @@ import { useRef, useEffect, useState } from "react";
 
 function StepCard({ number, title, desc, index }: { number: string; title: string; desc: string; index: number }) {
   const ref = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState(true);
 
   useEffect(() => {
     const el = ref.current;

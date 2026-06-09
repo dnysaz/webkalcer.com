@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 
 function TestiCard({ quote, name, role, index }: { quote: string; name: string; role: string; index: number }) {
   const ref = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState(true);
 
   useEffect(() => {
     const el = ref.current;

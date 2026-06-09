@@ -29,7 +29,7 @@ const techs: Tech[] = [
 
 function TechCard({ name, icon, isSvg, desc, index }: Tech & { index: number }) {
   const ref = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState(true);
 
   useEffect(() => {
     const el = ref.current;

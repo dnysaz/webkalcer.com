@@ -7,7 +7,7 @@ export default function CTA({ phone, email, waMessage }: { phone?: string; email
   const waUrl = buildWaUrl(phone, waMessage);
   const contactEmail = email || EMAIL;
   const ref = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState(true);
 
   useEffect(() => {
     const el = ref.current;

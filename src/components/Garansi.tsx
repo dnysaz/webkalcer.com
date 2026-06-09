@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 
 function GaransiCard({ icon, title, desc, index }: { icon: string; title: string; desc: string; index: number }) {
   const ref = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState(true);
 
   useEffect(() => {
     const el = ref.current;

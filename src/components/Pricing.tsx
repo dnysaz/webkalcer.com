@@ -5,7 +5,7 @@ import { buildWaUrl } from "@/lib/config";
 
 function OfferCard({ icon, label, desc, index }: { icon: string; label: string; desc: string; index: number }) {
   const ref = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState(true);
 
   useEffect(() => {
     const el = ref.current;

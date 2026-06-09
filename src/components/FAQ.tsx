@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 
 function FAQItem({ q, a, index }: { q: string; a: string; index: number }) {
   const ref = useRef<HTMLDetailsElement>(null);
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState(true);
 
   useEffect(() => {
     const el = ref.current;
