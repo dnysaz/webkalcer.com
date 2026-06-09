@@ -83,7 +83,16 @@ export default function TechStack() {
           </p>
         </div>
 
-        <div className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-5">
+        {/* Mobile: horizontal scroll */}
+        <div className="mt-10 flex gap-3 overflow-x-auto md:hidden snap-x snap-mandatory" style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
+          {techs.map((t, i) => (
+            <div key={t.name} className="shrink-0 w-32 snap-start">
+              <TechCard {...t} index={i} />
+            </div>
+          ))}
+        </div>
+        {/* Desktop: grid */}
+        <div className="mt-10 hidden md:grid md:grid-cols-3 lg:grid-cols-5 gap-3">
           {techs.map((t, i) => (
             <TechCard key={t.name} {...t} index={i} />
           ))}
