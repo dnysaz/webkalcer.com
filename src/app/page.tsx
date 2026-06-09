@@ -5,6 +5,7 @@ import dynamic from "next/dynamic";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 
+const TechStack = dynamic(() => import("@/components/TechStack"));
 const Stats = dynamic(() => import("@/components/Stats"));
 const HowItWorks = dynamic(() => import("@/components/HowItWorks"));
 const Portofolio = dynamic(() => import("@/components/Portofolio"));
@@ -55,6 +56,7 @@ export default async function Home() {
         <Hero hero={hero} phone={phone} waMessage={waMessage} />
         <Stats />
         <HowItWorks />
+        <TechStack />
         <Portofolio items={portfolios} />
         <Pricing phone={phone} waMessage={waMessage} />
         <Testimoni items={testimonials} />
