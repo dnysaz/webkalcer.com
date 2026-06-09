@@ -43,6 +43,7 @@ export default function VaPaymentForm({
   const [number, setNumber] = useState(vaNumber || "");
   const [customBank, setCustomBank] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [deleting, setDeleting] = useState(false);
 
   if (status === "paid" && vaBank && vaNumber) {
     return (
@@ -82,12 +83,17 @@ export default function VaPaymentForm({
             </button>
             <form
               action={async () => {
+                setDeleting(true);
                 await removeVaPayment(invoiceId);
                 router.refresh();
               }}
             >
-              <button className="rounded-full border-2 border-red-200 px-3 py-1 text-[11px] font-bold text-red-400 transition hover:border-red-400 hover:text-red-600">
-                Delete
+              <button
+                type="submit"
+                disabled={deleting}
+                className="rounded-full border-2 border-red-200 px-3 py-1 text-[11px] font-bold text-red-400 transition hover:border-red-400 hover:text-red-600 disabled:opacity-50"
+              >
+                {deleting ? "..." : "Delete"}
               </button>
             </form>
           </div>

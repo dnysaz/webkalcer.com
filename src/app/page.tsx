@@ -1,18 +1,20 @@
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 import { PHONE as ENV_PHONE, EMAIL as ENV_EMAIL } from "@/lib/config";
+import dynamic from "next/dynamic";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
-import Stats from "@/components/Stats";
-import HowItWorks from "@/components/HowItWorks";
-import Portofolio from "@/components/Portofolio";
-import Pricing from "@/components/Pricing";
-import Testimoni from "@/components/Testimoni";
-import FAQ from "@/components/FAQ";
-import Garansi from "@/components/Garansi";
-import CTA from "@/components/CTA";
-import Footer from "@/components/Footer";
-import TrackPageVisit from "@/components/TrackPageVisit";
+
+const Stats = dynamic(() => import("@/components/Stats"));
+const HowItWorks = dynamic(() => import("@/components/HowItWorks"));
+const Portofolio = dynamic(() => import("@/components/Portofolio"));
+const Pricing = dynamic(() => import("@/components/Pricing"));
+const Testimoni = dynamic(() => import("@/components/Testimoni"));
+const FAQ = dynamic(() => import("@/components/FAQ"));
+const Garansi = dynamic(() => import("@/components/Garansi"));
+const CTA = dynamic(() => import("@/components/CTA"));
+const Footer = dynamic(() => import("@/components/Footer"));
+const TrackPageVisit = dynamic(() => import("@/components/TrackPageVisit"));
 
 async function getData() {
   try {

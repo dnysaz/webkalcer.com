@@ -66,8 +66,11 @@ export default function InvoiceForm({ packages }: { packages: Package[] }) {
     });
   }, []);
 
+  const [saving, setSaving] = useState(false);
+
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    setSaving(true);
     const form = e.currentTarget;
     const formData = new FormData(form);
     formData.set("items", JSON.stringify(items));
@@ -213,8 +216,19 @@ export default function InvoiceForm({ packages }: { packages: Package[] }) {
         <textarea name="notes" rows={2} className="w-full rounded-xl border-2 border-zinc-200 px-4 py-3 text-sm font-bold outline-none transition focus:border-pink" />
       </div>
 
-      <button className="rounded-full bg-pink px-8 py-3 text-sm font-bold text-white shadow-lg transition hover:bg-pink-dark">
-        Save Invoice
+      <button
+        type="submit"
+        disabled={saving}
+        className="rounded-full bg-pink px-8 py-3 text-sm font-bold text-white shadow-lg transition hover:bg-pink-dark disabled:cursor-not-allowed disabled:opacity-50"
+      >
+        {saving ? (
+          <span className="inline-flex items-center gap-2">
+            <span className="h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white" />
+            Menyimpan...
+          </span>
+        ) : (
+          "Save Invoice"
+        )}
       </button>
     </form>
   );

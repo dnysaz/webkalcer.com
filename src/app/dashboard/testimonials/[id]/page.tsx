@@ -1,6 +1,7 @@
 import { getTestimonial } from "@/lib/supabase/queries";
 import { updateTestimonial } from "../actions";
 import { notFound } from "next/navigation";
+import SubmitButton from "@/components/SubmitButton";
 
 export default async function EditTestimonialPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -44,9 +45,7 @@ export default async function EditTestimonialPage({ params }: { params: Promise<
             </div>
           </div>
         </div>
-        <button className="rounded-full bg-pink px-8 py-3 text-sm font-bold text-white shadow-lg transition hover:bg-pink-dark">
-          Save
-        </button>
+        <SubmitButton>Save</SubmitButton>
       </form>
     </div>
   );

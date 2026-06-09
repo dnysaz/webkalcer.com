@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { logout } from "./actions";
 import Link from "next/link";
+import SubmitButton from "@/components/SubmitButton";
 
 export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
   const supabase = await createClient();
@@ -40,9 +41,9 @@ export default async function DashboardLayout({ children }: { children: React.Re
         <div className="absolute bottom-0 left-0 right-0 border-t border-zinc-200 p-4">
           <div className="mb-2 truncate text-xs font-bold text-zinc-400">{user.email}</div>
           <form action={logout}>
-            <button className="w-full rounded-full border-2 border-zinc-200 px-4 py-2 text-sm font-bold text-zinc-600 transition hover:border-pink hover:text-pink">
+            <SubmitButton className="w-full rounded-full border-2 border-zinc-200 px-4 py-2 text-sm font-bold text-zinc-600 transition hover:border-pink hover:text-pink">
               Logout
-            </button>
+            </SubmitButton>
           </form>
         </div>
       </aside>

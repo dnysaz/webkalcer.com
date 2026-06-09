@@ -1,6 +1,7 @@
 import { getHero } from "@/lib/supabase/queries";
 import { saveHero } from "./actions";
 import PageToast from "@/components/PageToast";
+import SubmitButton from "@/components/SubmitButton";
 
 export default async function HeroPage({ searchParams }: { searchParams: Promise<{ toast?: string }> }) {
   const hero = await getHero();
@@ -35,9 +36,7 @@ export default async function HeroPage({ searchParams }: { searchParams: Promise
             </div>
           </div>
         </div>
-        <button className="rounded-full bg-pink px-8 py-3 text-sm font-bold text-white shadow-lg transition hover:bg-pink-dark">
-          Save
-        </button>
+        <SubmitButton>Save</SubmitButton>
       </form>
     </div>
   );

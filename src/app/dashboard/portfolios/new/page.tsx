@@ -1,4 +1,5 @@
 import { createPortfolio } from "../actions";
+import SubmitButton from "@/components/SubmitButton";
 
 export default function NewPortfolioPage() {
   return (
@@ -36,9 +37,7 @@ export default function NewPortfolioPage() {
             </div>
           </div>
         </div>
-        <button className="rounded-full bg-pink px-8 py-3 text-sm font-bold text-white shadow-lg transition hover:bg-pink-dark">
-          Save
-        </button>
+        <SubmitButton>Save</SubmitButton>
       </form>
     </div>
   );
