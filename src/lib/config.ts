@@ -18,6 +18,6 @@ function normalizePhone(raw: string): string {
 export function buildWaUrl(phone?: string, message?: string) {
   const p = normalizePhone(phone || PHONE);
   const m = message || waMsg;
-  if (!p) return "https://wa.me/";
-  return `https://wa.me/${p}?text=${encodeURIComponent(m)}`;
+  if (!p) return "https://api.whatsapp.com/send";
+  return `https://api.whatsapp.com/send?phone=${p}&text=${encodeURIComponent(m)}`;
 }
