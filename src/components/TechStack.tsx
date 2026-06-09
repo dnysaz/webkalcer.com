@@ -11,7 +11,7 @@ const techs = [
   { name: "PHP", emoji: "🐘", desc: "Server language" },
   { name: "MySQL", emoji: "🗄️", desc: "Relational database" },
   { name: "SQLite", emoji: "📦", desc: "Embedded database" },
-  { name: "Vercel", emoji: "▲", desc: "Cloud hosting" },
+  { name: "Vercel", emoji: "🔺", desc: "Cloud hosting" },
   { name: "VPS Profesional", emoji: "🖥️", desc: "Professional hosting" },
 ];
 
