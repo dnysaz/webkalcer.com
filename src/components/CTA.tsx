@@ -44,7 +44,7 @@ export default function CTA({ phone, email, waMessage }: { phone?: string; email
           </span>
         </h2>
         <p className="mx-auto mt-4 max-w-lg text-base font-bold leading-relaxed text-dark/80">
-          Chat aja lewat WhatsApp atau email kakak. Konsultasi gratis, ga ada kewajiban beli.
+          Chat aja lewat WhatsApp atau email kakak. Konsultasi dulu aja, ga ada kewajiban beli.
         </p>
         <a
           href={waUrl}

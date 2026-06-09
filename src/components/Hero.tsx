@@ -91,7 +91,7 @@ export default function Hero({ hero, phone, waMessage }: { hero?: { badge_text?:
                 onClick={() => fetch("/api/track", { method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({eventType:"wa_click"}) }).catch(()=>{})}
                 className="rounded-full border-2 border-pink/30 bg-white px-8 py-4 text-lg font-bold text-dark shadow-sm transition-transform hover:border-pink hover:shadow-lg hover:scale-105 active:scale-95"
               >
-                Konsultasi Gratis
+                Konsultasi
               </a>
             </div>
 
@@ -100,7 +100,7 @@ export default function Hero({ hero, phone, waMessage }: { hero?: { badge_text?:
                 <span className="text-lime">✓</span> Free Domain
               </div>
               <div className="flex items-center gap-2">
-                <span className="text-lime">✓</span> SSL Gratis
+                <span className="text-lime">✓</span> SSL
               </div>
               <div className="flex items-center gap-2">
                 <span className="text-lime">✓</span> SEO Maksimal

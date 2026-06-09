@@ -75,10 +75,10 @@ export default function Pricing({ phone, waMessage }: { phone?: string; waMessag
         </div>
 
         <p className="mx-auto mt-6 max-w-xl text-base font-bold leading-relaxed text-dark/60">
-          Udah free domain, hosting, SSL — pokoknya tinggal pake kakak.
+          Udah include domain, hosting, SSL — pokoknya tinggal pake kakak.
         </p>
         <p className="mt-1 text-sm font-black uppercase text-pink">
-          lebih murah dari biaya nongkrong kakak di mall loh 🛍️
+          lebih hemat dari biaya nongkrong kakak di mall loh 🛍️
         </p>
 
         <div className="mt-6 flex flex-wrap justify-center gap-x-8 gap-y-2 text-sm font-bold text-dark">
@@ -88,7 +88,7 @@ export default function Pricing({ phone, waMessage }: { phone?: string; waMessag
           </span>
           <span className="flex items-center gap-1.5">
             <span className="flex h-5 w-5 items-center justify-center rounded-full bg-lime text-xs font-black text-dark">✓</span>
-            SSL Gratis
+            SSL
           </span>
           <span className="flex items-center gap-1.5">
             <span className="flex h-5 w-5 items-center justify-center rounded-full bg-lime text-xs font-black text-dark">✓</span>
@@ -113,15 +113,15 @@ export default function Pricing({ phone, waMessage }: { phone?: string; waMessag
             onClick={() => fetch("/api/track", { method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({eventType:"wa_click"}) }).catch(()=>{})}
             className="rounded-full border-2 border-pink/30 bg-white px-8 py-4 text-base font-bold text-dark shadow-sm transition-transform hover:border-pink hover:shadow-lg hover:scale-105 active:scale-95"
           >
-            Konsultasi Gratis
+            Konsultasi Dulu
           </a>
         </div>
 
         <div className="mt-12 grid grid-cols-2 gap-3 text-left sm:grid-cols-4">
           {[
-            { icon: "🎨", label: "FREE DOMAIN", desc: "domain gratis 1 thn" },
+            { icon: "🎨", label: "FREE DOMAIN", desc: "domain 1 tahun" },
             { icon: "🚀", label: "LANGSUNG ONLINE", desc: "max 2x24 jam" },
-            { icon: "🔒", label: "SSL GRATIS", desc: "HTTPS aman" },
+            { icon: "🔒", label: "SSL", desc: "HTTPS aman" },
             { icon: "📱", label: "RESPONSIVE", desc: "buka di HP/PC" },
           ].map((item, i) => (
             <OfferCard key={item.label} {...item} index={i} />
@@ -134,7 +134,7 @@ export default function Pricing({ phone, waMessage }: { phone?: string; waMessag
           </p>
           <div className="grid gap-3 sm:grid-cols-2">
             {[
-              "Jasa website murah Rp300rb — landing page 1 halaman, free domain setahun, SSL gratis, online 2×24 jam",
+              "Jasa website Rp300rb — landing page 1 halaman, domain setahun, SSL, online 2×24 jam",
               "Website UMKM & profil bisnis — pasang tombol WA, galeri produk, alamat, dan testimoni kakak",
               "Website personal branding & portofolio — cocok buat freelancer & content creator biar makin kredibel",
               "Jasa optimasi SEO & maintenance — backup rutin, update konten, bantu website kakak muncul di Google",
