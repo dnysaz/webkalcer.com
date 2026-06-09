@@ -25,6 +25,11 @@ export async function GET(_req: Request, { params }: { params: Promise<{ id: str
   const { id } = await params;
   const supabase = await createClient();
 
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) {
+    return new NextResponse("Unauthorized", { status: 401 });
+  }
+
   const match = id.match(/^(INV-\d{8}-\d{4})/);
   const invoiceNumber = match ? match[1] : id;
 
