@@ -45,7 +45,7 @@ const faqs = [
   { q: "DOMAIN DAN HOSTING GIMANA KAKAK?", a: "Semua paket udah include domain & hosting tahun pertama kakak. Tahun berikutnya kakak tinggal perpanjang sendiri atau kami bantu." },
   { q: "BISA MINTA REVISI KAKAK?", a: "Tentu kakak. Revisi minor (ganti teks, warna, foto) kami layani. Kalau ada perubahan besar atau tambah fitur, beda paket lagi kakak." },
   { q: "PAKET 300RB DAPET APA AJA KAKAK?", a: "Dapet 1 halaman landing page, domain 1 tahun, hosting Vercel, SSL, responsive, dan tombol WA. Cocok buat portofolio atau profil usaha kakak." },
-  { q: "KENAPA MURAH KAKAK? APA KUALITASNYA?", a: "Kami mengutamakan efisiensi — pake teknologi modern, workflow terstruktur, dan template yang udah teruji. Jadi kakak dapet website profesional dengan harga terjangkau, tanpa nguras kantong." },
+  { q: "KENAPA MURAH KAKAK? APA KUALITASNYA?", a: "Kami pake teknologi modern yang profesional dan workflow terstruktur. Karena udah template jadi tinggal isi konten — prosesnya efisien, kualitas tetap profesional kok." },
 ];
 
 export default function FAQ() {
