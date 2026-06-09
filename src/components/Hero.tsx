@@ -102,7 +102,9 @@ export default function Hero({ hero, phone, waMessage }: { hero?: { badge_text?:
               <div className="flex items-center gap-2">
                 <span className="text-lime">✓</span> SSL Gratis
               </div>
-
+              <div className="flex items-center gap-2">
+                <span className="text-lime">✓</span> SEO Maksimal
+              </div>
             </div>
           </div>
 
