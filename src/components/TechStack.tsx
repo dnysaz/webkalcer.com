@@ -2,20 +2,32 @@
 
 import { useEffect, useRef, useState } from "react";
 
-const techs = [
-  { name: "Next.js", emoji: "⚡", desc: "React framework" },
-  { name: "React.js", emoji: "⚛️", desc: "UI library" },
-  { name: "Vue.js", emoji: "💚", desc: "Frontend framework" },
-  { name: "Supabase", emoji: "🔥", desc: "Backend & database" },
-  { name: "Laravel", emoji: "🎯", desc: "PHP framework" },
-  { name: "PHP", emoji: "🐘", desc: "Server language" },
-  { name: "MySQL", emoji: "🗄️", desc: "Relational database" },
-  { name: "SQLite", emoji: "📦", desc: "Embedded database" },
-  { name: "Vercel", emoji: "🔺", desc: "Cloud hosting" },
-  { name: "VPS Profesional", emoji: "🖥️", desc: "Professional hosting" },
+interface Tech {
+  name: string;
+  icon: string;
+  isSvg?: boolean;
+  desc: string;
+}
+
+const techs: Tech[] = [
+  { name: "Next.js", icon: "https://cdn.simpleicons.org/nextdotjs/white", desc: "React framework" },
+  { name: "React.js", icon: "https://cdn.simpleicons.org/react/white", desc: "UI library" },
+  { name: "Vue.js", icon: "https://cdn.simpleicons.org/vuedotjs/white", desc: "Frontend framework" },
+  { name: "Supabase", icon: "https://cdn.simpleicons.org/supabase/white", desc: "Backend & database" },
+  { name: "Laravel", icon: "https://cdn.simpleicons.org/laravel/white", desc: "PHP framework" },
+  { name: "PHP", icon: "https://cdn.simpleicons.org/php/white", desc: "Server language" },
+  { name: "MySQL", icon: "https://cdn.simpleicons.org/mysql/white", desc: "Relational database" },
+  { name: "SQLite", icon: "https://cdn.simpleicons.org/sqlite/white", desc: "Embedded database" },
+  { name: "Vercel", icon: "https://cdn.simpleicons.org/vercel/white", desc: "Cloud hosting" },
+  {
+    name: "VPS Profesional",
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="2" y1="20" x2="22" y2="20"/><line x1="6" y1="17" x2="6" y2="20"/><line x1="18" y1="17" x2="18" y2="20"/><line x1="12" y1="10" x2="12" y2="13"/><line x1="9" y1="10" x2="15" y2="10"/></svg>`,
+    isSvg: true,
+    desc: "Professional hosting",
+  },
 ];
 
-function TechCard({ name, emoji, desc, index }: { name: string; emoji: string; desc: string; index: number }) {
+function TechCard({ name, icon, isSvg, desc, index }: Tech & { index: number }) {
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
 
@@ -38,7 +50,13 @@ function TechCard({ name, emoji, desc, index }: { name: string; emoji: string; d
       }`}
       style={{ transitionDelay: `${index * 60}ms` }}
     >
-      <span className="text-3xl transition-transform group-hover:scale-110">{emoji}</span>
+      <div className="flex h-9 w-9 items-center justify-center transition-transform group-hover:scale-110">
+        {isSvg ? (
+          <span className="h-7 w-7" dangerouslySetInnerHTML={{ __html: icon }} />
+        ) : (
+          <img src={icon} alt={name} className="h-7 w-7" loading="lazy" />
+        )}
+      </div>
       <span className="mt-2 text-sm font-black tracking-tight text-white">{name}</span>
       <span className="mt-0.5 text-[11px] font-bold text-zinc-500">{desc}</span>
     </div>
