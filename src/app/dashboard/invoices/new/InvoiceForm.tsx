@@ -89,7 +89,7 @@ export default function InvoiceForm({ packages }: { packages: Package[] }) {
             <label className="mb-1 block text-sm font-bold text-zinc-600">Customer Name</label>
             <input name="customer_name" required className="w-full rounded-xl border-2 border-zinc-200 px-4 py-3 text-sm font-bold outline-none transition focus:border-pink" />
           </div>
-          <div className="flex gap-4">
+          <div className="flex flex-col gap-4 sm:flex-row">
             <div className="flex-1">
               <label className="mb-1 block text-sm font-bold text-zinc-600">Phone</label>
               <input name="customer_phone" type="tel" className="w-full rounded-xl border-2 border-zinc-200 px-4 py-3 text-sm font-bold outline-none transition focus:border-pink" />
@@ -106,7 +106,7 @@ export default function InvoiceForm({ packages }: { packages: Package[] }) {
       <div className="rounded-2xl border-2 border-zinc-200 bg-white p-6">
         <div className="flex items-center justify-between">
           <h2 className="text-base font-black text-dark">Item</h2>
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2">
             <button type="button" onClick={addManualItem} className="rounded-full border-2 border-zinc-200 px-4 py-1.5 text-xs font-bold text-zinc-600 transition hover:border-pink hover:text-pink">
               + Manual
             </button>
@@ -148,7 +148,7 @@ export default function InvoiceForm({ packages }: { packages: Package[] }) {
                   className="flex-1 rounded-xl border-2 border-zinc-200 px-4 py-3 text-sm font-bold outline-none transition focus:border-pink"
                 />
               )}
-              <div className="relative w-48">
+              <div className="relative w-36 sm:w-48">
                 <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-sm font-bold text-zinc-400">Rp</span>
                 <input
                   value={item.price ? formatPrice(item.price).replace(/^Rp\s?/, "") : ""}
@@ -177,16 +177,16 @@ export default function InvoiceForm({ packages }: { packages: Package[] }) {
             <span>Subtotal</span>
             <span>{formatPrice(subtotal)}</span>
           </div>
-          <div className="flex items-center justify-between gap-4">
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
             <span className="text-sm font-bold text-zinc-600">Discount (Rp)</span>
             <input
               value={discount || ""}
               onChange={(e) => setDiscount(parsePrice(e.target.value))}
               placeholder="0"
-              className="w-48 rounded-xl border-2 border-zinc-200 px-4 py-2.5 text-right text-sm font-bold outline-none transition focus:border-pink"
+              className="w-full rounded-xl border-2 border-zinc-200 px-4 py-2.5 text-right text-sm font-bold outline-none transition focus:border-pink sm:w-48"
             />
           </div>
-          <div className="flex items-center justify-between gap-4">
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
             <span className="text-sm font-bold text-zinc-600">Tax (%)</span>
             <div className="flex items-center gap-3">
               <div className="relative w-24">

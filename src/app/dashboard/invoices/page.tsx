@@ -29,22 +29,22 @@ export default async function InvoicesPage({ searchParams }: { searchParams: Pro
   return (
     <div className="mx-auto max-w-5xl">
       <PageToast toast={toast} />
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-2xl font-black tracking-tighter text-dark">Invoice</h1>
-          <p className="mt-1 text-sm font-bold text-zinc-400">Manage invoices and payments.</p>
+          <h1 className="text-xl font-black tracking-tighter text-dark sm:text-2xl">Invoice</h1>
+          <p className="mt-1 text-xs font-bold text-zinc-400 sm:text-sm">Manage invoices and payments.</p>
         </div>
-        <Link href="/dashboard/invoices/new" className="rounded-full bg-pink px-6 py-2.5 text-sm font-bold text-white shadow-lg transition hover:bg-pink-dark">
+        <Link href="/dashboard/invoices/new" className="inline-flex self-start rounded-full bg-pink px-5 py-2 text-sm font-bold text-white shadow-lg transition hover:bg-pink-dark sm:self-auto">
           + Create Invoice
         </Link>
       </div>
 
-      <div className="mt-8 space-y-3">
+      <div className="mt-6 space-y-3 sm:mt-8">
         {invoices.length === 0 && <p className="text-sm font-bold text-zinc-400">No invoices yet.</p>}
         {invoices.map((inv) => (
-          <div key={inv.id} className="flex items-center justify-between rounded-2xl border-2 border-zinc-200 bg-white p-5 shadow-sm">
+          <div key={inv.id} className="flex flex-col gap-3 rounded-2xl border-2 border-zinc-200 bg-white p-4 shadow-sm sm:flex-row sm:items-center sm:justify-between sm:p-5">
             <div className="flex-1">
-              <div className="flex items-center gap-3">
+              <div className="flex flex-wrap items-center gap-2">
                 <span className="font-black text-dark">{inv.invoice_number}</span>
                 <span className={`rounded-full px-2.5 py-0.5 text-[11px] font-bold ${statusStyles[inv.status] || statusStyles.draft}`}>
                   {statusLabels[inv.status] || inv.status}
@@ -55,7 +55,7 @@ export default async function InvoicesPage({ searchParams }: { searchParams: Pro
                 {new Date(inv.created_at).toLocaleDateString("id-ID")} &middot; {formatPrice(inv.grand_total)}
               </p>
             </div>
-            <div className="ml-4 flex items-center gap-2">
+            <div className="flex items-center gap-2">
               <Link href={`/dashboard/invoices/${buildInvoiceSlug(inv.invoice_number, inv.customer_name)}`} className="rounded-full border-2 border-zinc-200 px-4 py-1.5 text-xs font-bold text-zinc-600 transition hover:border-pink hover:text-pink">
                 Detail
               </Link>

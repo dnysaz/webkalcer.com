@@ -37,10 +37,10 @@ export default async function InvoiceDetailPage({ params }: { params: Promise<{ 
       </Link>
 
       {/* Header Actions */}
-      <div className="mb-6 flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <h1 className="text-2xl font-black tracking-tighter text-dark">{invoice.invoice_number}</h1>
-          <span className={`rounded-full px-3 py-1 text-xs font-bold ${statusStyles[invoice.status] || statusStyles.draft}`}>
+      <div className="mb-4 flex flex-col gap-3 sm:mb-6 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex flex-wrap items-center gap-2">
+          <h1 className="text-xl font-black tracking-tighter text-dark sm:text-2xl">{invoice.invoice_number}</h1>
+          <span className={`rounded-full px-2.5 py-0.5 text-xs font-bold ${statusStyles[invoice.status] || statusStyles.draft}`}>
             {statusLabels[invoice.status] || invoice.status}
           </span>
         </div>
@@ -48,7 +48,7 @@ export default async function InvoiceDetailPage({ params }: { params: Promise<{ 
       </div>
 
       {/* Customer Info */}
-      <div className="mb-6 rounded-2xl border-2 border-zinc-200 bg-white p-6">
+      <div className="mb-4 rounded-2xl border-2 border-zinc-200 bg-white p-5 sm:mb-6 sm:p-6">
         <h2 className="text-xs font-bold uppercase tracking-wider text-zinc-400">Customer</h2>
         <p className="mt-2 text-lg font-black text-dark">{invoice.customer_name}</p>
         {invoice.customer_email && <p className="text-sm font-bold text-zinc-500">{invoice.customer_email}</p>}
@@ -56,23 +56,23 @@ export default async function InvoiceDetailPage({ params }: { params: Promise<{ 
       </div>
 
       {/* Items */}
-      <div className="mb-6 rounded-2xl border-2 border-zinc-200 bg-white">
-        <div className="border-b border-zinc-200 px-6 py-4">
+      <div className="mb-4 rounded-2xl border-2 border-zinc-200 bg-white sm:mb-6">
+        <div className="border-b border-zinc-200 px-5 py-4 sm:px-6">
           <h2 className="text-xs font-bold uppercase tracking-wider text-zinc-400">Item</h2>
         </div>
         <div className="divide-y divide-zinc-100">
           {!invoice.items || invoice.items.length === 0 ? (
-            <div className="px-6 py-8 text-center text-sm font-bold text-zinc-400">
+            <div className="px-5 py-8 text-center text-sm font-bold text-zinc-400 sm:px-6">
               No items yet. This invoice may need to be edited or recreated.
             </div>
           ) : (
             invoice.items.map((item: { id: number; description: string; price: number; package_id?: number | null }) => (
-              <div key={item.id} className="flex items-center justify-between px-6 py-4">
+              <div key={item.id} className="flex items-center justify-between px-5 py-4 sm:px-6">
                 <div className="flex items-center gap-2">
                   {item.package_id && <span className="rounded-full bg-teal/20 px-2 py-0.5 text-[10px] font-bold text-teal">PACKAGE</span>}
                   <span className="text-sm font-bold text-dark">{item.description}</span>
                 </div>
-                <span className="text-sm font-bold text-zinc-600">{formatPrice(item.price)}</span>
+                <span className="text-nowrap text-sm font-bold text-zinc-600">{formatPrice(item.price)}</span>
               </div>
             ))
           )}

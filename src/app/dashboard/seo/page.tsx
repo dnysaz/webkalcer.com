@@ -1,4 +1,3 @@
-import { Suspense } from "react";
 import { getSeo } from "@/lib/supabase/queries";
 import { decrypt } from "@/lib/encryption";
 import PageToast from "@/components/PageToast";
@@ -33,9 +32,7 @@ export default async function SeoPage({ searchParams }: { searchParams: Promise<
       <PageToast toast={toast} />
       <h1 className="text-2xl font-black tracking-tighter text-dark">SEO & Settings</h1>
       <p className="mt-1 mb-10 text-sm font-bold text-zinc-400">Manage meta tags, Google Tag, favicon, OG image, Midtrans, and Invoice.</p>
-      <Suspense fallback={<div className="h-96" />}>
         <SeoForm seo={seo as never} serverKeyHint={serverKeyHint} clientKeyHint={clientKeyHint} />
-      </Suspense>
     </div>
   );
 }

@@ -8,7 +8,7 @@ export default function AnalyticsChart({ data }: { data: ChartData }) {
   return (
     <div className="rounded-2xl border-2 border-zinc-200 bg-white p-6">
       <h2 className="text-base font-black text-dark">Last 14 Days Chart</h2>
-      <div className="mt-4 h-72">
+      <div className="mt-4 h-56 sm:h-72">
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={data}>
             <CartesianGrid strokeDasharray="3 3" stroke="#e4e4e7" />

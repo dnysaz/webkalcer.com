@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useActionState, useCallback, useEffect, useRef, useState } from "react";
 import { saveSeo } from "./actions";
 
@@ -110,15 +110,10 @@ const tabs = [
 
 export default function SeoForm({ seo, serverKeyHint, clientKeyHint }: { seo: SeoData | null; serverKeyHint: string; clientKeyHint: string }) {
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const tab = searchParams.get("tab") || "meta-tags";
+  const [tab, setTab] = useState("meta-tags");
 
   const [state, formAction, pending] = useActionState(saveSeo, null);
   const [toast, setToast] = useState<{ type: "success" | "error"; text: string } | null>(null);
-
-  const setTab = useCallback((t: string) => {
-    router.replace(`/dashboard/seo?tab=${t}`, { scroll: false });
-  }, [router]);
 
   // Show toast when action completes
   useEffect(() => {
@@ -135,13 +130,13 @@ export default function SeoForm({ seo, serverKeyHint, clientKeyHint }: { seo: Se
 
   return (
     <form action={formAction} className="space-y-5">
-      <div className="flex flex-wrap gap-2">
+      <div className="flex gap-2 overflow-x-auto pb-1">
         {tabs.map((t) => (
           <button
             key={t.id}
             type="button"
             onClick={() => setTab(t.id)}
-            className={`rounded-full px-5 py-2 text-sm font-bold transition ${
+            className={`shrink-0 rounded-full px-5 py-2 text-sm font-bold transition ${
               tab === t.id
                 ? "bg-pink text-white shadow-lg"
                 : "border-2 border-zinc-200 bg-white text-zinc-600 hover:border-pink hover:text-pink"
