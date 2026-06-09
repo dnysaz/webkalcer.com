@@ -1,6 +1,7 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Baloo_Bhai_2 } from "next/font/google";
 import "./globals.css";
+import PwaRegister from "@/components/PwaRegister";
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 
@@ -76,6 +77,14 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+  themeColor: "#ff3366",
+};
+
 export default async function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
@@ -104,8 +113,14 @@ export default async function RootLayout({
         {headScripts && (
           <script dangerouslySetInnerHTML={{ __html: headScripts }} />
         )}
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <meta name="apple-mobile-web-app-title" content="Webkalcer" />
+        <link rel="manifest" href="/manifest.json" />
+        <link rel="apple-touch-icon" href="/icon-192.svg" />
       </head>
       <body className="min-h-full flex flex-col bg-white text-zinc-900 font-sans">
+        <PwaRegister />
         {children}
       </body>
     </html>

@@ -1,0 +1,25 @@
+{
+  "name": "Webkalcer — Jasa Website Modern",
+  "short_name": "Webkalcer",
+  "description": "Jasa website murah Rp300ribu. Free domain, SSL, hosting. Untuk UMKM & personal branding.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fff8f0",
+  "theme_color": "#ff3366",
+  "orientation": "portrait-primary",
+  "categories": ["business", "productivity"],
+  "icons": [
+    {
+      "src": "/icon-192.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
