@@ -23,7 +23,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
   const userEmail = user.email ?? "";
 
   return (
-    <div className="flex min-h-screen bg-zinc-50">
+    <div className="flex min-h-screen flex-col bg-zinc-50 md:flex-row">
       {/* Mobile top bar */}
       <MobileSidebar links={links} userEmail={userEmail} />
 
