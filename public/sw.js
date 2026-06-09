@@ -1,9 +1,9 @@
-const CACHE = "webkalcer-v1";
-const SHELL = ["/", "/dashboard"];
+const CACHE = "webkalcer-v2";
+const PUBLIC_SHELL = ["/"];
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
-    caches.open(CACHE).then((cache) => cache.addAll(SHELL)),
+    caches.open(CACHE).then((cache) => cache.addAll(PUBLIC_SHELL)),
   );
   self.skipWaiting();
 });
