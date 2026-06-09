@@ -34,8 +34,8 @@ async function getSeoSettings() {
 export async function generateMetadata(): Promise<Metadata> {
   const seo = await getSeoSettings();
 
-  const title = seo?.title ?? "Webkalcer — Jasa Website Profesional untuk UMKM & Personal Branding";
-  const desc = seo?.description ?? "Jasa website Rp300ribu aja! Free domain, SSL, hosting. Tinggal chat, websitemu online. Untuk UMKM, personal branding, portofolio. Ga perlu ngoding.";
+  const title = seo?.title ?? "Webkalcer — Jasa Website Murah untuk UMKM & Personal Branding";
+  const desc = seo?.description ?? "Jasa website murah Rp300ribu aja! Free domain, SSL, hosting. Tinggal chat, websitemu online. Untuk UMKM, personal branding, portofolio. Ga perlu ngoding.";
   const keywords = seo?.keywords ?? [];
   const ogTitle = seo?.og_title ?? title;
   const ogDesc = seo?.og_description ?? desc;
