@@ -73,7 +73,6 @@ const id = {
   proposalTitle: "PROPOSAL",
   preparedFor: "Dipersiapkan Untuk",
   proposalDate: "Tanggal Proposal",
-  validUntil: "Berlaku Hingga",
   greeting: (n: string) => `Kepada Yth. ${n},`,
   intro1: "Terima kasih atas ketertarikan Anda terhadap layanan pembuatan website kami. Bersama ini kami sampaikan proposal penawaran yang telah disesuaikan dengan kebutuhan Anda.",
   intro2: "Webkalcer.com adalah penyedia jasa website profesional, responsif, dan terjangkau untuk UMKM, personal branding, dan profil bisnis. Berikut adalah rincian ruang lingkup pekerjaan dan harga untuk proyek Anda.",
@@ -108,7 +107,6 @@ const en = {
   proposalTitle: "PROPOSAL",
   preparedFor: "Prepared For",
   proposalDate: "Proposal Date",
-  validUntil: "Valid Until",
   greeting: (n: string) => `Dear ${n},`,
   intro1: "Thank you for your interest in our website development services. We are pleased to submit this proposal outlining our recommended solution tailored to your needs.",
   intro2: "At Webkalcer.com, we specialize in creating professional, responsive, and affordable websites for UMKM, personal branding, and business profiles. Below is the detailed scope of work and pricing for your project.",
@@ -176,10 +174,6 @@ function Page1({ t, proposal, logoUrl, companyName }: { t: typeof id; proposal: 
         <View style={[styles.infoBlock, { alignItems: "flex-end" }]}>
           <Text style={styles.infoLabel}>{t.proposalDate}</Text>
           <Text style={styles.infoValue}>{formatDate(proposal.created_at)}</Text>
-          <View style={{ marginTop: 8 }}>
-            <Text style={styles.infoLabel}>{t.validUntil}</Text>
-            <Text style={styles.infoValue}>{formatDate(proposal.created_at)}</Text>
-          </View>
         </View>
       </View>
 
