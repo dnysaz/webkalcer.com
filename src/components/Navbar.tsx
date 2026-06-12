@@ -35,8 +35,8 @@ export default function Navbar({ phone, waMessage }: { phone?: string; waMessage
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-shadow duration-300 ${
-        scrolled || menuOpen ? "bg-cream shadow-lg" : "bg-transparent"
+      className={`fixed top-0 left-0 right-0 z-50 bg-cream/90 backdrop-blur-sm transition-shadow duration-300 ${
+        scrolled || menuOpen ? "shadow-lg" : "shadow-sm"
       }`}
     >
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 sm:px-6">
