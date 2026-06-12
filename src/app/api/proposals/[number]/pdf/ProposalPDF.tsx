@@ -69,18 +69,18 @@ function formatDate(d: string) {
 }
 
 const id = {
-  companyDetail: "Jasa Website Murah untuk UMKM & Personal Branding",
+  companyDetail: "",
   proposalTitle: "PROPOSAL",
   preparedFor: "Dipersiapkan Untuk",
   proposalDate: "Tanggal Proposal",
   greeting: (n: string) => `Kepada Yth. ${n},`,
-  intro1: "Terima kasih atas ketertarikan Anda terhadap layanan pembuatan website kami. Bersama ini kami sampaikan proposal penawaran yang telah disesuaikan dengan kebutuhan Anda.",
-  intro2: "Webkalcer.com adalah penyedia jasa website profesional, responsif, dan terjangkau untuk UMKM, personal branding, dan profil bisnis. Berikut adalah rincian ruang lingkup pekerjaan dan harga untuk proyek Anda.",
+  intro1: "",
+  intro2: "",
   scopeTitle: "Ruang Lingkup Pekerjaan",
   serviceHeader: "Layanan / Item",
   priceHeader: "Harga",
   badge: "PAKET",
-  packageDesc: "Paket sudah termasuk desain responsif yang dioptimalkan untuk desktop dan mobile. Website akan siap digunakan setelah selesai dikerjakan.",
+  packageDesc: "",
   investment: "Investasi",
   subtotal: "Subtotal",
   discount: "Diskon",
@@ -88,33 +88,27 @@ const id = {
   grandTotal: "Total",
   notesTitle: "Catatan Tambahan",
   termsTitle: "Syarat & Ketentuan",
-  terms: [
-    "Pembayaran dilakukan setelah persetujuan proposal ini.",
-    "Waktu pengerjaan website: 3×24 jam (khusus untuk paket Kalcer) dan menyesuaikan sesuai prosedur untuk paket lainnya.",
-    "Revisi: maksimal 3 kali revisi. Lebih dari 3 kali akan ada konfirmasi biaya tambahan.",
-    "Biaya perpanjangan domain & hosting berlaku setelah tahun pertama.",
-    "Proposal ini berlaku selama 14 hari sejak tanggal di atas.",
-  ],
+  terms: [],
   approval: "Persetujuan",
-  approvalText: "Silakan konfirmasi penerimaan proposal ini dengan menandatangani di bawah. Setelah disetujui, kami akan segera memulai proses pengembangan. Jangan ragu untuk menghubungi kami jika ada pertanyaan.",
+  approvalText: "",
   acceptedBy: "Diterima & Disetujui Oleh",
   client: "Klien",
   preparedBy: "Dipersiapkan Oleh",
 };
 
 const en = {
-  companyDetail: "Affordable Website Services for UMKM & Personal Branding",
+  companyDetail: "",
   proposalTitle: "PROPOSAL",
   preparedFor: "Prepared For",
   proposalDate: "Proposal Date",
   greeting: (n: string) => `Dear ${n},`,
-  intro1: "Thank you for your interest in our website development services. We are pleased to submit this proposal outlining our recommended solution tailored to your needs.",
-  intro2: "At Webkalcer.com, we specialize in creating professional, responsive, and affordable websites for UMKM, personal branding, and business profiles. Below is the detailed scope of work and pricing for your project.",
+  intro1: "",
+  intro2: "",
   scopeTitle: "Scope of Work",
   serviceHeader: "Service / Item",
   priceHeader: "Price",
   badge: "PACKAGE",
-  packageDesc: "Packages include responsive design optimized for both desktop and mobile devices. The website will be fully deployed and ready to use.",
+  packageDesc: "",
   investment: "Investment",
   subtotal: "Subtotal",
   discount: "Discount",
@@ -122,15 +116,9 @@ const en = {
   grandTotal: "Grand Total",
   notesTitle: "Additional Notes",
   termsTitle: "Terms & Conditions",
-  terms: [
-    "Payment is due upon agreement of this proposal.",
-    "Website delivery time: 3×24 hours (for Kalcer package) and adjusted according to procedure for other packages.",
-    "Revision: maximum 3 rounds of revisions. Additional revisions beyond 3 will require a cost confirmation.",
-    "Domain & hosting renewal fees apply after the first year.",
-    "This proposal is valid for 14 days from the date above.",
-  ],
+  terms: [],
   approval: "Approval",
-  approvalText: "Please confirm your acceptance of this proposal by signing below. Once approved, we will begin the development process immediately. Feel free to reach out if you have any questions.",
+  approvalText: "",
   acceptedBy: "Accepted & Approved By",
   client: "Client",
   preparedBy: "Prepared By",
@@ -295,19 +283,19 @@ function Page2({ t, proposal, companyName }: { t: typeof id; proposal: any; comp
 export default function ProposalPDF({ proposal, seo }: { proposal: any; seo?: any }) {
   const isEn = proposal.language === "en";
   const base = isEn ? en : id;
-  const companyName = seo?.proposal_company_name || "Webkalcer.com";
+  const companyName = seo?.proposal_company_name || "";
 
   const seoTerms = isEn ? seo?.proposal_terms_en : seo?.proposal_terms_id;
 
   const t = {
     ...base,
     proposalTitle: seo?.proposal_title || base.proposalTitle,
-    companyDetail: seo ? (isEn ? seo.proposal_slogan_en : seo.proposal_slogan_id) || base.companyDetail : base.companyDetail,
-    intro1: seo ? (isEn ? seo.proposal_opening_en : seo.proposal_opening_id) || base.intro1 : base.intro1,
-    intro2: seo ? (isEn ? seo.proposal_intro2_en : seo.proposal_intro2_id) || base.intro2 : base.intro2,
-    packageDesc: seo ? (isEn ? seo.proposal_package_desc_en : seo.proposal_package_desc_id) || base.packageDesc : base.packageDesc,
-    approvalText: seo ? (isEn ? seo.proposal_closing_en : seo.proposal_closing_id) || base.approvalText : base.approvalText,
-    terms: seoTerms ? seoTerms.split("\n").filter(Boolean) : base.terms,
+    companyDetail: seo ? (isEn ? seo.proposal_slogan_en : seo.proposal_slogan_id) || "" : "",
+    intro1: seo ? (isEn ? seo.proposal_opening_en : seo.proposal_opening_id) || "" : "",
+    intro2: seo ? (isEn ? seo.proposal_intro2_en : seo.proposal_intro2_id) || "" : "",
+    packageDesc: seo ? (isEn ? seo.proposal_package_desc_en : seo.proposal_package_desc_id) || "" : "",
+    approvalText: seo ? (isEn ? seo.proposal_closing_en : seo.proposal_closing_id) || "" : "",
+    terms: seoTerms ? seoTerms.split("\n").filter(Boolean) : [],
   };
 
   const logoUrl = seo?.proposal_logo_url;
