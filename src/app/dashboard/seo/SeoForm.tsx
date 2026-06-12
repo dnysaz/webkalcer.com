@@ -510,6 +510,7 @@ export default function SeoForm({ seo, serverKeyHint, clientKeyHint }: { seo: Se
           </div>
         </div>
       </div>
+      )}
 
       {tab === "google-tag" && (
         <div>
