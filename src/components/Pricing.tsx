@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { buildWaUrl } from "@/lib/config";
 import { Sparkles, Heart, DollarSign, Flame, ShoppingBag, Palette, Rocket, Lock, Smartphone } from "lucide-react";
@@ -98,15 +99,12 @@ export default function Pricing({ phone, waMessage }: { phone?: string; waMessag
         </div>
 
         <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
-          <a
-            href={waUrl}
-            target="_blank"
-            rel="noopener"
-            onClick={() => fetch("/api/track", { method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({eventType:"wa_click"}) }).catch(()=>{})}
+          <Link
+            href="/pricelist"
             className="rounded-full bg-pink px-8 py-4 text-base font-bold text-white shadow-lg transition-transform hover:bg-pink-dark hover:scale-105 hover:shadow-xl active:scale-95"
           >
-            Tanya Harga Kak <Sparkles size={16} className="inline-block" />
-          </a>
+            Lihat Pricelist <Sparkles size={16} className="inline-block" />
+          </Link>
           <a
             href={waUrl}
             target="_blank"
