@@ -18,6 +18,7 @@ const techs: Tech[] = [
   { name: "PHP", icon: "https://cdn.simpleicons.org/php/white", desc: "Server language" },
   { name: "MySQL", icon: "https://cdn.simpleicons.org/mysql/white", desc: "Relational database" },
   { name: "SQLite", icon: "https://cdn.simpleicons.org/sqlite/white", desc: "Embedded database" },
+  { name: "Astro", icon: "https://cdn.simpleicons.org/astro/white", desc: "Static site builder" },
   { name: "Vercel", icon: "https://cdn.simpleicons.org/vercel/white", desc: "Cloud hosting" },
   {
     name: "VPS Profesional",
