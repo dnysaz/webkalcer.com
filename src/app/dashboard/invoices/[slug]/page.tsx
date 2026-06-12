@@ -48,7 +48,7 @@ export default async function InvoiceDetailPage({ params }: { params: Promise<{ 
       </div>
 
       {/* Customer Info */}
-      <div className="mb-4 rounded-2xl border-2 border-zinc-200 bg-white p-5 sm:mb-6 sm:p-6">
+      <div className="mb-4 rounded-lg border-2 border-zinc-200 bg-white p-5 sm:mb-6 sm:p-6">
         <h2 className="text-xs font-bold uppercase tracking-wider text-zinc-300">Customer</h2>
         <p className="mt-2 text-lg font-black text-dark">{invoice.customer_name}</p>
         {invoice.customer_email && <p className="text-sm font-bold text-zinc-500">{invoice.customer_email}</p>}
@@ -56,7 +56,7 @@ export default async function InvoiceDetailPage({ params }: { params: Promise<{ 
       </div>
 
       {/* Items */}
-      <div className="mb-4 rounded-2xl border-2 border-zinc-200 bg-white sm:mb-6">
+      <div className="mb-4 rounded-lg border-2 border-zinc-200 bg-white sm:mb-6">
         <div className="border-b border-zinc-200 px-5 py-4 sm:px-6">
           <h2 className="text-xs font-bold uppercase tracking-wider text-zinc-300">Item</h2>
         </div>
@@ -80,7 +80,7 @@ export default async function InvoiceDetailPage({ params }: { params: Promise<{ 
       </div>
 
       {/* Totals */}
-      <div className="mb-6 rounded-2xl border-2 border-zinc-200 bg-white p-6">
+      <div className="mb-6 rounded-lg border-2 border-zinc-200 bg-white p-6">
         <div className="space-y-2">
           <div className="flex items-center justify-between text-sm font-bold text-zinc-500">
             <span>Subtotal</span>
@@ -120,14 +120,14 @@ export default async function InvoiceDetailPage({ params }: { params: Promise<{ 
 
       {/* Payment Info (if paid via Midtrans) */}
       {invoice.status === "paid" && invoice.midtrans_transaction_id && (
-        <div className="mb-6 rounded-2xl border-2 border-green-200 bg-green-50 p-6">
+        <div className="mb-6 rounded-lg border-2 border-green-200 bg-green-50 p-6">
           <h2 className="text-xs font-bold uppercase tracking-wider text-green-600">Midtrans Payment Info</h2>
           <p className="mt-2 text-sm font-bold text-green-700">Transaction ID: {invoice.midtrans_transaction_id}</p>
         </div>
       )}
 
       {invoice.notes && (
-        <div className="mt-6 rounded-2xl border-2 border-zinc-200 bg-white p-6">
+        <div className="mt-6 rounded-lg border-2 border-zinc-200 bg-white p-6">
           <h2 className="text-xs font-bold uppercase tracking-wider text-zinc-300">Notes</h2>
           <p className="mt-2 text-sm font-bold text-zinc-600">{invoice.notes}</p>
         </div>

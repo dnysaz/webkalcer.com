@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useCallback } from "react";
-import { createInvoice } from "../actions";
+import { createProposal, updateProposal } from "../actions";
 
 interface Package {
   id: number;
@@ -10,11 +10,25 @@ interface Package {
   promo: number | null;
 }
 
-interface InvoiceItem {
+interface ProposalItem {
   type: "manual" | "package";
   description: string;
   price: number;
   package_id: number | null;
+}
+
+interface InitialData {
+  id: number;
+  proposal_number: string;
+  customer_name: string;
+  customer_email: string;
+  customer_phone: string;
+  discount: number;
+  tax_percentage: number;
+  language: string;
+  notes: string;
+  signature_name: string;
+  items: { description: string; price: number; package_id: number | null }[];
 }
 
 function formatPrice(n: number) {
@@ -25,15 +39,27 @@ function parsePrice(s: string): number {
   return parseFloat(s.replace(/[^0-9]/g, "")) || 0;
 }
 
-export default function InvoiceForm({ packages }: { packages: Package[] }) {
-  const [items, setItems] = useState<InvoiceItem[]>([{ type: "manual", description: "", price: 0, package_id: null }]);
-  const [discount, setDiscount] = useState(0);
-  const [taxPercent, setTaxPercent] = useState(0);
+function initItems(data?: InitialData): ProposalItem[] {
+  if (!data || !data.items?.length) return [{ type: "manual" as const, description: "", price: 0, package_id: null }];
+  return data.items.map((i) => ({
+    type: i.package_id ? "package" as const : "manual" as const,
+    description: i.description,
+    price: Number(i.price),
+    package_id: i.package_id,
+  }));
+}
+
+export default function ProposalForm({ packages, initialData }: { packages: Package[]; initialData?: InitialData }) {
+  const [items, setItems] = useState<ProposalItem[]>(() => initItems(initialData));
+  const [discount, setDiscount] = useState(initialData?.discount ?? 0);
+  const [taxPct, setTaxPct] = useState(initialData?.tax_percentage ?? 0);
   const [selectedPkg, setSelectedPkg] = useState("");
+  const [lang, setLang] = useState(initialData?.language ?? "id");
+  const isEdit = !!initialData;
 
   const subtotal = items.reduce((s, i) => s + i.price, 0);
-  const taxNominal = subtotal * taxPercent / 100;
-  const grandTotal = subtotal - discount + taxNominal;
+  const tax = subtotal * (taxPct / 100);
+  const grandTotal = subtotal - discount + tax;
 
   const addManualItem = useCallback(() => {
     setItems((prev) => [...prev, { type: "manual", description: "", price: 0, package_id: null }]);
@@ -75,28 +101,62 @@ export default function InvoiceForm({ packages }: { packages: Package[] }) {
     const formData = new FormData(form);
     formData.set("items", JSON.stringify(items));
     formData.set("discount", String(discount));
-    formData.set("tax_percentage", String(taxPercent));
-    await createInvoice(formData);
+    formData.set("tax_percentage", String(taxPct));
+    formData.set("tax", String(tax));
+    formData.set("language", lang);
+    if (isEdit && initialData) {
+      formData.set("proposal_id", String(initialData.id));
+      await updateProposal(formData);
+    } else {
+      await createProposal(formData);
+    }
   }
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
-      {/* Customer Data */}
+      {/* Language */}
       <div className="rounded-lg border-2 border-zinc-200 bg-white p-6">
-        <h2 className="text-base font-black text-dark">Customer Data</h2>
+        <div className="flex items-center gap-3">
+          <span className="text-sm font-black text-dark">Bahasa / Language</span>
+          <div className="flex overflow-hidden rounded-full border-2 border-zinc-200">
+            <button
+              type="button"
+              onClick={() => setLang("id")}
+              className={`px-5 py-1.5 text-xs font-bold transition ${
+                lang === "id" ? "bg-pink text-white" : "bg-white text-zinc-500"
+              }`}
+            >
+              Indonesia
+            </button>
+            <button
+              type="button"
+              onClick={() => setLang("en")}
+              className={`px-5 py-1.5 text-xs font-bold transition ${
+                lang === "en" ? "bg-pink text-white" : "bg-white text-zinc-500"
+              }`}
+            >
+              English
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Client Data */}
+      <div className="rounded-lg border-2 border-zinc-200 bg-white p-6">
+        <h2 className="text-base font-black text-dark">Client Data</h2>
         <div className="mt-4 space-y-4">
           <div>
-            <label className="mb-1 block text-sm font-bold text-zinc-600">Customer Name</label>
-            <input name="customer_name" required className="w-full rounded-md border-2 border-zinc-200 px-4 py-3 text-sm font-bold outline-none transition focus:border-pink" />
+            <label className="mb-1 block text-sm font-bold text-zinc-600">Client Name</label>
+            <input name="customer_name" required defaultValue={initialData?.customer_name} className="w-full rounded-md border-2 border-zinc-200 px-4 py-3 text-sm font-bold outline-none transition focus:border-pink" />
           </div>
           <div className="flex flex-col gap-4 sm:flex-row">
             <div className="flex-1">
               <label className="mb-1 block text-sm font-bold text-zinc-600">Phone</label>
-              <input name="customer_phone" type="tel" className="w-full rounded-md border-2 border-zinc-200 px-4 py-3 text-sm font-bold outline-none transition focus:border-pink" />
+              <input name="customer_phone" type="tel" defaultValue={initialData?.customer_phone} className="w-full rounded-md border-2 border-zinc-200 px-4 py-3 text-sm font-bold outline-none transition focus:border-pink" />
             </div>
             <div className="flex-1">
               <label className="mb-1 block text-sm font-bold text-zinc-600">Email</label>
-              <input name="customer_email" type="email" className="w-full rounded-md border-2 border-zinc-200 px-4 py-3 text-sm font-bold outline-none transition focus:border-pink" />
+              <input name="customer_email" type="email" defaultValue={initialData?.customer_email} className="w-full rounded-md border-2 border-zinc-200 px-4 py-3 text-sm font-bold outline-none transition focus:border-pink" />
             </div>
           </div>
         </div>
@@ -114,9 +174,7 @@ export default function InvoiceForm({ packages }: { packages: Package[] }) {
               <div className="flex items-center gap-1">
                 <select
                   value={selectedPkg}
-                  onChange={(e) => {
-                    addPackage(e.target.value);
-                  }}
+                  onChange={(e) => { addPackage(e.target.value); }}
                   className="rounded-full border-2 border-teal px-3 py-1.5 text-xs font-bold text-teal outline-none transition hover:border-teal-dark"
                 >
                   <option value="">+ Package</option>
@@ -188,19 +246,19 @@ export default function InvoiceForm({ packages }: { packages: Package[] }) {
           </div>
           <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
             <span className="text-sm font-bold text-zinc-600">Tax (%)</span>
-            <div className="flex items-center gap-3">
-              <div className="relative w-24">
-                <input
-                  value={taxPercent || ""}
-                  onChange={(e) => setTaxPercent(parseFloat(e.target.value.replace(/[^0-9.]/g, "")) || 0)}
-                  placeholder="0"
-                  className="w-full rounded-md border-2 border-zinc-200 px-4 py-2.5 text-right text-sm font-bold outline-none transition focus:border-pink"
-                />
-                <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-sm font-bold text-zinc-500">%</span>
-              </div>
-              <span className="text-sm font-bold text-zinc-300">{formatPrice(taxNominal)}</span>
-            </div>
+            <input
+              value={taxPct || ""}
+              onChange={(e) => setTaxPct(parseFloat(e.target.value) || 0)}
+              placeholder="0"
+              className="w-full rounded-md border-2 border-zinc-200 px-4 py-2.5 text-right text-sm font-bold outline-none transition focus:border-pink sm:w-48"
+            />
           </div>
+          {taxPct > 0 && (
+            <div className="flex items-center justify-between text-sm font-bold text-zinc-600">
+              <span>Tax ({taxPct}%)</span>
+              <span>{formatPrice(tax)}</span>
+            </div>
+          )}
           <div className="border-t border-zinc-200 pt-3">
             <div className="flex items-center justify-between text-base font-black text-dark">
               <span>Grand Total</span>
@@ -213,7 +271,21 @@ export default function InvoiceForm({ packages }: { packages: Package[] }) {
       {/* Notes */}
       <div className="rounded-lg border-2 border-zinc-200 bg-white p-6">
         <label className="mb-1 block text-sm font-bold text-zinc-600">Notes (optional)</label>
-        <textarea name="notes" rows={2} className="w-full rounded-md border-2 border-zinc-200 px-4 py-3 text-sm font-bold outline-none transition focus:border-pink" />
+        <textarea name="notes" rows={3} defaultValue={initialData?.notes} className="w-full rounded-md border-2 border-zinc-200 px-4 py-3 text-sm font-bold outline-none transition focus:border-pink" />
+      </div>
+
+      {/* Signature */}
+      <div className="rounded-lg border-2 border-zinc-200 bg-white p-6">
+        <h2 className="text-base font-black text-dark">Digital Signature</h2>
+        <p className="mb-4 mt-1 text-xs font-bold text-zinc-500">Name to appear on the proposal as the authorized signatory.</p>
+        <div>
+          <label className="mb-1 block text-sm font-bold text-zinc-600">Signatory Name</label>
+          <input
+            name="signature_name"
+            defaultValue={initialData?.signature_name || "Webkalcer Team"}
+            className="w-full rounded-md border-2 border-zinc-200 px-4 py-3 text-sm font-bold outline-none transition focus:border-pink"
+          />
+        </div>
       </div>
 
       <button
@@ -221,14 +293,7 @@ export default function InvoiceForm({ packages }: { packages: Package[] }) {
         disabled={saving}
         className="rounded-full bg-pink px-8 py-3 text-sm font-bold text-white transition hover:bg-pink-dark disabled:cursor-not-allowed disabled:opacity-50"
       >
-        {saving ? (
-          <span className="inline-flex items-center gap-2">
-            <span className="h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white" />
-            Menyimpan...
-          </span>
-        ) : (
-          "Save Invoice"
-        )}
+        {saving ? "Saving..." : isEdit ? "Update Proposal" : "Save Proposal"}
       </button>
     </form>
   );

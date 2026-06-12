@@ -59,15 +59,15 @@ export default async function AnalyticsPage() {
       <p className="mt-1 mb-10 text-sm font-bold text-zinc-300">Monitor homepage visits and interactions.</p>
 
       <div className="grid gap-4 sm:grid-cols-3">
-        <div className="rounded-2xl border-2 border-orange/20 bg-white p-6 shadow-sm">
+        <div className="rounded-lg border-2 border-orange/20 bg-white p-6">
           <div className="text-3xl font-black text-pink">{count}</div>
           <div className="mt-1 text-sm font-bold text-zinc-500">Total Visits</div>
         </div>
-        <div className="rounded-2xl border-2 border-orange/20 bg-white p-6 shadow-sm">
+        <div className="rounded-lg border-2 border-orange/20 bg-white p-6">
           <div className="text-3xl font-black text-green-500">{clickCounts.waClicks}</div>
           <div className="mt-1 text-sm font-bold text-zinc-500">WA Clicks</div>
         </div>
-        <div className="rounded-2xl border-2 border-orange/20 bg-white p-6 shadow-sm">
+        <div className="rounded-lg border-2 border-orange/20 bg-white p-6">
           <div className="text-3xl font-black text-blue-500">{clickCounts.emailClicks}</div>
           <div className="mt-1 text-sm font-bold text-zinc-500">Email Clicks</div>
         </div>
@@ -82,7 +82,7 @@ export default async function AnalyticsPage() {
         {visits.length === 0 && <p className="mt-4 text-sm font-bold text-zinc-500">No visits yet.</p>}
         <div className="mt-4 space-y-2">
           {visits.map((v, i) => (
-            <div key={v.id} className="flex items-center justify-between rounded-xl border-2 border-zinc-100 bg-white px-5 py-3 text-sm">
+            <div key={v.id} className="flex items-center justify-between rounded-md border-2 border-zinc-100 bg-white px-5 py-3 text-sm">
               <span className="font-bold text-zinc-600">#{i + 1}</span>
               <span className="text-xs text-zinc-500">{v.visitor_id || "—"}</span>
               <span className="text-xs text-zinc-300">{v.country ? `🌍 ${v.country}` : ""}</span>

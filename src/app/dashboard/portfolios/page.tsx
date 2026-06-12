@@ -16,7 +16,7 @@ export default async function PortfoliosPage({ searchParams }: { searchParams: P
           <h1 className="text-xl font-black tracking-tighter text-dark sm:text-2xl">Portfolio</h1>
           <p className="mt-1 text-xs font-bold text-zinc-500 sm:text-sm">Manage finished website examples.</p>
         </div>
-        <Link href="/dashboard/portfolios/new" className="inline-flex self-start rounded-full bg-pink px-5 py-2 text-sm font-bold text-white shadow-lg transition hover:bg-pink-dark sm:self-auto">
+        <Link href="/dashboard/portfolios/new" className="inline-flex self-start rounded-full bg-pink px-5 py-2 text-sm font-bold text-white transition hover:bg-pink-dark sm:self-auto">
           + Add
         </Link>
       </div>
@@ -24,7 +24,7 @@ export default async function PortfoliosPage({ searchParams }: { searchParams: P
       <div className="mt-6 space-y-3 sm:mt-8">
         {portfolios.length === 0 && <p className="text-sm font-bold text-zinc-500">No portfolios yet.</p>}
         {portfolios.map((p) => (
-          <div key={p.id} className="flex flex-col gap-3 rounded-2xl border-2 border-zinc-200 bg-white p-4 shadow-sm sm:flex-row sm:items-center sm:justify-between sm:p-5">
+          <div key={p.id} className="flex flex-col gap-3 rounded-lg border-2 border-zinc-200 bg-white p-4 sm:flex-row sm:items-center sm:justify-between sm:p-5">
             <div>
               <p className="text-sm font-bold text-dark">{p.title}</p>
               <p className="mt-0.5 text-xs font-bold text-zinc-600">{p.tag}{p.url ? <span className="ml-2 text-pink">🔗 {p.url}</span> : null} {!p.is_active && <span className="text-red-400">(inactive)</span>}</p>

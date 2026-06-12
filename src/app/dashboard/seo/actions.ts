@@ -33,6 +33,19 @@ export async function saveSeo(_prev: unknown, formData: FormData): Promise<{ suc
       email: formData.get("email") as string,
       wa_message: formData.get("wa_message") as string,
       midtrans_is_production: isProduction,
+      sitename: formData.get("sitename") as string,
+      logo_url: formData.get("logo_url") as string,
+      proposal_company_name: formData.get("proposal_company_name") as string,
+      proposal_title: formData.get("proposal_title") as string,
+      proposal_slogan_id: formData.get("proposal_slogan_id") as string,
+      proposal_slogan_en: formData.get("proposal_slogan_en") as string,
+      proposal_logo_url: formData.get("proposal_logo_url") as string,
+      proposal_opening_id: formData.get("proposal_opening_id") as string,
+      proposal_opening_en: formData.get("proposal_opening_en") as string,
+      proposal_closing_id: formData.get("proposal_closing_id") as string,
+      proposal_closing_en: formData.get("proposal_closing_en") as string,
+      proposal_terms_id: formData.get("proposal_terms_id") as string,
+      proposal_terms_en: formData.get("proposal_terms_en") as string,
       updated_at: new Date().toISOString(),
     };
 
@@ -47,13 +60,6 @@ export async function saveSeo(_prev: unknown, formData: FormData): Promise<{ suc
 
     const { error } = await supabase.from("seo_settings").update(updates).eq("page", "home");
     if (error) return { error: error.message || JSON.stringify(error) };
-
-    // Save invoice fields separately (sitename, logo_url)
-    await supabase.from("seo_settings").update({
-      sitename: formData.get("sitename") as string,
-      logo_url: formData.get("logo_url") as string,
-      updated_at: new Date().toISOString(),
-    }).eq("page", "home");
 
     revalidatePath("/", "layout");
     revalidatePath("/dashboard/seo");

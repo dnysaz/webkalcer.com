@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { buildWaUrl } from "@/lib/config";
+import { Sparkles, Heart, DollarSign, Flame, ShoppingBag, Palette, Rocket, Lock, Smartphone } from "lucide-react";
 
-function OfferCard({ icon, label, desc, index }: { icon: string; label: string; desc: string; index: number }) {
+function OfferCard({ icon, label, desc, index }: { icon: ReactNode; label: string; desc: string; index: number }) {
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(true);
 
@@ -26,7 +27,7 @@ function OfferCard({ icon, label, desc, index }: { icon: string; label: string; 
       }`}
       style={{ transitionDelay: `${index * 100}ms` }}
     >
-      <div className="text-3xl transition-transform group-hover:scale-110">{icon}</div>
+      <div className="text-3xl text-orange transition-transform group-hover:scale-110">{icon}</div>
       <div className="mt-2 text-sm font-black tracking-tight text-dark">{label}</div>
         <div className="text-xs font-bold text-zinc-600">{desc}</div>
     </div>
@@ -42,8 +43,8 @@ function ServiceItem({ text, index }: { text: string; index: number }) {
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
     >
-      <span className={`mt-0.5 text-xl transition-all duration-300 ${hover ? "rotate-90 text-pink" : ""}`}>
-        {hover ? "❤️" : "✨"}
+      <span className={`mt-0.5 transition-all duration-300 ${hover ? "rotate-90 text-pink" : "text-orange"}`}>
+        {hover ? <Heart size={20} /> : <Sparkles size={20} />}
       </span>
       {text}
     </div>
@@ -59,7 +60,7 @@ export default function Pricing({ phone, waMessage }: { phone?: string; waMessag
 
       <div className="relative mx-auto max-w-3xl text-center">
         <div className="mb-6 inline-block animate-float rounded-full bg-pink px-6 py-2 text-sm font-bold uppercase tracking-wide text-white shadow-lg">
-          💸 GA PAKE MIKIR HARGA
+          <DollarSign size={18} className="inline-block -mt-0.5 me-1" /> GA PAKE MIKIR HARGA
         </div>
 
         <h2 className="text-5xl font-black leading-none tracking-tighter sm:text-6xl lg:text-7xl">
@@ -71,14 +72,14 @@ export default function Pricing({ phone, waMessage }: { phone?: string; waMessag
           <span className="inline-block -rotate-2 rounded-3xl bg-yellow px-8 py-3 text-5xl font-black text-dark shadow-2xl sm:text-6xl">
             RP300.000
           </span>
-          <span className="absolute -top-3 -right-6 animate-float text-3xl">🔥</span>
+          <span className="absolute -top-3 -right-6 animate-float text-3xl"><Flame size={28} className="text-orange" /></span>
         </div>
 
         <p className="mx-auto mt-6 max-w-xl text-base font-bold leading-relaxed text-dark/60">
           Udah include domain gratis, hosting berkualitas gratis, SSL gratis — pokoknya tinggal pake kakak.
         </p>
         <p className="mt-1 text-sm font-black uppercase text-pink">
-          lebih hemat dari biaya nongkrong kakak di mall loh 🛍️
+          lebih hemat dari biaya nongkrong kakak di mall loh <ShoppingBag size={16} className="inline-block" />
         </p>
 
         <div className="mt-6 flex flex-wrap justify-center gap-x-8 gap-y-2 text-sm font-bold text-dark">
@@ -104,7 +105,7 @@ export default function Pricing({ phone, waMessage }: { phone?: string; waMessag
             onClick={() => fetch("/api/track", { method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({eventType:"wa_click"}) }).catch(()=>{})}
             className="rounded-full bg-pink px-8 py-4 text-base font-bold text-white shadow-lg transition-transform hover:bg-pink-dark hover:scale-105 hover:shadow-xl active:scale-95"
           >
-            Tanya Harga Kak ✨
+            Tanya Harga Kak <Sparkles size={16} className="inline-block" />
           </a>
           <a
             href={waUrl}
@@ -119,10 +120,10 @@ export default function Pricing({ phone, waMessage }: { phone?: string; waMessag
 
         <div className="mt-12 grid grid-cols-2 gap-3 text-left sm:grid-cols-4">
           {[
-            { icon: "🎨", label: "FREE DOMAIN", desc: "domain gratis 1 thn" },
-            { icon: "🚀", label: "LANGSUNG ONLINE", desc: "max 2x24 jam" },
-            { icon: "🔒", label: "SSL GRATIS", desc: "HTTPS aman" },
-            { icon: "📱", label: "RESPONSIVE", desc: "buka di HP/PC" },
+            { icon: <Palette size={28} />, label: "FREE DOMAIN", desc: "domain gratis 1 thn" },
+            { icon: <Rocket size={28} />, label: "LANGSUNG ONLINE", desc: "max 2x24 jam" },
+            { icon: <Lock size={28} />, label: "SSL GRATIS", desc: "HTTPS aman" },
+            { icon: <Smartphone size={28} />, label: "RESPONSIVE", desc: "buka di HP/PC" },
           ].map((item, i) => (
             <OfferCard key={item.label} {...item} index={i} />
           ))}
@@ -130,7 +131,7 @@ export default function Pricing({ phone, waMessage }: { phone?: string; waMessag
 
         <div className="mt-12 space-y-3 text-left">
           <p className="flex items-center gap-2 text-sm font-black uppercase tracking-wide text-zinc-500">
-            <span>✨</span> Yang kita tawarin kakak:
+            <Sparkles size={16} /> Yang kita tawarin kakak:
           </p>
           <div className="grid gap-3 sm:grid-cols-2">
             {[
@@ -153,7 +154,7 @@ export default function Pricing({ phone, waMessage }: { phone?: string; waMessag
             onClick={() => fetch("/api/track", { method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({eventType:"wa_click"}) }).catch(()=>{})}
             className="inline-flex items-center gap-1 text-pink font-black underline underline-offset-4"
           >
-            Chat aja santai kakak ✨
+            Chat aja santai kakak <Sparkles size={16} className="inline-block" />
           </a>
         </p>
       </div>

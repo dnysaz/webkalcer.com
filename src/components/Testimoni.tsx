@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { Star } from "lucide-react";
 
 function TestiCard({ quote, name, role, index }: { quote: string; name: string; role: string; index: number }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -26,8 +27,8 @@ function TestiCard({ quote, name, role, index }: { quote: string; name: string; 
       }`}
       style={{ transitionDelay: `${index * 150}ms` }}
     >
-      <div className="mb-4 flex gap-1 text-lg text-yellow">
-        <span>⭐</span><span>⭐</span><span>⭐</span><span>⭐</span><span>⭐</span>
+      <div className="mb-4 flex gap-1 text-yellow">
+        <Star size={20} fill="currentColor" /><Star size={20} fill="currentColor" /><Star size={20} fill="currentColor" /><Star size={20} fill="currentColor" /><Star size={20} fill="currentColor" />
       </div>
       <p className="text-base font-bold leading-relaxed text-zinc-200">&ldquo;{quote}&rdquo;</p>
       <div className="mt-5 flex items-center gap-3 border-t border-zinc-700 pt-4">

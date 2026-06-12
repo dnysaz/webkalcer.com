@@ -1,8 +1,9 @@
 "use client";
 
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState, type ReactNode } from "react";
+import { Rocket, Laptop, CheckCircle, Target } from "lucide-react";
 
-function BenefitCard({ icon, title, desc, index }: { icon: string; title: string; desc: string; index: number }) {
+function BenefitCard({ icon, title, desc, index }: { icon: ReactNode; title: string; desc: string; index: number }) {
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(true);
 
@@ -37,22 +38,22 @@ function BenefitCard({ icon, title, desc, index }: { icon: string; title: string
 
 const benefits = [
   {
-    icon: "🚀",
+    icon: <Rocket size={32} className="text-teal" />,
     title: "Platform Siap Pakai",
     desc: "Website diserahkan dalam kondisi 100% aktif dan siap digunakan untuk operasional bisnis, lengkap dengan halaman utama, profil, dan kontak.",
   },
   {
-    icon: "💻",
+    icon: <Laptop size={32} className="text-teal" />,
     title: "Bukan Sekadar Source Code",
     desc: "Anda tidak perlu pusing memikirkan cara instalasi, deployment, atau konfigurasi database. Kami yang tangani seluruh proses teknisnya.",
   },
   {
-    icon: "✅",
+    icon: <CheckCircle size={32} className="text-teal" />,
     title: "Sistem yang Teruji",
     desc: "Kami memastikan performa website optimal, responsif di handphone maupun desktop, dan siap diakses oleh publik tanpa kendala teknis.",
   },
   {
-    icon: "🎯",
+    icon: <Target size={32} className="text-teal" />,
     title: "SEO Tujuan Utama",
     desc: "Kami selalu mengoptimalkan SEO pada title dan description website agar mudah ditemukan di mesin pencarian dan menjangkau lebih banyak pelanggan.",
   },

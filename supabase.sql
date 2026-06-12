@@ -93,6 +93,17 @@ CREATE TABLE IF NOT EXISTS seo_settings (
   midtrans_is_production BOOLEAN DEFAULT FALSE,
   logo_url TEXT DEFAULT '',
   sitename TEXT DEFAULT 'Webkalcer',
+  proposal_company_name TEXT DEFAULT 'Webkalcer.com',
+  proposal_title TEXT DEFAULT 'PROPOSAL',
+  proposal_slogan_id TEXT DEFAULT 'Jasa Website Murah untuk UMKM & Personal Branding',
+  proposal_slogan_en TEXT DEFAULT 'Affordable Website Services for UMKM & Personal Branding',
+  proposal_logo_url TEXT DEFAULT '',
+  proposal_opening_id TEXT DEFAULT 'Terima kasih atas ketertarikan Anda terhadap layanan pembuatan website kami. Bersama ini kami sampaikan proposal penawaran yang telah disesuaikan dengan kebutuhan Anda.',
+  proposal_opening_en TEXT DEFAULT 'Thank you for your interest in our website development services. We are pleased to submit this proposal outlining our recommended solution tailored to your needs.',
+  proposal_closing_id TEXT DEFAULT 'Silakan konfirmasi penerimaan proposal ini dengan menandatangani di bawah. Setelah disetujui, kami akan segera memulai proses pengembangan.',
+  proposal_closing_en TEXT DEFAULT 'Please confirm your acceptance of this proposal by signing below. Once approved, we will begin the development process immediately.',
+  proposal_terms_id TEXT DEFAULT '',
+  proposal_terms_en TEXT DEFAULT '',
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
 
@@ -131,6 +142,17 @@ ALTER TABLE seo_settings ADD COLUMN IF NOT EXISTS midtrans_client_key_enc TEXT D
 ALTER TABLE seo_settings ADD COLUMN IF NOT EXISTS midtrans_is_production BOOLEAN DEFAULT FALSE;
 ALTER TABLE seo_settings ADD COLUMN IF NOT EXISTS logo_url TEXT DEFAULT '';
 ALTER TABLE seo_settings ADD COLUMN IF NOT EXISTS sitename TEXT DEFAULT 'Webkalcer';
+ALTER TABLE seo_settings ADD COLUMN IF NOT EXISTS proposal_company_name TEXT DEFAULT 'Webkalcer.com';
+ALTER TABLE seo_settings ADD COLUMN IF NOT EXISTS proposal_title TEXT DEFAULT 'PROPOSAL';
+ALTER TABLE seo_settings ADD COLUMN IF NOT EXISTS proposal_slogan_id TEXT DEFAULT 'Jasa Website Murah untuk UMKM & Personal Branding';
+ALTER TABLE seo_settings ADD COLUMN IF NOT EXISTS proposal_slogan_en TEXT DEFAULT 'Affordable Website Services for UMKM & Personal Branding';
+ALTER TABLE seo_settings ADD COLUMN IF NOT EXISTS proposal_logo_url TEXT DEFAULT '';
+ALTER TABLE seo_settings ADD COLUMN IF NOT EXISTS proposal_opening_id TEXT DEFAULT 'Terima kasih atas ketertarikan Anda terhadap layanan pembuatan website kami. Bersama ini kami sampaikan proposal penawaran yang telah disesuaikan dengan kebutuhan Anda.';
+ALTER TABLE seo_settings ADD COLUMN IF NOT EXISTS proposal_opening_en TEXT DEFAULT 'Thank you for your interest in our website development services. We are pleased to submit this proposal outlining our recommended solution tailored to your needs.';
+ALTER TABLE seo_settings ADD COLUMN IF NOT EXISTS proposal_closing_id TEXT DEFAULT 'Silakan konfirmasi penerimaan proposal ini dengan menandatangani di bawah. Setelah disetujui, kami akan segera memulai proses pengembangan.';
+ALTER TABLE seo_settings ADD COLUMN IF NOT EXISTS proposal_closing_en TEXT DEFAULT 'Please confirm your acceptance of this proposal by signing below. Once approved, we will begin the development process immediately.';
+ALTER TABLE seo_settings ADD COLUMN IF NOT EXISTS proposal_terms_id TEXT DEFAULT '';
+ALTER TABLE seo_settings ADD COLUMN IF NOT EXISTS proposal_terms_en TEXT DEFAULT '';
 
 -- Add VA payment columns to invoices (for manual VA payments)
 ALTER TABLE invoices ADD COLUMN IF NOT EXISTS va_bank TEXT;
@@ -185,8 +207,22 @@ CREATE TABLE IF NOT EXISTS packages (
   is_active BOOLEAN DEFAULT TRUE,
   sort_order INT DEFAULT 0,
   created_at TIMESTAMPTZ DEFAULT NOW(),
+  features JSONB DEFAULT '[]'::jsonb,
+  tagline TEXT DEFAULT '',
+  price_note TEXT DEFAULT '',
+  note TEXT DEFAULT '',
+  badge TEXT DEFAULT '',
+  icon TEXT DEFAULT '📦',
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
+
+-- Pricelist display columns (safe to re-run)
+ALTER TABLE packages ADD COLUMN IF NOT EXISTS features JSONB DEFAULT '[]'::jsonb;
+ALTER TABLE packages ADD COLUMN IF NOT EXISTS tagline TEXT DEFAULT '';
+ALTER TABLE packages ADD COLUMN IF NOT EXISTS price_note TEXT DEFAULT '';
+ALTER TABLE packages ADD COLUMN IF NOT EXISTS note TEXT DEFAULT '';
+ALTER TABLE packages ADD COLUMN IF NOT EXISTS badge TEXT DEFAULT '';
+ALTER TABLE packages ADD COLUMN IF NOT EXISTS icon TEXT DEFAULT '📦';
 
 -- Enable Row Level Security (RLS)
 ALTER TABLE hero_content ENABLE ROW LEVEL SECURITY;
@@ -271,3 +307,46 @@ CREATE POLICY "Auth delete images 2hpxmz"
 DROP POLICY IF EXISTS "Public read images 2hpxmz" ON storage.objects;
 CREATE POLICY "Public read images 2hpxmz"
   ON storage.objects FOR SELECT USING (bucket_id = 'webkalcer-images');
+
+-- 11. PROPOSALS
+CREATE TABLE IF NOT EXISTS proposals (
+  id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  proposal_number TEXT UNIQUE NOT NULL,
+  customer_name TEXT NOT NULL,
+  customer_email TEXT,
+  customer_phone TEXT,
+  subtotal NUMERIC(12,2) NOT NULL DEFAULT 0,
+  discount NUMERIC(12,2) NOT NULL DEFAULT 0,
+  tax_percentage NUMERIC(5,2) NOT NULL DEFAULT 0,
+  tax NUMERIC(12,2) NOT NULL DEFAULT 0,
+  grand_total NUMERIC(12,2) NOT NULL DEFAULT 0,
+  language TEXT DEFAULT 'id',
+  status TEXT DEFAULT 'draft',
+  notes TEXT,
+  signature_name TEXT,
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- Migrations: add columns for existing databases
+ALTER TABLE proposals ADD COLUMN IF NOT EXISTS language TEXT DEFAULT 'id';
+ALTER TABLE proposals ADD COLUMN IF NOT EXISTS tax_percentage NUMERIC(5,2) NOT NULL DEFAULT 0;
+ALTER TABLE proposals ADD COLUMN IF NOT EXISTS tax NUMERIC(12,2) NOT NULL DEFAULT 0;
+
+CREATE TABLE IF NOT EXISTS proposal_items (
+  id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  proposal_id BIGINT NOT NULL REFERENCES proposals(id) ON DELETE CASCADE,
+  description TEXT NOT NULL,
+  price NUMERIC(12,2) NOT NULL DEFAULT 0,
+  package_id BIGINT REFERENCES packages(id) ON DELETE SET NULL
+);
+
+ALTER TABLE proposals ENABLE ROW LEVEL SECURITY;
+ALTER TABLE proposal_items ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "Auth all proposals" ON proposals;
+CREATE POLICY "Auth all proposals" ON proposals FOR ALL TO authenticated USING (TRUE) WITH CHECK (TRUE);
+DROP POLICY IF EXISTS "Auth all proposal_items" ON proposal_items;
+CREATE POLICY "Auth all proposal_items" ON proposal_items FOR ALL TO authenticated USING (TRUE) WITH CHECK (TRUE);
+DROP POLICY IF EXISTS "Public read proposals" ON proposals;
+CREATE POLICY "Public read proposals" ON proposals FOR SELECT USING (TRUE);

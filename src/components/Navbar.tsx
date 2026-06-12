@@ -2,14 +2,15 @@
 
 import { useEffect, useState } from "react";
 import { buildWaUrl } from "@/lib/config";
+import { PhoneCall, Menu, X } from "lucide-react";
 
 const links = [
-  { href: "#how", label: "Cara Kerja" },
-  { href: "#portfolio", label: "Portofolio" },
-  { href: "#price", label: "Harga" },
-  { href: "#testimoni", label: "Testimoni" },
-  { href: "#faq", label: "FAQ" },
-  { href: "#garansi", label: "Jaminan" },
+  { href: "/", label: "Beranda" },
+  { href: "/pricelist", label: "Pricelist" },
+  { href: "/#how", label: "Cara Kerja" },
+  { href: "/#portfolio", label: "Portofolio" },
+  { href: "/#testimoni", label: "Testimoni" },
+  { href: "/#faq", label: "FAQ" },
 ];
 
 export default function Navbar({ phone, waMessage }: { phone?: string; waMessage?: string }) {
@@ -86,9 +87,7 @@ export default function Navbar({ phone, waMessage }: { phone?: string; waMessage
             className="flex h-10 w-10 items-center justify-center rounded-xl border-2 border-zinc-200 bg-white text-dark shadow-sm transition hover:border-pink"
             aria-label={menuOpen ? "Tutup menu" : "Buka menu"}
           >
-            <span className={`text-2xl font-black transition-transform ${menuOpen ? "rotate-45" : ""}`}>
-              {menuOpen ? "+" : "☰"}
-            </span>
+            {menuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
       </div>

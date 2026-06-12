@@ -202,3 +202,68 @@ export async function getPackage(id: number) {
   const { data } = await supabase.from("packages").select("*").eq("id", id).single();
   return data;
 }
+
+// ─── PROPOSALS ────────────────────────────────────────────────────────────
+
+export async function getAllProposals() {
+  const supabase = await createClient();
+  const { data } = await supabase
+    .from("proposals")
+    .select("*")
+    .order("created_at", { ascending: false });
+  return data ?? [];
+}
+
+export async function getProposal(id: number) {
+  const supabase = await createClient();
+  const { data } = await supabase.from("proposals").select("*").eq("id", id).single();
+  return data;
+}
+
+export async function getProposalItems(proposalId: number) {
+  const supabase = await createClient();
+  const { data } = await supabase
+    .from("proposal_items")
+    .select("*")
+    .eq("proposal_id", proposalId)
+    .order("id", { ascending: true });
+  return data ?? [];
+}
+
+export async function getProposalWithItems(id: number) {
+  const proposal = await getProposal(id);
+  if (!proposal) return null;
+  const items = await getProposalItems(id);
+  return { ...proposal, items };
+}
+
+export async function getProposalByNumber(proposalNumber: string) {
+  const supabase = await createClient();
+  const { data } = await supabase
+    .from("proposals")
+    .select("*")
+    .eq("proposal_number", proposalNumber)
+    .single();
+  return data;
+}
+
+export async function getProposalWithItemsByNumber(proposalNumber: string) {
+  const proposal = await getProposalByNumber(proposalNumber);
+  if (!proposal) return null;
+  const items = await getProposalItems(proposal.id);
+  return { ...proposal, items };
+}
+
+export function buildProposalSlug(proposalNumber: string, customerName: string): string {
+  const nameSlug = customerName
+    .toLowerCase()
+    .replace(/[^a-z0-9]/g, "-")
+    .replace(/-+/g, "-")
+    .replace(/^-|-$/g, "");
+  return `${proposalNumber}-${nameSlug}`;
+}
+
+export function parseProposalSlug(slug: string): string | null {
+  const match = slug.match(/^(PRO-\d{8}-\d{4})/);
+  return match ? match[1] : null;
+}

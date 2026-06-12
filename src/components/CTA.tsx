@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { EMAIL, buildWaUrl } from "@/lib/config";
+import { Rocket, Sparkles, Mail } from "lucide-react";
 
 export default function CTA({ phone, email, waMessage }: { phone?: string; email?: string; waMessage?: string }) {
   const waUrl = buildWaUrl(phone, waMessage);
@@ -32,7 +33,7 @@ export default function CTA({ phone, email, waMessage }: { phone?: string; email
       >
         <div className="absolute -top-6 left-1/2 -translate-x-1/2">
           <span className="inline-block animate-float rounded-full bg-white px-6 py-2 text-sm font-black text-dark shadow-lg">
-            🚀 YUK LAH
+            <Rocket size={18} className="inline-block -mt-0.5 me-1" /> YUK LAH
           </span>
         </div>
 
@@ -40,7 +41,7 @@ export default function CTA({ phone, email, waMessage }: { phone?: string; email
           SIAP BIKIN
           <br />
           <span className="mt-2 inline-block -rotate-1 rounded-3xl bg-white px-6 py-2 text-dark shadow-xl sm:px-10">
-            WEBSITE KAK? 🎉
+            WEBSITE KAK? <Sparkles size={24} className="inline-block" />
           </span>
         </h2>
         <p className="mx-auto mt-4 max-w-lg text-base font-bold leading-relaxed text-dark/80">
@@ -61,7 +62,7 @@ export default function CTA({ phone, email, waMessage }: { phone?: string; email
             onClick={() => fetch("/api/track", { method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({eventType:"email_click"}) }).catch(()=>{})}
             className="group mt-4 inline-flex items-center gap-2 rounded-full border-2 border-white/50 bg-white px-8 py-3 text-base font-bold text-dark shadow-sm transition-transform hover:bg-white hover:scale-105 hover:shadow-lg active:scale-95"
           >
-            {contactEmail} ✉️
+            <Mail size={18} className="inline-block -mt-0.5 me-1" /> {contactEmail}
           </a>
       </div>
     </section>

@@ -47,7 +47,7 @@ export default function VaPaymentForm({
 
   if (status === "paid" && vaBank && vaNumber) {
     return (
-      <div className="rounded-2xl border-2 border-green-200 bg-green-50 p-6">
+      <div className="rounded-lg border-2 border-green-200 bg-green-50 p-6">
         <div className="flex items-center gap-3">
           <div className="flex h-12 w-12 items-center justify-center rounded-full bg-green-200 text-lg font-black text-green-700">
             ✓
@@ -68,7 +68,7 @@ export default function VaPaymentForm({
 
   if (vaBank && vaNumber && !showForm) {
     return (
-      <div className="rounded-2xl border-2 border-teal/30 bg-teal/5 p-6">
+      <div className="rounded-lg border-2 border-teal/30 bg-teal/5 p-6">
         <div className="mb-3 flex items-center justify-between">
           <h2 className="text-xs font-bold uppercase tracking-wider text-teal">Virtual Account Payment</h2>
           <div className="flex gap-2">
@@ -98,9 +98,9 @@ export default function VaPaymentForm({
             </form>
           </div>
         </div>
-        <div className="rounded-xl border-2 border-teal/20 bg-white p-5">
+        <div className="rounded-md border-2 border-teal/20 bg-white p-5">
           <div className="flex items-center gap-4">
-            <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-teal/10 text-2xl font-black text-teal">
+            <div className="flex h-14 w-14 items-center justify-center rounded-md bg-teal/10 text-2xl font-black text-teal">
               VA
             </div>
             <div>
@@ -129,7 +129,7 @@ export default function VaPaymentForm({
   }
 
   return (
-    <div className="rounded-2xl border-2 border-zinc-200 bg-white p-6">
+    <div className="rounded-lg border-2 border-zinc-200 bg-white p-6">
       <h2 className="text-xs font-bold uppercase tracking-wider text-zinc-500">Virtual Account (Manual)</h2>
       <p className="mb-4 mt-1 text-sm font-bold text-zinc-500">
         Manually input VA for offline payment.
@@ -153,7 +153,7 @@ export default function VaPaymentForm({
                 setCustomBank(e.target.value === "Lainnya");
               }}
               required
-              className="w-full rounded-xl border-2 border-zinc-200 px-4 py-3 text-sm font-bold outline-none transition focus:border-pink"
+              className="w-full rounded-md border-2 border-zinc-200 px-4 py-3 text-sm font-bold outline-none transition focus:border-pink"
              >
               <option value="">-- Select Bank --</option>
               {BANK_OPTIONS.map((o) => (
@@ -171,7 +171,7 @@ export default function VaPaymentForm({
                 name="va_bank_custom"
                 required
                 placeholder="e.g. Bank Jago"
-              className="w-full rounded-xl border-2 border-zinc-200 px-4 py-3 text-sm font-bold outline-none transition focus:border-pink"
+              className="w-full rounded-md border-2 border-zinc-200 px-4 py-3 text-sm font-bold outline-none transition focus:border-pink"
               />
             </div>
           )}
@@ -184,7 +184,7 @@ export default function VaPaymentForm({
               onChange={(e) => setNumber(e.target.value)}
               required
               placeholder="e.g. 1234567890"
-              className="w-full rounded-xl border-2 border-zinc-200 px-4 py-3 text-sm font-bold outline-none transition focus:border-pink"
+              className="w-full rounded-md border-2 border-zinc-200 px-4 py-3 text-sm font-bold outline-none transition focus:border-pink"
             />
           </div>
 

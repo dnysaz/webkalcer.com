@@ -7,14 +7,26 @@ import { createClient } from "@/lib/supabase/server";
 export async function createPackage(formData: FormData) {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
-  if (!user) throw new Error("Unauthorized");
+  if (!user) return { error: "Unauthorized" };
 
   const name = formData.get("name") as string;
   const description = formData.get("description") as string;
+  const tagline = formData.get("tagline") as string;
+  const priceNote = formData.get("price_note") as string;
+  const note = formData.get("note") as string;
+  const badge = formData.get("badge") as string;
+  const icon = formData.get("icon") as string;
   const price = parseFloat(formData.get("price") as string) || 0;
   const promo = parseFloat(formData.get("promo") as string) || 0;
   const sortOrder = parseInt(formData.get("sort_order") as string) || 0;
-  const isActive = formData.get("is_active") === "on";
+  let isActive = formData.get("is_active") === "on";
+  const isDraft = formData.get("draft") === "1";
+  if (isDraft) isActive = false;
+  let features: string[] = [];
+  try {
+    const raw = formData.get("features") as string;
+    if (raw) features = JSON.parse(raw);
+  } catch {}
 
   const catalogFile = formData.get("catalog") as File | null;
   const thumbnailFile = formData.get("thumbnail") as File | null;
@@ -49,17 +61,27 @@ export async function createPackage(formData: FormData) {
   const { error } = await supabase.from("packages").insert({
     name,
     description,
+    tagline,
+    price_note: priceNote,
+    note,
+    badge,
+    icon: icon || "📦",
     catalog_url: catalogUrl,
     thumbnail_url: thumbnailUrl,
     price,
     promo,
+    features,
     is_active: isActive,
     sort_order: sortOrder,
   });
 
-  if (error) redirect("/dashboard/packages?toast=error%3AFailed%20to%20add%20package");
+  if (error) {
+    console.error("Failed to add package:", error);
+    return { error: error.message };
+  }
+
   revalidatePath("/dashboard/packages");
-  redirect("/dashboard/packages?toast=Package%20added%20successfully");
+  return { success: true };
 }
 
 export async function updatePackage(id: number, formData: FormData) {
@@ -69,10 +91,22 @@ export async function updatePackage(id: number, formData: FormData) {
 
   const name = formData.get("name") as string;
   const description = formData.get("description") as string;
+  const tagline = formData.get("tagline") as string;
+  const priceNote = formData.get("price_note") as string;
+  const note = formData.get("note") as string;
+  const badge = formData.get("badge") as string;
+  const icon = formData.get("icon") as string;
   const price = parseFloat(formData.get("price") as string) || 0;
   const promo = parseFloat(formData.get("promo") as string) || 0;
   const sortOrder = parseInt(formData.get("sort_order") as string) || 0;
-  const isActive = formData.get("is_active") === "on";
+  let isActive = formData.get("is_active") === "on";
+  const isDraft = formData.get("draft") === "1";
+  if (isDraft) isActive = false;
+  let features: string[] = [];
+  try {
+    const raw = formData.get("features") as string;
+    if (raw) features = JSON.parse(raw);
+  } catch {}
 
   const catalogFile = formData.get("catalog") as File | null;
   const thumbnailFile = formData.get("thumbnail") as File | null;
@@ -80,8 +114,14 @@ export async function updatePackage(id: number, formData: FormData) {
   const updates: Record<string, unknown> = {
     name,
     description,
+    tagline,
+    price_note: priceNote,
+    note,
+    badge,
+    icon: icon || "📦",
     price,
     promo,
+    features,
     is_active: isActive,
     sort_order: sortOrder,
     updated_at: new Date().toISOString(),

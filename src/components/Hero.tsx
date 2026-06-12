@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { buildWaUrl } from "@/lib/config";
+import { Sparkles, Rocket, Laptop, PhoneCall } from "lucide-react";
 
 function Mockup() {
   return (
@@ -53,15 +54,15 @@ export default function Hero({ hero, phone, waMessage }: { hero?: { badge_text?:
       <div className="pointer-events-none absolute -top-40 -right-40 h-96 w-96 rounded-full bg-pink/10 blur-2xl" />
       <div className="pointer-events-none absolute -bottom-40 -left-40 h-96 w-96 rounded-full bg-orange/10 blur-2xl" />
 
-      <span className="pointer-events-none absolute left-[10%] top-[20%] animate-float text-4xl opacity-20">✨</span>
-      <span className="pointer-events-none absolute right-[15%] top-[15%] animate-float text-3xl opacity-20" style={{ animationDelay: "1s" }}>🚀</span>
-      <span className="pointer-events-none absolute bottom-[25%] left-[5%] animate-float text-2xl opacity-20" style={{ animationDelay: "2s" }}>💻</span>
+      <span className="pointer-events-none absolute left-[10%] top-[20%] animate-float text-4xl opacity-20"><Sparkles size={32} /></span>
+      <span className="pointer-events-none absolute right-[15%] top-[15%] animate-float text-3xl opacity-20" style={{ animationDelay: "1s" }}><Rocket size={28} /></span>
+      <span className="pointer-events-none absolute bottom-[25%] left-[5%] animate-float text-2xl opacity-20" style={{ animationDelay: "2s" }}><Laptop size={24} /></span>
 
       <div className="relative mx-auto max-w-6xl">
         <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
           <div className="text-center lg:text-left">
             <div className="mb-6 inline-block animate-float rounded-full bg-pink px-6 py-2 text-sm font-bold uppercase tracking-wide text-white shadow-lg">
-              {hero?.badge_text || "✨ Jual website, bukan jasa koding"}
+              <Sparkles size={18} className="inline-block -mt-0.5 me-1" />{hero?.badge_text || "Jual website, bukan jasa koding"}
             </div>
 
             <div ref={ref} style={{ transform: "rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg))", transition: "transform 0.15s ease-out", willChange: "transform" }}>
@@ -85,11 +86,17 @@ export default function Hero({ hero, phone, waMessage }: { hero?: { badge_text?:
                 {hero?.cta_text || "Mulai dari 300rb ↓"}
               </a>
               <a
+                href="/pricelist"
+                className="rounded-full border-2 border-pink/30 bg-white px-8 py-4 text-lg font-bold text-dark shadow-sm transition-transform hover:border-pink hover:shadow-lg hover:scale-105 active:scale-95 sm:hidden"
+              >
+                Lihat Pricelist
+              </a>
+              <a
                 href={waUrl}
                 target="_blank"
                 rel="noopener"
                 onClick={() => fetch("/api/track", { method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({eventType:"wa_click"}) }).catch(()=>{})}
-                className="rounded-full border-2 border-pink/30 bg-white px-8 py-4 text-lg font-bold text-dark shadow-sm transition-transform hover:border-pink hover:shadow-lg hover:scale-105 active:scale-95"
+                className="hidden rounded-full border-2 border-pink/30 bg-white px-8 py-4 text-lg font-bold text-dark shadow-sm transition-transform hover:border-pink hover:shadow-lg hover:scale-105 active:scale-95 sm:inline-flex"
               >
                 Konsultasi Gratis
               </a>

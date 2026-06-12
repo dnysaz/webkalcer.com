@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
+import { Lock, Wrench, Handshake } from "lucide-react";
 
-function GaransiCard({ icon, title, desc, index }: { icon: string; title: string; desc: string; index: number }) {
+function GaransiCard({ icon, title, desc, index }: { icon: ReactNode; title: string; desc: string; index: number }) {
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(true);
 
@@ -25,7 +26,7 @@ function GaransiCard({ icon, title, desc, index }: { icon: string; title: string
       }`}
       style={{ transitionDelay: `${index * 100}ms` }}
     >
-      <div className="text-4xl transition-transform group-hover:scale-110">{icon}</div>
+      <div className="mb-4 transition-transform group-hover:scale-110">{icon}</div>
       <div className="mt-3 text-lg font-black text-dark">{title}</div>
       <div className="mt-1 text-sm font-bold leading-relaxed text-zinc-500">{desc}</div>
     </div>
@@ -33,9 +34,9 @@ function GaransiCard({ icon, title, desc, index }: { icon: string; title: string
 }
 
 const garansi = [
-  { icon: "🔒", title: "Garansi Uang Kembali", desc: "Kalau websitenya batal jadi, uang kakak kembali 100%. Tenang aja." },
-  { icon: "🔧", title: "Garansi Revisi", desc: "Ganti teks, warna, atau foto kakak — kami layani dengan cepat." },
-  { icon: "🤝", title: "Support Santai", desc: "Bebas tanya kapan aja lewat WhatsApp. Kakak ga bakal diemin." },
+  { icon: <Lock size={32} className="text-teal" />, title: "Garansi Uang Kembali", desc: "Kalau websitenya batal jadi, uang kakak kembali 100%. Tenang aja." },
+  { icon: <Wrench size={32} className="text-teal" />, title: "Garansi Revisi", desc: "Ganti teks, warna, atau foto kakak — kami layani dengan cepat." },
+  { icon: <Handshake size={32} className="text-teal" />, title: "Support Santai", desc: "Bebas tanya kapan aja lewat WhatsApp. Kakak ga bakal diemin." },
 ];
 
 export default function Garansi() {

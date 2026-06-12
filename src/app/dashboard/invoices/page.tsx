@@ -34,7 +34,7 @@ export default async function InvoicesPage({ searchParams }: { searchParams: Pro
           <h1 className="text-xl font-black tracking-tighter text-dark sm:text-2xl">Invoice</h1>
           <p className="mt-1 text-xs font-bold text-zinc-300 sm:text-sm">Manage invoices and payments.</p>
         </div>
-        <Link href="/dashboard/invoices/new" className="inline-flex self-start rounded-full bg-pink px-5 py-2 text-sm font-bold text-white shadow-lg transition hover:bg-pink-dark sm:self-auto">
+        <Link href="/dashboard/invoices/new" className="inline-flex self-start rounded-full bg-pink px-5 py-2 text-sm font-bold text-white transition hover:bg-pink-dark sm:self-auto">
           + Create Invoice
         </Link>
       </div>
@@ -42,7 +42,7 @@ export default async function InvoicesPage({ searchParams }: { searchParams: Pro
       <div className="mt-6 space-y-3 sm:mt-8">
         {invoices.length === 0 && <p className="text-sm font-bold text-zinc-400">No invoices yet.</p>}
         {invoices.map((inv) => (
-          <div key={inv.id} className="flex flex-col gap-3 rounded-2xl border-2 border-zinc-200 bg-white p-4 shadow-sm sm:flex-row sm:items-center sm:justify-between sm:p-5">
+          <div key={inv.id} className="flex flex-col gap-3 rounded-lg border-2 border-zinc-200 bg-white p-4 sm:flex-row sm:items-center sm:justify-between sm:p-5">
             <div className="flex-1">
               <div className="flex flex-wrap items-center gap-2">
                 <span className="font-black text-dark">{inv.invoice_number}</span>

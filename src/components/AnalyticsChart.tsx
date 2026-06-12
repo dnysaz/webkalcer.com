@@ -6,7 +6,7 @@ type ChartData = { date: string; visits: number; wa_clicks: number; email_clicks
 
 export default function AnalyticsChart({ data }: { data: ChartData }) {
   return (
-    <div className="rounded-2xl border-2 border-zinc-200 bg-white p-6">
+    <div className="rounded-lg border-2 border-zinc-200 bg-white p-6">
       <h2 className="text-base font-black text-dark">Last 14 Days Chart</h2>
       <div className="mt-4 h-56 sm:h-72">
         <ResponsiveContainer width="100%" height="100%">
@@ -16,7 +16,7 @@ export default function AnalyticsChart({ data }: { data: ChartData }) {
             <YAxis allowDecimals={false} tick={{ fontSize: 11, fontWeight: 700 }} stroke="#a1a1aa" />
             <Tooltip
               contentStyle={{
-                borderRadius: 12,
+                borderRadius: 8,
                 border: "2px solid #e4e4e7",
                 fontSize: 12,
                 fontWeight: 700,

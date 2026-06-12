@@ -5,6 +5,18 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { logout } from "./actions";
 import SubmitButton from "@/components/SubmitButton";
+import { LayoutDashboard, PenTool, MessageSquare, Image, Search, Package, ClipboardList, FileText, PhoneCall, Menu, X } from "lucide-react";
+
+const iconMap: Record<string, React.ReactNode> = {
+  LayoutDashboard: <LayoutDashboard size={18} />,
+  PenTool: <PenTool size={18} />,
+  MessageSquare: <MessageSquare size={18} />,
+  Image: <Image size={18} />,
+  Search: <Search size={18} />,
+  Package: <Package size={18} />,
+  ClipboardList: <ClipboardList size={18} />,
+  FileText: <FileText size={18} />,
+};
 
 interface NavLink {
   href: string;
@@ -38,19 +50,17 @@ export default function MobileSidebar({ links, userEmail }: { links: NavLink[]; 
   return (
     <>
       {/* Top bar with hamburger */}
-      <div className="sticky top-0 z-30 flex h-14 items-center justify-between border-b border-zinc-200 bg-white px-4 shadow-sm md:hidden">
+      <div className="sticky top-0 z-30 flex h-14 items-center justify-between border-b border-zinc-200 bg-white px-4 md:hidden">
         <div className="flex items-center gap-2">
           <span className="text-yellow text-xl">🤙</span>
           <span className="text-base font-black tracking-tighter text-dark">dashboard</span>
         </div>
         <button
           onClick={() => setOpen(!open)}
-          className="flex h-9 w-9 items-center justify-center rounded-xl border-2 border-zinc-200 text-dark transition hover:border-pink"
+          className="flex h-9 w-9 items-center justify-center rounded-md border border-zinc-200 text-dark transition hover:border-pink"
           aria-label={open ? "Close menu" : "Open menu"}
         >
-          <span className={`text-xl font-black transition-transform ${open ? "rotate-45" : ""}`}>
-            {open ? "+" : "☰"}
-          </span>
+          {open ? <X size={20} /> : <Menu size={20} />}
         </button>
       </div>
 
@@ -64,7 +74,7 @@ export default function MobileSidebar({ links, userEmail }: { links: NavLink[]; 
 
       {/* Mobile sidebar panel */}
       <aside
-        className={`fixed inset-y-0 left-0 z-50 flex w-72 flex-col border-r border-zinc-200 bg-white shadow-2xl transition-transform duration-300 md:hidden ${
+        className={`fixed inset-y-0 left-0 z-50 flex w-72 flex-col border-r border-zinc-200 bg-white transition-transform duration-300 md:hidden ${
           open ? "translate-x-0" : "-translate-x-full"
         }`}
       >
@@ -72,7 +82,7 @@ export default function MobileSidebar({ links, userEmail }: { links: NavLink[]; 
           <span className="text-yellow text-xl">🤙</span>
           <span className="text-base font-black tracking-tighter text-dark">dashboard</span>
         </div>
-        <nav className="flex-1 space-y-1 overflow-y-auto p-4">
+        <nav className="flex-1 space-y-0.5 overflow-y-auto p-3">
           {links.map((l) => {
             const isActive = pathname === l.href || (l.href !== "/dashboard" && pathname.startsWith(l.href));
             return (
@@ -80,13 +90,13 @@ export default function MobileSidebar({ links, userEmail }: { links: NavLink[]; 
                 key={l.href}
                 href={l.href}
                 onClick={() => setOpen(false)}
-                className={`flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-bold transition ${
+                className={`flex items-center gap-3 rounded-md px-4 py-2.5 text-sm transition ${
                   isActive
-                    ? "bg-pink/10 text-pink"
-                    : "text-zinc-600 hover:bg-pink/5 hover:text-pink"
+                    ? "bg-pink/10 font-bold text-pink"
+                    : "font-medium text-zinc-500 hover:bg-pink/5 hover:text-pink"
                 }`}
               >
-                <span className="text-lg">{l.icon}</span>
+                <span>{iconMap[l.icon]}</span>
                 {l.label}
               </Link>
             );

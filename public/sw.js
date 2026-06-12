@@ -3,7 +3,9 @@ const PUBLIC_SHELL = ["/"];
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
-    caches.open(CACHE).then((cache) => cache.addAll(PUBLIC_SHELL)),
+    caches.open(CACHE).then((cache) =>
+      cache.addAll(PUBLIC_SHELL).catch(() => {}),
+    ),
   );
   self.skipWaiting();
 });
@@ -26,12 +28,8 @@ self.addEventListener("fetch", (event) => {
     event.respondWith(fetch(request));
     return;
   }
-  if (url.origin === self.origin && url.pathname.endsWith("/") === false && !url.pathname.includes(".")) {
-    event.respondWith(fetch(request));
-    return;
-  }
 
   event.respondWith(
-    caches.match(request).then((cached) => cached || fetch(request)),
+    caches.match(request).then((cached) => cached || fetch(request).catch(() => cached)),
   );
 });

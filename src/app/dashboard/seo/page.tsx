@@ -1,14 +1,9 @@
 import { getSeo } from "@/lib/supabase/queries";
-import { decrypt } from "@/lib/encryption";
 import PageToast from "@/components/PageToast";
 import SeoForm from "./SeoForm";
 
-function maskKey(key: string | null | undefined): string {
-  if (!key) return "";
-  const decrypted = decrypt(key);
-  if (!decrypted || decrypted.length < 3) return "•••••";
-  const last3 = decrypted.slice(-3);
-  return "•".repeat(decrypted.length - 3) + last3;
+function hasKey(key: string | null | undefined): boolean {
+  return !!key && key.length > 0;
 }
 
 export default async function SeoPage({ searchParams }: { searchParams: Promise<{ toast?: string }> }) {
@@ -21,8 +16,8 @@ export default async function SeoPage({ searchParams }: { searchParams: Promise<
     seo = await getSeo();
     const sp = await searchParams;
     toast = sp.toast;
-    serverKeyHint = maskKey(seo?.midtrans_server_key_enc as string | null | undefined);
-    clientKeyHint = maskKey(seo?.midtrans_client_key_enc as string | null | undefined);
+    serverKeyHint = hasKey(seo?.midtrans_server_key_enc as string | null | undefined) ? "••••••••••" : "";
+    clientKeyHint = hasKey(seo?.midtrans_client_key_enc as string | null | undefined) ? "••••••••••" : "";
   } catch (e) {
     console.error("SeoPage error:", e);
   }

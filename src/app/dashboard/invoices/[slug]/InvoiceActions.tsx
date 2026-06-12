@@ -106,7 +106,7 @@ export default function InvoiceActions({ invoice }: { invoice: Invoice }) {
           <button
             onClick={handleCreatePayment}
             disabled={loading}
-            className="rounded-full bg-pink px-6 py-2.5 text-sm font-bold text-white shadow-lg transition hover:bg-pink-dark disabled:opacity-50"
+            className="rounded-full bg-pink px-6 py-2.5 text-sm font-bold text-white transition hover:bg-pink-dark disabled:opacity-50"
           >
             {loading ? "Processing..." : invoice.midtrans_snap_token ? "Continue Payment" : "Create Payment"}
           </button>
@@ -124,7 +124,7 @@ export default function InvoiceActions({ invoice }: { invoice: Invoice }) {
 
       {message && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
-          <div className="mx-4 w-full max-w-sm rounded-3xl border-2 border-zinc-700 bg-dark p-6 shadow-2xl">
+          <div className="mx-4 w-full max-w-sm rounded-lg border-2 border-zinc-700 bg-dark p-6">
             <div className="flex flex-col items-center gap-4 text-center">
               <div className={`flex h-16 w-16 items-center justify-center rounded-full text-3xl ${message.type === "success" ? "bg-green-500/20 text-green-400" : "bg-red-500/20 text-red-400"}`}>
                 {message.type === "success" ? "✓" : "✕"}
@@ -135,7 +135,7 @@ export default function InvoiceActions({ invoice }: { invoice: Invoice }) {
               <p className="text-sm font-bold text-zinc-300">{message.text}</p>
               <button
                 onClick={refreshAndClose}
-                className={`mt-2 w-full rounded-full px-4 py-2.5 text-sm font-bold text-white shadow-lg transition ${message.type === "success" ? "bg-green-600 hover:bg-green-700" : "bg-red-600 hover:bg-red-700"}`}
+                className={`mt-2 w-full rounded-full px-4 py-2.5 text-sm font-bold text-white transition ${message.type === "success" ? "bg-green-600 hover:bg-green-700" : "bg-red-600 hover:bg-red-700"}`}
               >
                 OK
               </button>
@@ -153,7 +153,7 @@ async function loadSnapScript(): Promise<void> {
   const configRes = await fetch("/api/midtrans/client-key");
   const config = await configRes.json();
   if (!config.clientKey) {
-    throw new Error("Midtrans belum dikonfigurasi");
+    throw new Error("Midtrans not configured");
   }
 
   const scriptUrl = config.isProduction

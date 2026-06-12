@@ -16,7 +16,7 @@ export default async function TestimonialsPage({ searchParams }: { searchParams:
           <h1 className="text-xl font-black tracking-tighter text-dark sm:text-2xl">Testimonials</h1>
           <p className="mt-1 text-xs font-bold text-zinc-500 sm:text-sm">Manage customer testimonials.</p>
         </div>
-        <Link href="/dashboard/testimonials/new" className="inline-flex self-start rounded-full bg-pink px-5 py-2 text-sm font-bold text-white shadow-lg transition hover:bg-pink-dark sm:self-auto">
+        <Link href="/dashboard/testimonials/new" className="inline-flex self-start rounded-full bg-pink px-5 py-2 text-sm font-bold text-white transition hover:bg-pink-dark sm:self-auto">
           + Add
         </Link>
       </div>
@@ -24,7 +24,7 @@ export default async function TestimonialsPage({ searchParams }: { searchParams:
       <div className="mt-6 space-y-3 sm:mt-8">
         {testimonials.length === 0 && <p className="text-sm font-bold text-zinc-500">No testimonials yet.</p>}
         {testimonials.map((t) => (
-          <div key={t.id} className="flex flex-col gap-3 rounded-2xl border-2 border-zinc-200 bg-white p-4 shadow-sm sm:flex-row sm:items-center sm:justify-between sm:p-5">
+          <div key={t.id} className="flex flex-col gap-3 rounded-lg border-2 border-zinc-200 bg-white p-4 sm:flex-row sm:items-center sm:justify-between sm:p-5">
             <div className="flex-1">
               <p className="text-sm font-bold text-dark">&ldquo;{t.quote}&rdquo;</p>
               <p className="mt-1 text-xs font-bold text-zinc-500">{t.name} — {t.role} {!t.is_active && <span className="text-red-400">(inactive)</span>}</p>

@@ -4,7 +4,7 @@ export default function DashboardLoading() {
       {/* Stats skeleton */}
       <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
         {[...Array(3)].map((_, i) => (
-          <div key={i} className="rounded-2xl border border-zinc-200 bg-white p-5">
+          <div key={i} className="rounded-lg border border-zinc-200 bg-white p-5">
             <div className="mb-2 h-3 w-20 rounded-full bg-zinc-200" />
             <div className="mb-1 h-7 w-16 rounded-lg bg-zinc-200" />
             <div className="h-2 w-12 rounded-full bg-zinc-100" />
@@ -15,7 +15,7 @@ export default function DashboardLoading() {
       {/* Invoice status skeleton */}
       <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
         {["Paid", "Pending", "Overdue", "Total"].map((label) => (
-          <div key={label} className="rounded-2xl border border-zinc-200 bg-white p-5">
+          <div key={label} className="rounded-lg border border-zinc-200 bg-white p-5">
             <div className="mb-2 h-3 w-14 rounded-full bg-zinc-200" />
             <div className="mb-1 h-6 w-12 rounded-lg bg-zinc-200" />
             <div className="h-2 w-10 rounded-full bg-zinc-100" />
@@ -24,13 +24,13 @@ export default function DashboardLoading() {
       </div>
 
       {/* Revenue chart skeleton */}
-      <div className="rounded-2xl border border-zinc-200 bg-white p-6">
+      <div className="rounded-lg border border-zinc-200 bg-white p-6">
         <div className="mb-4 h-4 w-32 rounded-full bg-zinc-200" />
-        <div className="h-56 rounded-xl bg-zinc-100 sm:h-72" />
+        <div className="h-56 rounded-md bg-zinc-100 sm:h-72" />
       </div>
 
       {/* Table skeleton */}
-      <div className="rounded-2xl border border-zinc-200 bg-white p-6">
+      <div className="rounded-lg border border-zinc-200 bg-white p-6">
         <div className="mb-4 h-4 w-40 rounded-full bg-zinc-200" />
         <div className="space-y-3">
           {[...Array(4)].map((_, i) => (
