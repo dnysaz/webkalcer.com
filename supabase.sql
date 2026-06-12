@@ -104,6 +104,10 @@ CREATE TABLE IF NOT EXISTS seo_settings (
   proposal_closing_en TEXT DEFAULT 'Please confirm your acceptance of this proposal by signing below. Once approved, we will begin the development process immediately.',
   proposal_terms_id TEXT DEFAULT '',
   proposal_terms_en TEXT DEFAULT '',
+  proposal_intro2_id TEXT DEFAULT '',
+  proposal_intro2_en TEXT DEFAULT '',
+  proposal_package_desc_id TEXT DEFAULT '',
+  proposal_package_desc_en TEXT DEFAULT '',
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
 
@@ -153,6 +157,10 @@ ALTER TABLE seo_settings ADD COLUMN IF NOT EXISTS proposal_closing_id TEXT DEFAU
 ALTER TABLE seo_settings ADD COLUMN IF NOT EXISTS proposal_closing_en TEXT DEFAULT 'Please confirm your acceptance of this proposal by signing below. Once approved, we will begin the development process immediately.';
 ALTER TABLE seo_settings ADD COLUMN IF NOT EXISTS proposal_terms_id TEXT DEFAULT '';
 ALTER TABLE seo_settings ADD COLUMN IF NOT EXISTS proposal_terms_en TEXT DEFAULT '';
+ALTER TABLE seo_settings ADD COLUMN IF NOT EXISTS proposal_intro2_id TEXT DEFAULT '';
+ALTER TABLE seo_settings ADD COLUMN IF NOT EXISTS proposal_intro2_en TEXT DEFAULT '';
+ALTER TABLE seo_settings ADD COLUMN IF NOT EXISTS proposal_package_desc_id TEXT DEFAULT '';
+ALTER TABLE seo_settings ADD COLUMN IF NOT EXISTS proposal_package_desc_en TEXT DEFAULT '';
 
 -- Add VA payment columns to invoices (for manual VA payments)
 ALTER TABLE invoices ADD COLUMN IF NOT EXISTS va_bank TEXT;

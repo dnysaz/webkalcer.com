@@ -46,6 +46,10 @@ export async function saveSeo(_prev: unknown, formData: FormData): Promise<{ suc
       proposal_closing_en: formData.get("proposal_closing_en") as string,
       proposal_terms_id: formData.get("proposal_terms_id") as string,
       proposal_terms_en: formData.get("proposal_terms_en") as string,
+      proposal_intro2_id: formData.get("proposal_intro2_id") as string,
+      proposal_intro2_en: formData.get("proposal_intro2_en") as string,
+      proposal_package_desc_id: formData.get("proposal_package_desc_id") as string,
+      proposal_package_desc_en: formData.get("proposal_package_desc_en") as string,
       updated_at: new Date().toISOString(),
     };
 

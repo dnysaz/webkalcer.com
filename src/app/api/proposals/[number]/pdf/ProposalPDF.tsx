@@ -304,6 +304,8 @@ export default function ProposalPDF({ proposal, seo }: { proposal: any; seo?: an
     proposalTitle: seo?.proposal_title || base.proposalTitle,
     companyDetail: seo ? (isEn ? seo.proposal_slogan_en : seo.proposal_slogan_id) || base.companyDetail : base.companyDetail,
     intro1: seo ? (isEn ? seo.proposal_opening_en : seo.proposal_opening_id) || base.intro1 : base.intro1,
+    intro2: seo ? (isEn ? seo.proposal_intro2_en : seo.proposal_intro2_id) || base.intro2 : base.intro2,
+    packageDesc: seo ? (isEn ? seo.proposal_package_desc_en : seo.proposal_package_desc_id) || base.packageDesc : base.packageDesc,
     approvalText: seo ? (isEn ? seo.proposal_closing_en : seo.proposal_closing_id) || base.approvalText : base.approvalText,
     terms: seoTerms ? seoTerms.split("\n").filter(Boolean) : base.terms,
   };

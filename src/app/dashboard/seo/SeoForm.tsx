@@ -15,6 +15,8 @@ type SeoData = {
   proposal_logo_url?: string; proposal_opening_id?: string; proposal_opening_en?: string;
   proposal_closing_id?: string; proposal_closing_en?: string;
   proposal_terms_id?: string; proposal_terms_en?: string;
+  proposal_intro2_id?: string; proposal_intro2_en?: string;
+  proposal_package_desc_id?: string; proposal_package_desc_en?: string;
 };
 
 function ImageUploadField({ name, defaultValue, label, hint, folder }: {
@@ -147,6 +149,9 @@ const tabs = [
   { id: "proposal", label: "Proposal" },
   { id: "google-tag", label: "Google Tag" },
 ];
+
+const intro2PlaceholderId = "Webkalcer.com adalah penyedia jasa website profesional, responsif, dan terjangkau untuk UMKM, personal branding, dan profil bisnis. Berikut adalah rincian ruang lingkup pekerjaan dan harga untuk proyek Anda.";
+const intro2PlaceholderEn = "At Webkalcer.com, we specialize in creating professional, responsive, and affordable websites for UMKM, personal branding, and business profiles. Below is the detailed scope of work and pricing for your project.";
 
 export default function SeoForm({ seo, serverKeyHint, clientKeyHint }: { seo: SeoData | null; serverKeyHint: string; clientKeyHint: string }) {
   const router = useRouter();
@@ -449,13 +454,62 @@ export default function SeoForm({ seo, serverKeyHint, clientKeyHint }: { seo: Se
                       placeholder={"Payment is due upon agreement of this proposal.\nWebsite delivery time: 3×24 hours (for Kalcer package) and adjusted according to procedure for other packages.\nRevision: maximum 3 rounds of revisions. Additional revisions beyond 3 will require a cost confirmation.\nDomain & hosting renewal fees apply after the first year.\nThis proposal is valid for 14 days from the date above."}
                       className="w-full rounded-md border-2 border-zinc-200 px-4 py-3 text-sm font-bold outline-none transition focus:border-pink"
                     />
-                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="border-t border-zinc-200 pt-5">
+              <p className="mb-4 text-xs font-bold text-zinc-400 uppercase tracking-wider">Intro Text (tentang perusahaan)</p>
+              <div className="space-y-4">
+                <div>
+                  <label className="mb-1 block text-sm font-bold text-zinc-600">Bahasa Indonesia</label>
+                  <textarea
+                    name="proposal_intro2_id"
+                    rows={4}
+                    defaultValue={seo?.proposal_intro2_id ?? ""}
+                    placeholder={intro2PlaceholderId}
+                    className="w-full rounded-md border-2 border-zinc-200 px-4 py-3 text-sm font-bold outline-none transition focus:border-pink"
+                  />
+                </div>
+                <div>
+                  <label className="mb-1 block text-sm font-bold text-zinc-600">English</label>
+                  <textarea
+                    name="proposal_intro2_en"
+                    rows={4}
+                    defaultValue={seo?.proposal_intro2_en ?? ""}
+                    placeholder={intro2PlaceholderEn}
+                    className="w-full rounded-md border-2 border-zinc-200 px-4 py-3 text-sm font-bold outline-none transition focus:border-pink"
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="border-t border-zinc-200 pt-5">
+              <p className="mb-4 text-xs font-bold text-zinc-400 uppercase tracking-wider">Package Description</p>
+              <div className="space-y-4">
+                <div>
+                  <label className="mb-1 block text-sm font-bold text-zinc-600">Bahasa Indonesia</label>
+                  <textarea
+                    name="proposal_package_desc_id"
+                    rows={3}
+                    defaultValue={seo?.proposal_package_desc_id ?? ""}
+                    placeholder={"Paket sudah termasuk desain responsif yang dioptimalkan untuk desktop dan mobile. Website akan siap digunakan setelah selesai dikerjakan."}
+                    className="w-full rounded-md border-2 border-zinc-200 px-4 py-3 text-sm font-bold outline-none transition focus:border-pink"
+                  />
+                </div>
+                <div>
+                  <label className="mb-1 block text-sm font-bold text-zinc-600">English</label>
+                  <textarea
+                    name="proposal_package_desc_en"
+                    rows={3}
+                    defaultValue={seo?.proposal_package_desc_en ?? ""}
+                    placeholder={"Packages include responsive design optimized for both desktop and mobile devices. The website will be fully deployed and ready to use."}
+                    className="w-full rounded-md border-2 border-zinc-200 px-4 py-3 text-sm font-bold outline-none transition focus:border-pink"
+                  />
                 </div>
               </div>
             </div>
           </div>
         </div>
-      )}
+      </div>
 
       {tab === "google-tag" && (
         <div>
