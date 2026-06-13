@@ -95,7 +95,7 @@ export default async function PricelistPage() {
                 )}
 
                 {pkg.thumbnail_url && (
-                  <div className="relative -mx-6 -mt-6 mb-4 h-44 overflow-hidden">
+                  <div className="relative -mx-6 -mt-6 mb-4 h-44 overflow-hidden rounded-t-3xl">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img src={pkg.thumbnail_url} alt={pkg.name} className="h-full w-full object-cover" loading="lazy" />
                   </div>
