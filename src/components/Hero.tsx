@@ -78,7 +78,7 @@ export default function Hero({ hero, phone, waMessage }: { hero?: { badge_text?:
               </p>
             </div>
 
-            <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row lg:justify-start">
+            <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center lg:justify-start">
               <a
                 href="#price"
                 className="rounded-full bg-pink px-8 py-4 text-lg font-bold text-white shadow-lg transition-transform hover:bg-pink-dark hover:scale-105 hover:shadow-xl active:scale-95"
