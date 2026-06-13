@@ -108,6 +108,7 @@ export default async function PricelistPage() {
                   <div>
                     <h3 className="text-xl font-black tracking-tight text-dark">{pkg.name}</h3>
                     {pkg.tagline && <p className="text-xs font-bold text-zinc-500">{pkg.tagline}</p>}
+                    {pkg.description && <p className="mt-1 text-xs font-bold leading-relaxed text-zinc-400">{pkg.description}</p>}
                   </div>
                 </div>
 

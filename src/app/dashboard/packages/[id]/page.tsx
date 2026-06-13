@@ -38,7 +38,7 @@ export default async function EditPackagePage({ params }: { params: Promise<{ id
             </div>
             <div>
               <label className="mb-1 block text-sm font-bold text-zinc-600">Description</label>
-              <input name="description" defaultValue={p.description} className="w-full rounded-md border-2 border-zinc-200 px-4 py-3 text-sm font-bold outline-none transition focus:border-pink" />
+              <textarea name="description" defaultValue={p.description} rows={3} className="w-full rounded-md border-2 border-zinc-200 px-4 py-3 text-sm font-bold outline-none transition focus:border-pink resize-none" />
             </div>
             <div className="flex gap-4">
               <div className="flex-1">
