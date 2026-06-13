@@ -186,9 +186,11 @@ interface SeoData {
   proposal_closing_en?: string;
   logo_url?: string;
   proposal_logo_url?: string;
+  phone?: string;
+  email?: string;
 }
 
-function Page1({ t, proposal, logoUrl, companyName }: { t: Translation; proposal: ProposalData; logoUrl?: string; companyName: string }) {
+function Page1({ t, proposal, logoUrl, companyName, contactEmail, contactPhone }: { t: Translation; proposal: ProposalData; logoUrl?: string; companyName: string; contactEmail?: string; contactPhone?: string }) {
   const pn = (n: number) => `— ${t.proposalTitle.toLowerCase()} ${proposal.proposal_number} | Page ${n} —`;
 
   return (
@@ -207,7 +209,7 @@ function Page1({ t, proposal, logoUrl, companyName }: { t: Translation; proposal
             <Text style={styles.companyName}>{companyName}</Text>
             <View style={styles.companyDetail}>
               <Text>{t.companyDetail}</Text>
-              <Text>Email: halo@webkalcer.com | Phone: 0857-9272-1649</Text>
+              <Text>Email: {contactEmail || "halo@webkalcer.com"} | Phone: {contactPhone || "0857-9272-1649"}</Text>
             </View>
           </View>
         </View>
@@ -296,7 +298,7 @@ function Page1({ t, proposal, logoUrl, companyName }: { t: Translation; proposal
   );
 }
 
-function Page2({ t, proposal, companyName }: { t: Translation; proposal: ProposalData; companyName: string }) {
+function Page2({ t, proposal, companyName, contactEmail, contactPhone }: { t: Translation; proposal: ProposalData; companyName: string; contactEmail?: string; contactPhone?: string }) {
   const pn = (n: number) => `— ${t.proposalTitle.toLowerCase()} ${proposal.proposal_number} | Page ${n} —`;
 
   return (
@@ -337,7 +339,7 @@ function Page2({ t, proposal, companyName }: { t: Translation; proposal: Proposa
 
       <Text style={styles.footerDisclaimer}>
         {companyName} — {t.companyDetail}{'\n'}
-        Email: halo@webkalcer.com | WhatsApp: 0857-9272-1649 | www.webkalcer.com
+        Email: {contactEmail || "halo@webkalcer.com"} | WhatsApp: {contactPhone || "0857-9272-1649"} | www.webkalcer.com
       </Text>
 
       <Text style={styles.pageNum}>{pn(2)}</Text>
@@ -364,11 +366,13 @@ export default function ProposalPDF({ proposal, seo }: { proposal: ProposalData;
   };
 
   const logoUrl = seo?.proposal_logo_url;
+  const contactEmail = seo?.email || "";
+  const contactPhone = seo?.phone || "";
 
   return (
     <Document>
-      <Page1 t={t} proposal={proposal} logoUrl={logoUrl} companyName={companyName} />
-      <Page2 t={t} proposal={proposal} companyName={companyName} />
+      <Page1 t={t} proposal={proposal} logoUrl={logoUrl} companyName={companyName} contactEmail={contactEmail} contactPhone={contactPhone} />
+      <Page2 t={t} proposal={proposal} companyName={companyName} contactEmail={contactEmail} contactPhone={contactPhone} />
     </Document>
   );
 }

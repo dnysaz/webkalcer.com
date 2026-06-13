@@ -3,6 +3,7 @@ import { cookies } from "next/headers";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Link from "next/link";
+import { buildWaUrl } from "@/lib/config";
 import { Tag, ArrowDown, Package, Check, Sparkles, MessageCircle, ClipboardList, Palette, CheckCircle } from "lucide-react";
 
 function formatPrice(n: number) {
@@ -39,12 +40,40 @@ async function getPackages() {
   }
 }
 
+async function getSeo() {
+  try {
+    const cookieStore = await cookies();
+    const supabase = createServerClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+      {
+        cookies: {
+          getAll() { return cookieStore.getAll(); },
+          setAll() {},
+        },
+      },
+    );
+    const { data } = await supabase
+      .from("seo_settings")
+      .select("phone,email,wa_message")
+      .eq("page", "home")
+      .single();
+    return data ?? null;
+  } catch {
+    return null;
+  }
+}
+
 export default async function PricelistPage() {
-  const packages = await getPackages();
+  const [packages, seo] = await Promise.all([getPackages(), getSeo()]);
+  const phone = seo?.phone || "";
+  const email = seo?.email || "";
+  const waMessage = seo?.wa_message || "";
+  const waUrl = buildWaUrl(phone, waMessage);
 
   return (
     <>
-      <Navbar />
+      <Navbar phone={phone} waMessage={waMessage} />
 
       {/* === HERO === */}
       <section className="relative overflow-hidden bg-cream px-4 pt-32 pb-16 sm:px-6 sm:pt-40">
@@ -155,7 +184,7 @@ export default async function PricelistPage() {
                 )}
 
                 <Link
-                  href={`https://wa.me/${process.env.NEXT_PUBLIC_PHONE_NUMBER || "6285792721649"}?text=${encodeURIComponent(`Halo kak, saya tertarik dengan paket ${pkg.name} di webkalcer.com`)}`}
+                  href={buildWaUrl(phone, `Halo kak, saya tertarik dengan paket ${pkg.name} di webkalcer.com`)}
                   target="_blank"
                   className="inline-flex items-center justify-center gap-2 rounded-full bg-dark px-8 py-3.5 text-sm font-bold text-white shadow-md transition-all hover:scale-[1.02] hover:bg-pink hover:shadow-xl active:scale-95"
                 >
@@ -181,7 +210,7 @@ export default async function PricelistPage() {
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-4">
             <a
-              href={`https://wa.me/${process.env.NEXT_PUBLIC_PHONE_NUMBER || "6285792721649"}?text=${encodeURIComponent(process.env.NEXT_PUBLIC_WA_MESSAGE || "Halo kak, saya mau buat website di webkalcer.com, bisa dibantu?")}`}
+              href={waUrl}
               target="_blank"
               rel="noopener"
               className="inline-flex items-center gap-2 rounded-full bg-pink px-10 py-4 text-base font-bold text-white shadow-lg transition-all hover:bg-pink-dark hover:scale-105 hover:shadow-xl active:scale-95"
@@ -190,7 +219,7 @@ export default async function PricelistPage() {
               <Sparkles className="h-4 w-4" />
             </a>
             <a
-              href={`https://wa.me/${process.env.NEXT_PUBLIC_PHONE_NUMBER || "6285792721649"}`}
+              href={buildWaUrl(phone, "")}
               target="_blank"
               rel="noopener"
               className="inline-flex items-center gap-2 rounded-full border-2 border-zinc-600 bg-transparent px-10 py-4 text-base font-bold text-white shadow-lg transition-all hover:border-pink hover:scale-105 active:scale-95"
@@ -241,7 +270,7 @@ export default async function PricelistPage() {
         </div>
       </section>
 
-      <Footer />
+      <Footer email={email} />
     </>
   );
 }
