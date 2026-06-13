@@ -89,7 +89,7 @@ export default async function PricelistPage() {
                 className="group relative flex flex-col rounded-3xl border-2 border-yellow/40 bg-white p-6 shadow-md transition-all duration-300 hover:border-yellow hover:shadow-2xl"
               >
                 {pkg.badge && (
-                  <div className={`absolute -top-3 right-4 rounded-full px-4 py-1 text-xs font-black uppercase tracking-wide shadow-lg ${badgeColor()}`}>
+                  <div className={`absolute -top-3 right-4 z-10 rounded-full px-4 py-1 text-xs font-black uppercase tracking-wide shadow-lg ${badgeColor()}`}>
                     {pkg.badge}
                   </div>
                 )}
