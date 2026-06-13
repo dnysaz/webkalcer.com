@@ -19,39 +19,31 @@ export async function saveSeo(_prev: unknown, formData: FormData): Promise<{ suc
     const clientKey = formData.get("client_key") as string;
     const isProduction = formData.get("is_production") === "on";
 
-    const updates: Record<string, unknown> = {
-      title: formData.get("title") as string,
-      description: formData.get("description") as string,
-      keywords,
-      og_title: formData.get("og_title") as string,
-      og_description: formData.get("og_description") as string,
-      og_image_url: formData.get("og_image_url") as string,
-      favicon_url: formData.get("favicon_url") as string,
-      google_tag: formData.get("google_tag") as string,
-      head_scripts: formData.get("head_scripts") as string,
-      phone: formData.get("phone") as string,
-      email: formData.get("email") as string,
-      wa_message: formData.get("wa_message") as string,
-      midtrans_is_production: isProduction,
-      sitename: formData.get("sitename") as string,
-      logo_url: formData.get("logo_url") as string,
-      proposal_company_name: formData.get("proposal_company_name") as string,
-      proposal_title: formData.get("proposal_title") as string,
-      proposal_slogan_id: formData.get("proposal_slogan_id") as string,
-      proposal_slogan_en: formData.get("proposal_slogan_en") as string,
-      proposal_logo_url: formData.get("proposal_logo_url") as string,
-      proposal_opening_id: formData.get("proposal_opening_id") as string,
-      proposal_opening_en: formData.get("proposal_opening_en") as string,
-      proposal_closing_id: formData.get("proposal_closing_id") as string,
-      proposal_closing_en: formData.get("proposal_closing_en") as string,
-      proposal_terms_id: formData.get("proposal_terms_id") as string,
-      proposal_terms_en: formData.get("proposal_terms_en") as string,
-      proposal_intro2_id: formData.get("proposal_intro2_id") as string,
-      proposal_intro2_en: formData.get("proposal_intro2_en") as string,
-      proposal_package_desc_id: formData.get("proposal_package_desc_id") as string,
-      proposal_package_desc_en: formData.get("proposal_package_desc_en") as string,
-      updated_at: new Date().toISOString(),
-    };
+    const g = (key: string) => formData.get(key) as string | null;
+
+    const updates: Record<string, unknown> = {};
+    const title = g("title");
+    if (title !== null) updates.title = title;
+    const description = g("description");
+    if (description !== null) updates.description = description;
+    updates.keywords = keywords;
+    for (const key of [
+      "og_title", "og_description", "og_image_url", "favicon_url",
+      "google_tag", "head_scripts", "phone", "email", "wa_message",
+      "sitename", "logo_url",
+      "proposal_company_name", "proposal_title",
+      "proposal_slogan_id", "proposal_slogan_en", "proposal_logo_url",
+      "proposal_opening_id", "proposal_opening_en",
+      "proposal_closing_id", "proposal_closing_en",
+      "proposal_terms_id", "proposal_terms_en",
+      "proposal_intro2_id", "proposal_intro2_en",
+      "proposal_package_desc_id", "proposal_package_desc_en",
+    ]) {
+      const val = g(key);
+      if (val !== null) updates[key] = val;
+    }
+    updates.midtrans_is_production = isProduction;
+    updates.updated_at = new Date().toISOString();
 
     if (serverKey) {
       const enc = encrypt(serverKey);
