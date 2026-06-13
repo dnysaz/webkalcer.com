@@ -82,7 +82,7 @@ export default async function PricelistPage() {
           {packages.length === 0 && (
             <p className="text-center text-sm font-bold text-zinc-400">Belum ada paket tersedia. Cek lagi nanti ya kak!</p>
           )}
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-2">
+          <div className={`gap-6 ${packages.length === 1 ? "flex justify-center" : "grid sm:grid-cols-2 lg:grid-cols-2"}`}>
             {packages.map((pkg) => (
               <div
                 key={pkg.id}
