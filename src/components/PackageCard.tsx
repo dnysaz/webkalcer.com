@@ -39,7 +39,7 @@ export default function PackageCard({ pkg, deleteAction }: { pkg: PackageData; d
       >
         {pkg.thumbnail_url && (
           <div className="h-40 overflow-hidden bg-zinc-100">
-            <Image src={pkg.thumbnail_url} alt={pkg.name} width={400} height={160} className="h-full w-full object-cover" />
+            <Image src={pkg.thumbnail_url} alt={pkg.name} width={400} height={160} className="h-full w-full object-cover" unoptimized />
           </div>
         )}
         <div className="flex flex-1 flex-col p-5">
