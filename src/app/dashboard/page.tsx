@@ -1,5 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
-import { getVisitCount, getDailyVisits, getDailyClicks, getClickCounts } from "@/lib/supabase/queries";
+import { getVisitCount, getDailyVisits, getDailyClicks } from "@/lib/supabase/queries";
 import AnalyticsChart from "@/components/AnalyticsChart";
 
 function formatPrice(n: number) {
@@ -51,7 +51,6 @@ export default async function DashboardHome() {
     visitCount,
     dailyRows,
     clickRows,
-    clickCounts,
   ] = await Promise.all([
     supabase.from("packages").select("*", { count: "exact", head: true }),
     supabase.from("invoices").select("*", { count: "exact", head: true }).eq("status", "draft"),
@@ -61,7 +60,6 @@ export default async function DashboardHome() {
     getVisitCount(),
     getDailyVisits(14),
     getDailyClicks(14),
-    getClickCounts(),
   ]);
 
   const { data: paidInvoices } = await supabase

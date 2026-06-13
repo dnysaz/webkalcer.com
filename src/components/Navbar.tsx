@@ -1,8 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { buildWaUrl } from "@/lib/config";
-import { PhoneCall, Menu, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 
 const links = [
   { href: "/", label: "Beranda" },
@@ -40,25 +41,25 @@ export default function Navbar({ phone, waMessage }: { phone?: string; waMessage
       }`}
     >
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 sm:px-6">
-        <a
+        <Link
           href="/"
           className="flex items-center gap-2 text-3xl font-black tracking-tighter transition-all hover:scale-105 sm:text-4xl"
           onClick={close}
         >
           <span className="text-2xl text-yellow sm:text-3xl">🤙</span>
           <span><span className="text-dark">web</span><span className="rounded-lg bg-yellow text-dark">kalcer</span><span className="text-dark">.com</span></span>
-        </a>
+        </Link>
 
         {/* Desktop nav */}
         <nav className="hidden items-center gap-1 sm:flex">
           {links.map((l) => (
-            <a
+            <Link
               key={l.href}
               href={l.href}
               className="rounded-full px-4 py-2 text-sm font-bold text-dark transition hover:bg-pink/10"
             >
               {l.label}
-            </a>
+            </Link>
           ))}
           <a
             href={waUrl}
@@ -98,14 +99,14 @@ export default function Navbar({ phone, waMessage }: { phone?: string; waMessage
           <div className="fixed inset-0 top-0 -z-10" onClick={close} />
           <nav className="border-t border-zinc-200 bg-cream px-4 pb-6 pt-2 shadow-xl sm:hidden">
             {links.map((l) => (
-              <a
+              <Link
                 key={l.href}
                 href={l.href}
                 onClick={close}
                 className="block rounded-2xl px-4 py-3 text-base font-bold text-dark transition hover:bg-pink/10"
               >
                 {l.label}
-              </a>
+              </Link>
             ))}
           </nav>
         </>

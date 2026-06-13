@@ -55,6 +55,7 @@ function TechCard({ name, icon, isSvg, desc, index }: Tech & { index: number }) 
         {isSvg ? (
           <span className="h-7 w-7" dangerouslySetInnerHTML={{ __html: icon }} />
         ) : (
+          // eslint-disable-next-line @next/next/no-img-element
           <img src={icon} alt={name} className="h-7 w-7" loading="lazy" />
         )}
       </div>

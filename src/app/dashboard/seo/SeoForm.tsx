@@ -177,8 +177,9 @@ export default function SeoForm({ seo, serverKeyHint, clientKeyHint }: { seo: Se
   useEffect(() => {
     if (!state) return;
     if (state.success) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setToast({ type: "success", text: "Settings saved successfully" });
-      router.refresh(); // refresh server component data
+      router.refresh();
     } else if (state.error) {
       setToast({ type: "error", text: state.error });
     }

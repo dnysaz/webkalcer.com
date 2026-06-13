@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { buildWaUrl } from "@/lib/config";
-import { Sparkles, Rocket, Laptop, PhoneCall } from "lucide-react";
+import { Sparkles, Rocket, Laptop } from "lucide-react";
 
 function Mockup() {
   return (

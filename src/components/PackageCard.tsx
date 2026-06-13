@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import DeleteButton from "./DeleteButton";
 import { X, Check } from "lucide-react";
 
@@ -38,7 +39,7 @@ export default function PackageCard({ pkg, deleteAction }: { pkg: PackageData; d
       >
         {pkg.thumbnail_url && (
           <div className="h-40 overflow-hidden bg-zinc-100">
-            <img src={pkg.thumbnail_url} alt={pkg.name} className="h-full w-full object-cover" />
+            <Image src={pkg.thumbnail_url} alt={pkg.name} width={400} height={160} className="h-full w-full object-cover" />
           </div>
         )}
         <div className="flex flex-1 flex-col p-5">

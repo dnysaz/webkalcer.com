@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { EMAIL as ENV_EMAIL } from "@/lib/config";
 
 export default function Footer({ email }: { email?: string }) {
@@ -8,10 +9,10 @@ export default function Footer({ email }: { email?: string }) {
     <footer className="bg-dark px-4 py-8 sm:px-6">
       <div className="mx-auto flex max-w-5xl flex-col items-center justify-between gap-6 text-sm sm:flex-row">
         <div className="flex flex-col items-center gap-3 sm:items-start">
-          <a href="/" className="flex items-center gap-2 text-lg font-black tracking-tight text-white">
+          <Link href="/" className="flex items-center gap-2 text-lg font-black tracking-tight text-white">
             <span className="text-yellow">🤙</span>
             <span><span className="text-white">web</span><span className="rounded-lg bg-yellow text-dark">kalcer</span><span className="text-white">.com</span></span>
-          </a>
+          </Link>
           <a
             href="https://www.instagram.com/webkalcer/"
             target="_blank"

@@ -1,6 +1,7 @@
 "use client";
 
 import { useActionState } from "react";
+import Link from "next/link";
 import { login } from "./actions";
 
 export default function LoginPage() {
@@ -11,10 +12,10 @@ export default function LoginPage() {
       <div className="w-full max-w-sm">
         <div className="rounded-3xl border-2 border-zinc-700 bg-dark p-8 shadow-2xl">
           <div className="mb-6 text-center">
-            <a href="/" className="inline-flex items-center gap-2 text-2xl font-black tracking-tighter text-white">
+            <Link href="/" className="inline-flex items-center gap-2 text-2xl font-black tracking-tighter text-white">
               <span className="text-yellow">🤙</span>
               <span><span className="text-white">web</span><span className="rounded-lg bg-yellow text-dark">kalcer</span></span>
-            </a>
+            </Link>
              <p className="mt-2 text-sm font-bold text-zinc-300">Login admin</p>
           </div>
 

@@ -41,14 +41,8 @@ export default function NewPackagePage() {
   const router = useRouter();
   const formRef = useRef<HTMLFormElement>(null);
   const [state, formAction] = useActionState(wrappedAction, null);
-  const [draft, setDraft] = useState<Record<string, FieldValue>>({});
-  const [loaded, setLoaded] = useState(false);
-
-  useEffect(() => {
-    const saved = loadDraft();
-    setDraft(saved);
-    setLoaded(true);
-  }, []);
+  const [draft, setDraft] = useState<Record<string, FieldValue>>(loadDraft);
+  const [loaded] = useState(true);
 
   useEffect(() => {
     if (state?.success) {

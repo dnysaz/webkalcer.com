@@ -214,7 +214,7 @@ export default async function PricelistPage() {
               { icon: ClipboardList, label: "Konfirmasi", desc: "Kami buatkan proposal & RAB, kakak tinggal setuju" },
               { icon: Palette, label: "Pengerjaan", desc: "Tim kami garap website sesuai kesepakatan" },
               { icon: CheckCircle, label: "Revisi & Launch", desc: "Kakak review, kami revisi, lalu website online!" },
-            ].map((item, i) => {
+            ].map((item) => {
               const Icon = item.icon;
               return (
                 <div

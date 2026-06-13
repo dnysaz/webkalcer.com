@@ -68,7 +68,35 @@ function formatDate(d: string) {
   return new Date(d).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
 }
 
-const id = {
+interface Translation {
+  companyDetail: string;
+  proposalTitle: string;
+  preparedFor: string;
+  proposalDate: string;
+  greeting: (n: string) => string;
+  intro1: string;
+  intro2: string;
+  scopeTitle: string;
+  serviceHeader: string;
+  priceHeader: string;
+  badge: string;
+  packageDesc: string;
+  investment: string;
+  subtotal: string;
+  discount: string;
+  tax: string;
+  grandTotal: string;
+  notesTitle: string;
+  termsTitle: string;
+  terms: string[];
+  approval: string;
+  approvalText: string;
+  acceptedBy: string;
+  client: string;
+  preparedBy: string;
+}
+
+const id: Translation = {
   companyDetail: "",
   proposalTitle: "PROPOSAL",
   preparedFor: "Dipersiapkan Untuk",
@@ -96,7 +124,7 @@ const id = {
   preparedBy: "Dipersiapkan Oleh",
 };
 
-const en = {
+const en: Translation = {
   companyDetail: "",
   proposalTitle: "PROPOSAL",
   preparedFor: "Prepared For",
@@ -124,7 +152,43 @@ const en = {
   preparedBy: "Prepared By",
 };
 
-function Page1({ t, proposal, logoUrl, companyName }: { t: typeof id; proposal: any; logoUrl?: string; companyName: string }) {
+interface ProposalData {
+  proposal_number: string;
+  customer_name: string;
+  customer_email?: string;
+  customer_phone?: string;
+  created_at: string;
+  subtotal: number;
+  discount: number;
+  tax_percentage: number;
+  tax: number;
+  grand_total: number;
+  notes?: string;
+  signature_name?: string;
+  language?: string;
+  items: { description: string; price: number; package_id?: number | null }[];
+}
+
+interface SeoData {
+  proposal_company_name?: string;
+  proposal_title?: string;
+  proposal_terms_id?: string;
+  proposal_terms_en?: string;
+  proposal_opening_id?: string;
+  proposal_opening_en?: string;
+  proposal_intro2_id?: string;
+  proposal_intro2_en?: string;
+  proposal_package_desc_id?: string;
+  proposal_package_desc_en?: string;
+  proposal_slogan_id?: string;
+  proposal_slogan_en?: string;
+  proposal_closing_id?: string;
+  proposal_closing_en?: string;
+  logo_url?: string;
+  proposal_logo_url?: string;
+}
+
+function Page1({ t, proposal, logoUrl, companyName }: { t: Translation; proposal: ProposalData; logoUrl?: string; companyName: string }) {
   const pn = (n: number) => `— ${t.proposalTitle.toLowerCase()} ${proposal.proposal_number} | Page ${n} —`;
 
   return (
@@ -136,6 +200,7 @@ function Page1({ t, proposal, logoUrl, companyName }: { t: typeof id; proposal: 
       <View style={styles.header}>
         <View style={{ flexDirection: "row", gap: 12, alignItems: "center", flex: 1 }}>
           {logoUrl && (
+            // eslint-disable-next-line jsx-a11y/alt-text
             <Image src={logoUrl} style={{ width: 40, height: 40, objectFit: "contain" }} />
           )}
           <View style={styles.headerLeft}>
@@ -179,7 +244,7 @@ function Page1({ t, proposal, logoUrl, companyName }: { t: typeof id; proposal: 
               <Text style={[styles.tableHeaderCell, { width: "70%" }]}>{t.serviceHeader}</Text>
               <Text style={[styles.tableHeaderCell, { width: "30%", textAlign: "right" }]}>{t.priceHeader}</Text>
             </View>
-            {proposal.items.map((item: any, i: number) => (
+            {proposal.items.map((item: { description: string; price: number; package_id?: number | null }, i: number) => (
               <View key={i} style={styles.tableRow}>
                 <Text style={[styles.tableCell, { width: "70%", flexDirection: "row", alignItems: "center" }]}>
                   {item.package_id && <Text style={styles.badge}>{t.badge} </Text>}
@@ -231,7 +296,7 @@ function Page1({ t, proposal, logoUrl, companyName }: { t: typeof id; proposal: 
   );
 }
 
-function Page2({ t, proposal, companyName }: { t: typeof id; proposal: any; companyName: string }) {
+function Page2({ t, proposal, companyName }: { t: Translation; proposal: ProposalData; companyName: string }) {
   const pn = (n: number) => `— ${t.proposalTitle.toLowerCase()} ${proposal.proposal_number} | Page ${n} —`;
 
   return (
@@ -280,14 +345,14 @@ function Page2({ t, proposal, companyName }: { t: typeof id; proposal: any; comp
   );
 }
 
-export default function ProposalPDF({ proposal, seo }: { proposal: any; seo?: any }) {
+export default function ProposalPDF({ proposal, seo }: { proposal: ProposalData; seo?: SeoData }) {
   const isEn = proposal.language === "en";
   const base = isEn ? en : id;
   const companyName = seo?.proposal_company_name || "";
 
   const seoTerms = isEn ? seo?.proposal_terms_en : seo?.proposal_terms_id;
 
-  const t = {
+  const t: Translation = {
     ...base,
     proposalTitle: seo?.proposal_title || base.proposalTitle,
     companyDetail: seo ? (isEn ? seo.proposal_slogan_en : seo.proposal_slogan_id) || "" : "",

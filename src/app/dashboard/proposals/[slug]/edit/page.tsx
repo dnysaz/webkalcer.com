@@ -39,7 +39,7 @@ export default async function EditProposalPage({ params }: { params: Promise<{ s
           language: proposal.language || "id",
           notes: proposal.notes || "",
           signature_name: proposal.signature_name || "",
-          items: (proposal.items || []).map((i: any) => ({
+          items: (proposal.items || []).map((i: { description: string; price: number; package_id?: number | null }) => ({
             description: i.description,
             price: Number(i.price),
             package_id: i.package_id || null,

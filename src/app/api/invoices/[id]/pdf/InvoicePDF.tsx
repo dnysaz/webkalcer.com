@@ -126,12 +126,14 @@ export default function InvoicePDF({ invoice, items, seo, emojiSrc }: InvoiceDat
       <Page size="A4" style={styles.page}>
         {/* Watermark */}
         <View style={styles.watermark}>
+          {/* eslint-disable-next-line jsx-a11y/alt-text */}
           {emojiSrc && <Image style={styles.watermarkImg} src={emojiSrc} />}
           <Text style={styles.watermarkText}>webkalcer.com</Text>
         </View>
 
         <View style={styles.header}>
           <View style={styles.headerLeft}>
+            {/* eslint-disable-next-line jsx-a11y/alt-text */}
             {seo?.favicon_url && <Image style={styles.logo} src={seo.favicon_url} />}
             <View>
               <Text style={styles.companyName}>{seo?.title || "Webkalcer"}</Text>

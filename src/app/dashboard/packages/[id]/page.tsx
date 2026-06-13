@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { getPackage } from "@/lib/supabase/queries";
 import { updatePackage } from "../actions";
 import { notFound } from "next/navigation";
@@ -92,7 +93,7 @@ export default async function EditPackagePage({ params }: { params: Promise<{ id
           {p.thumbnail_url && (
             <div className="mb-3 mt-2">
               <p className="mb-1 text-xs font-bold text-zinc-500">Current thumbnail:</p>
-              <img src={p.thumbnail_url} alt={p.name} className="h-32 w-56 rounded-md object-cover" />
+              <Image src={p.thumbnail_url} alt={p.name} width={224} height={128} className="h-32 w-56 rounded-md object-cover" unoptimized />
             </div>
           )}
           <p className="mb-4 text-xs font-bold text-zinc-500">Upload a new image to replace.</p>
