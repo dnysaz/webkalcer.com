@@ -290,17 +290,22 @@ CREATE POLICY "Auth all invoice_items" ON invoice_items FOR ALL TO authenticated
 DROP POLICY IF EXISTS "Public read invoices" ON invoices;
 CREATE POLICY "Public read invoices" ON invoices FOR SELECT USING (TRUE);
 
--- 10. STORAGE BUCKET for images (logo, OG image, favicon)
+-- 10. STORAGE BUCKETS
+
+-- Bucket for images (logo, OG image, favicon)
 INSERT INTO storage.buckets (id, name, public) VALUES ('webkalcer-images', 'webkalcer-images', TRUE)
 ON CONFLICT (id) DO NOTHING;
 
--- Allow authenticated users to upload to bucket
+-- Bucket for packages (thumbnails, catalogs)
+INSERT INTO storage.buckets (id, name, public) VALUES ('packages', 'packages', TRUE)
+ON CONFLICT (id) DO NOTHING;
+
+-- Allow authenticated users to upload to webkalcer-images
 DROP POLICY IF EXISTS "Auth upload images 2hpxmz" ON storage.objects;
 CREATE POLICY "Auth upload images 2hpxmz"
   ON storage.objects FOR INSERT TO authenticated
   WITH CHECK (bucket_id = 'webkalcer-images');
 
--- Allow authenticated users to update/delete
 DROP POLICY IF EXISTS "Auth update images 2hpxmz" ON storage.objects;
 CREATE POLICY "Auth update images 2hpxmz"
   ON storage.objects FOR UPDATE TO authenticated
@@ -311,10 +316,26 @@ CREATE POLICY "Auth delete images 2hpxmz"
   ON storage.objects FOR DELETE TO authenticated
   USING (bucket_id = 'webkalcer-images');
 
--- Public read for all images
+-- Allow authenticated users to upload to packages bucket
+DROP POLICY IF EXISTS "Auth upload packages p1" ON storage.objects;
+CREATE POLICY "Auth upload packages p1"
+  ON storage.objects FOR INSERT TO authenticated
+  WITH CHECK (bucket_id = 'packages');
+
+DROP POLICY IF EXISTS "Auth update packages p1" ON storage.objects;
+CREATE POLICY "Auth update packages p1"
+  ON storage.objects FOR UPDATE TO authenticated
+  USING (bucket_id = 'packages');
+
+DROP POLICY IF EXISTS "Auth delete packages p1" ON storage.objects;
+CREATE POLICY "Auth delete packages p1"
+  ON storage.objects FOR DELETE TO authenticated
+  USING (bucket_id = 'packages');
+
+-- Public read for both buckets
 DROP POLICY IF EXISTS "Public read images 2hpxmz" ON storage.objects;
 CREATE POLICY "Public read images 2hpxmz"
-  ON storage.objects FOR SELECT USING (bucket_id = 'webkalcer-images');
+  ON storage.objects FOR SELECT USING (bucket_id IN ('webkalcer-images', 'packages'));
 
 -- 11. PROPOSALS
 CREATE TABLE IF NOT EXISTS proposals (

@@ -43,6 +43,7 @@ export default function NewPackagePage() {
   const [state, formAction] = useActionState(wrappedAction, null);
   const [draft, setDraft] = useState<Record<string, FieldValue>>(loadDraft);
   const [loaded] = useState(true);
+  const [thumbPreview, setThumbPreview] = useState<string | null>(null);
 
   useEffect(() => {
     if (state?.success) {
@@ -67,7 +68,17 @@ export default function NewPackagePage() {
   function handleReset() {
     clearDraft();
     setDraft({});
+    setThumbPreview(null);
     if (formRef.current) formRef.current.reset();
+  }
+
+  function handleThumbChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (file) {
+      setThumbPreview(URL.createObjectURL(file));
+    } else {
+      setThumbPreview(null);
+    }
   }
 
   if (!loaded) {
@@ -160,9 +171,15 @@ export default function NewPackagePage() {
         <div className="rounded-lg border-2 border-zinc-200 bg-white p-6">
           <h2 className="text-base font-black text-dark">Thumbnail</h2>
           <p className="mb-4 mt-1 text-xs font-bold text-zinc-500">Upload a package thumbnail image (optional).</p>
+          {thumbPreview && (
+            <div className="mb-3 overflow-hidden rounded-lg bg-zinc-100">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={thumbPreview} alt="Preview" className="h-40 w-full object-cover" />
+            </div>
+          )}
           <div>
             <label className="mb-1 block text-sm font-bold text-zinc-600">Thumbnail Image</label>
-            <input name="thumbnail" type="file" accept="image/*" className="w-full text-sm font-bold text-zinc-500 file:mr-3 file:rounded-full file:border-0 file:bg-pink/10 file:px-4 file:py-2 file:text-sm file:font-bold file:text-pink hover:file:bg-pink/20" />
+            <input name="thumbnail" type="file" accept="image/*" onChange={handleThumbChange} className="w-full text-sm font-bold text-zinc-500 file:mr-3 file:rounded-full file:border-0 file:bg-pink/10 file:px-4 file:py-2 file:text-sm file:font-bold file:text-pink hover:file:bg-pink/20" />
           </div>
         </div>
 

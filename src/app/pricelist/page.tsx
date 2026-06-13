@@ -94,8 +94,15 @@ export default async function PricelistPage() {
                   </div>
                 )}
 
+                {pkg.thumbnail_url && (
+                  <div className="relative -mx-6 -mt-6 mb-4 h-44 overflow-hidden">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={pkg.thumbnail_url} alt={pkg.name} className="h-full w-full object-cover" loading="lazy" />
+                  </div>
+                )}
+
                 <div className="mb-4 flex items-center gap-3">
-                  <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-yellow/20 text-yellow-dark transition-transform group-hover:scale-110 group-hover:-rotate-6">
+                  <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-yellow/20 text-yellow-dark transition-transform group-hover:scale-110 group-hover:-rotate-6">
                     <Package className="h-6 w-6" />
                   </span>
                   <div>
