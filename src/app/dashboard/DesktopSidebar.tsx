@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, PenTool, MessageSquare, Search, Package, ClipboardList, FileText } from "lucide-react";
+import { LayoutDashboard, PenTool, MessageSquare, Image, Search, Package, ClipboardList, FileText } from "lucide-react";
 import { logout } from "./actions";
 import SubmitButton from "@/components/SubmitButton";
 
@@ -10,6 +10,7 @@ const iconMap: Record<string, React.ReactNode> = {
   LayoutDashboard: <LayoutDashboard size={18} />,
   PenTool: <PenTool size={18} />,
   MessageSquare: <MessageSquare size={18} />,
+  Image: <Image size={18} />,
   Search: <Search size={18} />,
   Package: <Package size={18} />,
   ClipboardList: <ClipboardList size={18} />,
