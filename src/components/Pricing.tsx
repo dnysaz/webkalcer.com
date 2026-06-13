@@ -116,7 +116,7 @@ export default function Pricing({ phone, waMessage }: { phone?: string; waMessag
           </a>
         </div>
 
-        <div className="mt-12 grid grid-cols-2 gap-3 text-left sm:grid-cols-4">
+        <div className="mt-12 grid grid-cols-2 gap-3 text-left md:grid-cols-4">
           {[
             { icon: <Palette size={28} />, label: "FREE DOMAIN", desc: "domain gratis 1 thn" },
             { icon: <Rocket size={28} />, label: "LANGSUNG ONLINE", desc: "max 2x24 jam" },

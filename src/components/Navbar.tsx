@@ -51,7 +51,7 @@ export default function Navbar({ phone, waMessage }: { phone?: string; waMessage
         </Link>
 
         {/* Desktop nav */}
-        <nav className="hidden items-center gap-1 sm:flex">
+        <nav className="hidden items-center gap-1 md:flex">
           {links.map((l) => (
             <Link
               key={l.href}
@@ -73,7 +73,7 @@ export default function Navbar({ phone, waMessage }: { phone?: string; waMessage
         </nav>
 
         {/* Mobile hamburger */}
-        <div className="flex items-center gap-2 sm:hidden">
+        <div className="flex items-center gap-2 md:hidden">
           <a
             href={waUrl}
             target="_blank"
@@ -97,7 +97,7 @@ export default function Navbar({ phone, waMessage }: { phone?: string; waMessage
       {menuOpen && (
         <>
           <div className="fixed inset-0 top-0 -z-10" onClick={close} />
-          <nav className="border-t border-zinc-200 bg-cream px-4 pb-6 pt-2 shadow-xl sm:hidden">
+          <nav className="border-t border-zinc-200 bg-cream px-4 pb-6 pt-2 shadow-xl md:hidden">
             {links.map((l) => (
               <Link
                 key={l.href}

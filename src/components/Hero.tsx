@@ -87,7 +87,7 @@ export default function Hero({ hero, phone, waMessage }: { hero?: { badge_text?:
               </a>
               <a
                 href="/pricelist"
-                className="rounded-full border-2 border-pink/30 bg-white px-8 py-4 text-lg font-bold text-dark shadow-sm transition-transform hover:border-pink hover:shadow-lg hover:scale-105 active:scale-95 sm:hidden"
+                className="rounded-full border-2 border-pink/30 bg-white px-8 py-4 text-lg font-bold text-dark shadow-sm transition-transform hover:border-pink hover:shadow-lg hover:scale-105 active:scale-95 md:hidden"
               >
                 Lihat Pricelist
               </a>
@@ -96,7 +96,7 @@ export default function Hero({ hero, phone, waMessage }: { hero?: { badge_text?:
                 target="_blank"
                 rel="noopener"
                 onClick={() => fetch("/api/track", { method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({eventType:"wa_click"}) }).catch(()=>{})}
-                className="hidden rounded-full border-2 border-pink/30 bg-white px-8 py-4 text-lg font-bold text-dark shadow-sm transition-transform hover:border-pink hover:shadow-lg hover:scale-105 active:scale-95 sm:inline-flex"
+                className="hidden rounded-full border-2 border-pink/30 bg-white px-8 py-4 text-lg font-bold text-dark shadow-sm transition-transform hover:border-pink hover:shadow-lg hover:scale-105 active:scale-95 md:inline-flex"
               >
                 Konsultasi Gratis
               </a>
