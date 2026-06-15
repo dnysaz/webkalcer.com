@@ -1,12 +1,14 @@
 "use client";
 
-import { useState, useMemo, useRef, useEffect } from "react";
+import { useState, useMemo, useRef, useEffect, useActionState } from "react";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { Check } from "lucide-react";
 import { createTask } from "../../../actions";
 
 const DEFAULTS = ["Started", "Pending", "Process", "Completed", "Cancel"];
+
+type ActionState = { error?: string } | null;
 
 function formatDate(d: string) {
   if (!d) return "";
@@ -25,12 +27,24 @@ export default function NewTaskPage() {
   const [status, setStatus] = useState(initialStatus ?? "Started");
   const [dueDate, setDueDate] = useState("");
   const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
 
   const descRef = useRef<HTMLTextAreaElement>(null);
   const tailRef = useRef<HTMLDivElement>(null);
   const maxHRef = useRef(0);
   const gapBelowRef = useRef(0);
+
+  const [state, formAction, pending] = useActionState(
+    async (_prev: ActionState, formData: FormData) => createTask(formData),
+    null,
+  );
+
+  useEffect(() => {
+    if (state?.error) {
+      setError(state.error);
+    } else if (state && !("error" in state)) {
+      router.push(`/dashboard/projects/${projectId}`);
+    }
+  }, [state, router, projectId]);
 
   useEffect(() => {
     function calcMax() {
@@ -74,7 +88,6 @@ export default function NewTaskPage() {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!name.trim()) return;
-    setLoading(true);
     setError("");
 
     const fd = new FormData();
@@ -84,15 +97,7 @@ export default function NewTaskPage() {
     fd.set("status", status);
     fd.set("due_date", dueDate);
 
-    const result = await createTask(fd);
-    setLoading(false);
-
-    if (result.error) {
-      setError(result.error);
-    } else {
-      router.push(`/dashboard/projects/${projectId}`);
-      router.refresh();
-    }
+    formAction(fd);
   }
 
   return (
@@ -212,10 +217,10 @@ export default function NewTaskPage() {
 
           <button
             type="submit"
-            disabled={loading || !name.trim()}
+            disabled={pending || !name.trim()}
             className="rounded-full bg-pink px-8 py-3 text-sm font-bold text-white shadow-lg transition hover:bg-pink-dark disabled:opacity-50"
           >
-            {loading ? "Saving..." : "Add Task"}
+            {pending ? "Saving..." : "Add Task"}
           </button>
         </div>
       </form>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useMemo, useRef } from "react";
+import { useEffect, useState, useMemo, useRef, useActionState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { Check, Trash2 } from "lucide-react";
@@ -8,6 +8,8 @@ import { getTaskById, updateTask, deleteTask } from "../../../actions";
 import ConfirmModal from "@/components/ConfirmModal";
 
 const DEFAULTS = ["Started", "Pending", "Process", "Completed", "Cancel"];
+
+type ActionState = { error?: string } | null;
 
 function formatDate(d: string) {
   if (!d) return "";
@@ -24,7 +26,6 @@ export default function EditTaskPage() {
   const [status, setStatus] = useState("Started");
   const [dueDate, setDueDate] = useState("");
   const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
   const [deleting, setDeleting] = useState(false);
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [ready, setReady] = useState(false);
@@ -33,6 +34,19 @@ export default function EditTaskPage() {
   const tailRef = useRef<HTMLDivElement>(null);
   const maxHRef = useRef(0);
   const gapBelowRef = useRef(24);
+
+  const [state, formAction, pending] = useActionState(
+    async (_prev: ActionState, formData: FormData) => updateTask(taskId, formData),
+    null,
+  );
+
+  useEffect(() => {
+    if (state?.error) {
+      setError(state.error);
+    } else if (state && !("error" in state)) {
+      router.push(`/dashboard/projects/${projectId}`);
+    }
+  }, [state, router, projectId]);
 
   useEffect(() => {
     if (!ready) return;
@@ -92,7 +106,6 @@ export default function EditTaskPage() {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!name.trim()) return;
-    setLoading(true);
     setError("");
 
     const fd = new FormData();
@@ -101,15 +114,7 @@ export default function EditTaskPage() {
     fd.set("status", status);
     fd.set("due_date", dueDate);
 
-    const result = await updateTask(taskId, fd);
-    setLoading(false);
-
-    if (result.error) {
-      setError(result.error);
-    } else {
-      router.push(`/dashboard/projects/${projectId}`);
-      router.refresh();
-    }
+    formAction(fd);
   }
 
   async function handleDelete() {
@@ -117,7 +122,6 @@ export default function EditTaskPage() {
     try {
       await deleteTask(taskId);
       router.push(`/dashboard/projects/${projectId}`);
-      router.refresh();
     } catch {
       setError("Failed to delete task");
       setDeleting(false);
@@ -272,10 +276,10 @@ export default function EditTaskPage() {
 
           <button
             type="submit"
-            disabled={loading || !name.trim()}
+            disabled={pending || !name.trim()}
             className="rounded-full bg-pink px-8 py-3 text-sm font-bold text-white shadow-lg transition hover:bg-pink-dark disabled:opacity-50"
           >
-            {loading ? "Saving..." : "Update Task"}
+            {pending ? "Saving..." : "Update Task"}
           </button>
         </div>
       </form>
