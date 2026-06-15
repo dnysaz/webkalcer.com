@@ -1,8 +1,13 @@
+import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import MobileSidebar from "./MobileSidebar";
 import DesktopSidebar from "./DesktopSidebar";
 
 export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) redirect("/login");
+
   const links = [
     { href: "/dashboard", label: "Dashboard", icon: "LayoutDashboard" },
     { href: "/dashboard/hero", label: "Hero", icon: "PenTool" },
@@ -15,9 +20,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
     { href: "/dashboard/invoices", label: "Invoices", icon: "FileText" },
   ];
 
-  const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
-  const userEmail = user?.email ?? "";
+  const userEmail = user.email ?? "";
 
   return (
     <div className="flex min-h-screen flex-col bg-zinc-50 md:flex-row">
