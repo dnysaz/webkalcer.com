@@ -26,7 +26,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
     <div className="flex min-h-screen flex-col bg-zinc-50 md:flex-row">
       <MobileSidebar links={links} userEmail={userEmail} />
       <DesktopSidebar links={links} userEmail={userEmail} />
-      <main className="flex-1 px-4 py-4 md:ml-64 md:px-8 md:py-8">
+      <main className="flex-1 min-w-0 overflow-hidden px-4 py-4 md:ml-64 md:px-8 md:py-8">
         {children}
       </main>
     </div>

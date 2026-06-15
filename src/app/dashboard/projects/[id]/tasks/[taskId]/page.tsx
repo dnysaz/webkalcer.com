@@ -1,17 +1,18 @@
 "use client";
 
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useMemo, useRef } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
-import { Check, ChevronLeft, ChevronRight, Trash2 } from "lucide-react";
+import { Check, Trash2 } from "lucide-react";
 import { getTaskById, updateTask, deleteTask } from "../../../actions";
+import ConfirmModal from "@/components/ConfirmModal";
 
-const STATUS_LIST = ["Started", "Pending", "Process", "Completed", "Cancel"];
-const WEEKDAYS = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
+const DEFAULTS = ["Started", "Pending", "Process", "Completed", "Cancel"];
 
-function autoGrow(el: HTMLTextAreaElement) {
-  el.style.height = "auto";
-  el.style.height = el.scrollHeight + "px";
+function formatDate(d: string) {
+  if (!d) return "";
+  const date = new Date(d + "T00:00:00");
+  return date.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
 }
 
 export default function EditTaskPage() {
@@ -25,15 +26,54 @@ export default function EditTaskPage() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [deleting, setDeleting] = useState(false);
+  const [confirmOpen, setConfirmOpen] = useState(false);
   const [ready, setReady] = useState(false);
 
-  const today = useMemo(() => {
-    const d = new Date();
-    return { year: d.getFullYear(), month: d.getMonth(), day: d.getDate() };
-  }, []);
+  const descRef = useRef<HTMLTextAreaElement>(null);
+  const tailRef = useRef<HTMLDivElement>(null);
+  const maxHRef = useRef(0);
+  const gapBelowRef = useRef(24);
 
-  const [calYear, setCalYear] = useState(today.year);
-  const [calMonth, setCalMonth] = useState(today.month);
+  useEffect(() => {
+    if (!ready) return;
+    function calcMax() {
+      if (!descRef.current || !tailRef.current) return;
+      const top = descRef.current.getBoundingClientRect().top;
+      const tailH = tailRef.current.offsetHeight;
+      const vh = window.innerHeight;
+      const gap = gapBelowRef.current;
+      const breathing = 50;
+      const available = vh - top - tailH - gap - breathing;
+      maxHRef.current = Math.max(available, 80);
+    }
+    calcMax();
+    if (descRef.current) autoGrow(descRef.current);
+    window.addEventListener("resize", calcMax);
+    return () => window.removeEventListener("resize", calcMax);
+  }, [ready]);
+
+  function autoGrow(el: HTMLTextAreaElement) {
+    el.style.height = "auto";
+    const max = maxHRef.current;
+    const h = Math.min(el.scrollHeight, max);
+    el.style.height = h + "px";
+    el.style.overflowY = h >= max ? "auto" : "hidden";
+  }
+
+  const statusOptions = useMemo(() => {
+    if (status && !DEFAULTS.includes(status)) {
+      return [status, ...DEFAULTS];
+    }
+    return DEFAULTS;
+  }, [status]);
+
+  const statusColors: Record<string, string> = {
+    Started: "bg-blue-100 text-blue-700 border-blue-200",
+    Pending: "bg-yellow-100 text-yellow-700 border-yellow-200",
+    Process: "bg-purple-100 text-purple-700 border-purple-200",
+    Completed: "bg-green-100 text-green-700 border-green-200",
+    Cancel: "bg-red-100 text-red-700 border-red-200",
+  };
 
   useEffect(() => {
     getTaskById(taskId).then((task) => {
@@ -45,11 +85,6 @@ export default function EditTaskPage() {
       setDetail(task.detail ?? "");
       setStatus(task.status);
       setDueDate(task.due_date ?? "");
-      if (task.due_date) {
-        const d = new Date(task.due_date);
-        setCalYear(d.getFullYear());
-        setCalMonth(d.getMonth());
-      }
       setReady(true);
     });
   }, [taskId, projectId, router]);
@@ -89,44 +124,9 @@ export default function EditTaskPage() {
     }
   }
 
-  const daysInMonth = new Date(calYear, calMonth + 1, 0).getDate();
-  const firstDay = new Date(calYear, calMonth, 1).getDay();
-  const weeks: (number | null)[][] = [];
-  let day = 1;
-  for (let w = 0; w < 6; w++) {
-    const week: (number | null)[] = [];
-    for (let d = 0; d < 7; d++) {
-      if ((w === 0 && d < firstDay) || day > daysInMonth) {
-        week.push(null);
-      } else {
-        week.push(day);
-        day++;
-      }
-    }
-    weeks.push(week);
-    if (day > daysInMonth) break;
-  }
-
-  function selectDate(d: number) {
-    const m = String(calMonth + 1).padStart(2, "0");
-    const dd = String(d).padStart(2, "0");
-    setDueDate(`${calYear}-${m}-${dd}`);
-  }
-
-  function isSelected(d: number) {
-    if (!dueDate) return false;
-    const m = String(calMonth + 1).padStart(2, "0");
-    const dd = String(d).padStart(2, "0");
-    return dueDate === `${calYear}-${m}-${dd}`;
-  }
-
-  function isToday(d: number) {
-    return today.year === calYear && today.month === calMonth && today.day === d;
-  }
-
   if (!ready) {
     return (
-      <div className="flex h-full items-center justify-center">
+      <div className="flex items-center justify-center px-4 py-20">
         <p className="text-sm font-bold text-zinc-400">Loading...</p>
       </div>
     );
@@ -134,7 +134,20 @@ export default function EditTaskPage() {
 
   return (
     <div className="px-4 py-4">
-      <div className="mb-8 flex items-center justify-between">
+      <ConfirmModal
+        open={confirmOpen}
+        title={`Delete "${name}"?`}
+        description="This task will be permanently deleted."
+        onConfirm={() => {
+          setConfirmOpen(false);
+          handleDelete();
+        }}
+        onCancel={() => setConfirmOpen(false)}
+        loading={deleting}
+      />
+
+      {/* ── Header ── */}
+      <div className="mb-8 flex items-start justify-between">
         <div>
           <Link
             href={`/dashboard/projects/${projectId}`}
@@ -143,165 +156,127 @@ export default function EditTaskPage() {
             &larr; Back to Board
           </Link>
           <h1 className="text-2xl font-black tracking-tighter text-dark">Edit Task</h1>
+          <p className="mt-1 text-sm font-bold text-zinc-500">Update task details.</p>
         </div>
-        <button
-          onClick={handleDelete}
-          disabled={deleting}
-          className="rounded-full p-2 text-zinc-300 transition hover:bg-red-50 hover:text-red-500"
-        >
-          <Trash2 size={20} />
-        </button>
+        <div className="flex items-center gap-3">
+          <button
+            type="button"
+            onClick={() => setConfirmOpen(true)}
+            disabled={deleting}
+            className="rounded-full border-2 border-red-200 px-4 py-2 text-xs font-bold text-red-400 transition hover:border-red-400 hover:text-red-600"
+          >
+            <Trash2 size={14} className="-mt-0.5 mr-1 inline-block" />
+            Delete
+          </button>
+          <Link
+            href={`/dashboard/projects/${projectId}`}
+            className="rounded-full border-2 border-zinc-200 px-5 py-2 text-sm font-bold text-zinc-600 transition hover:border-red-300 hover:text-red-500"
+          >
+            Cancel
+          </Link>
+        </div>
       </div>
 
+      {/* ── Error ── */}
       {error && (
         <div className="mb-6 rounded-lg border-2 border-red-200 bg-red-50 px-6 py-4 text-sm font-bold text-red-600">
           {error}
         </div>
       )}
 
-      <form onSubmit={handleSubmit}>
-        <div className="flex gap-8">
-          <div className="flex-1 min-w-0 max-w-2xl">
-            <input
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              required
-              placeholder="Task Name"
-              className="mb-6 block w-full border-0 bg-transparent p-0 text-3xl font-bold tracking-tighter text-dark outline-none placeholder:text-zinc-300 focus:ring-0"
-            />
+      <form onSubmit={handleSubmit} className="max-w-2xl">
+        <input
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          required
+          placeholder="Task Name"
+          className="mb-6 block w-full border-0 bg-transparent p-0 text-3xl font-bold tracking-tighter text-dark outline-none placeholder:text-zinc-300 focus:ring-0"
+        />
 
-            <hr className="mb-6 border-t border-zinc-200" />
+        <hr className="mb-6 border-t border-zinc-200" />
 
-            <textarea
-              value={detail}
-              onChange={(e) => setDetail(e.target.value)}
-              onInput={(e) => autoGrow(e.currentTarget)}
-              placeholder="Task details..."
-              rows={5}
-              className="block w-full resize-none border-0 bg-transparent p-0 text-sm font-bold text-zinc-700 outline-none placeholder:text-zinc-300 focus:ring-0 max-h-[200px] overflow-y-auto"
-            />
-          </div>
-
-          <div className="w-[130px] shrink-0">
-            <div className="space-y-1">
-              {STATUS_LIST.map((s) => {
-                const active = status === s;
-                return (
-                  <button
-                    key={s}
-                    type="button"
-                    onClick={() => setStatus(s)}
-                    className={`flex w-full items-center gap-2 rounded-lg px-3 py-2 text-left text-sm font-bold transition ${
-                      active
-                        ? "bg-pink/10 text-pink"
-                        : "text-zinc-500 hover:bg-zinc-100 hover:text-dark"
-                    }`}
-                  >
-                    <span
-                      className={`flex h-4 w-4 shrink-0 items-center justify-center rounded-full border-2 transition ${
-                        active
-                          ? "border-pink bg-pink text-white"
-                          : "border-zinc-300"
-                      }`}
-                    >
-                      {active && <Check size={10} strokeWidth={3} />}
-                    </span>
-                    {s}
-                  </button>
-                );
-              })}
-            </div>
-
-            <hr className="my-4 border-t border-zinc-200" />
-
-            <div className="text-xs font-bold text-zinc-400 mb-2">Due Date</div>
-            <div className="rounded-lg border-2 border-zinc-200 p-2">
-              <div className="flex items-center justify-between mb-2">
-                <button
-                  type="button"
-                  onClick={() => {
-                    if (calMonth === 0) { setCalYear((y) => y - 1); setCalMonth(11); }
-                    else setCalMonth((m) => m - 1);
-                  }}
-                  className="rounded p-0.5 text-zinc-400 hover:text-dark"
-                >
-                  <ChevronLeft size={14} />
-                </button>
-                <span className="text-xs font-bold text-dark">
-                  {new Date(calYear, calMonth).toLocaleDateString("en-US", {
-                    month: "short",
-                    year: "numeric",
-                  })}
-                </span>
-                <button
-                  type="button"
-                  onClick={() => {
-                    if (calMonth === 11) { setCalYear((y) => y + 1); setCalMonth(0); }
-                    else setCalMonth((m) => m + 1);
-                  }}
-                  className="rounded p-0.5 text-zinc-400 hover:text-dark"
-                >
-                  <ChevronRight size={14} />
-                </button>
-              </div>
-              <div className="grid grid-cols-7 gap-0">
-                {WEEKDAYS.map((wd) => (
-                  <div key={wd} className="text-center text-[10px] font-bold text-zinc-400 py-1">
-                    {wd}
-                  </div>
-                ))}
-                {weeks.map((week, wi) =>
-                  week.map((d, di) => (
-                    <div key={`${wi}-${di}`} className="aspect-square p-0.5">
-                      {d !== null ? (
-                        <button
-                          type="button"
-                          onClick={() => selectDate(d)}
-                          className={`flex h-full w-full items-center justify-center rounded text-[11px] font-bold transition ${
-                            isSelected(d)
-                              ? "bg-pink text-white"
-                              : isToday(d)
-                                ? "bg-zinc-100 text-dark"
-                                : "text-zinc-600 hover:bg-zinc-100"
-                          }`}
-                        >
-                          {d}
-                        </button>
-                      ) : (
-                        <div />
-                      )}
-                    </div>
-                  ))
-                )}
-              </div>
-            </div>
-
-            {dueDate && (
-              <button
-                type="button"
-                onClick={() => setDueDate("")}
-                className="mt-1 text-[10px] font-bold text-zinc-400 hover:text-red-500"
-              >
-                Clear date
-              </button>
-            )}
-          </div>
+        {/* ── Auto-grow textarea ── */}
+        <div
+          ref={(el) => {
+            if (el) gapBelowRef.current = parseFloat(getComputedStyle(el).marginBottom || "24");
+          }}
+          className="mb-6"
+        >
+          <textarea
+            ref={descRef}
+            value={detail}
+            onChange={(e) => setDetail(e.target.value)}
+            onInput={(e) => autoGrow(e.currentTarget)}
+            placeholder="Description"
+            rows={3}
+            className="block w-full resize-none border-0 bg-transparent p-0 text-sm font-bold text-zinc-700 outline-none placeholder:text-zinc-300 focus:ring-0 overflow-hidden"
+          />
         </div>
 
-        <div className="mt-6 flex justify-start gap-3 pb-6">
+        {/* ── Tail — everything below textarea ── */}
+        <div ref={tailRef}>
+          <hr className="mb-6 border-t border-zinc-200" />
+
+          {/* Status & Due Date */}
+          <div className="mb-6 flex flex-wrap gap-6">
+            <div>
+              <p className="mb-2 text-xs font-bold uppercase tracking-wider text-zinc-400">Status</p>
+              <div className="flex flex-wrap gap-2">
+                {statusOptions.map((s) => {
+                  const active = status === s;
+                  const color = statusColors[s] || "bg-zinc-100 text-zinc-700";
+                  return (
+                    <button
+                      key={s}
+                      type="button"
+                      onClick={() => setStatus(s)}
+                      className={`rounded-lg border-2 px-3 py-1.5 text-xs font-bold transition ${
+                        active
+                          ? color + " ring-2 ring-pink/20"
+                          : "border-zinc-200 text-zinc-500 hover:border-zinc-300 hover:text-dark"
+                      }`}
+                    >
+                      <span className="flex items-center gap-1.5">
+                        {active && <Check size={10} />}
+                        {s}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            <div>
+              <p className="mb-2 text-xs font-bold uppercase tracking-wider text-zinc-400">Due Date</p>
+              {dueDate ? (
+                <div className="inline-flex items-center gap-2 rounded-lg border border-green-200 bg-green-50 px-3 py-1.5 text-xs font-bold text-green-700">
+                  {formatDate(dueDate)}
+                  <button
+                    type="button"
+                    onClick={() => setDueDate("")}
+                    className="ml-0.5 rounded p-0.5 hover:bg-green-200"
+                  >
+                    ✕
+                  </button>
+                </div>
+              ) : (
+                <input
+                  type="date"
+                  value={dueDate}
+                  onChange={(e) => setDueDate(e.target.value)}
+                  className="rounded-lg border-2 border-zinc-200 px-3 py-1.5 text-sm font-bold text-zinc-700 outline-none transition focus:border-pink"
+                />
+              )}
+            </div>
+          </div>
+
           <button
             type="submit"
-            disabled={loading || deleting}
-            className="rounded-full bg-pink px-6 py-2 text-sm font-bold text-white transition hover:bg-pink-dark disabled:opacity-50"
+            disabled={loading || !name.trim()}
+            className="rounded-full bg-pink px-8 py-3 text-sm font-bold text-white shadow-lg transition hover:bg-pink-dark disabled:opacity-50"
           >
-            {loading ? "Saving..." : "Update"}
+            {loading ? "Saving..." : "Update Task"}
           </button>
-          <Link
-            href={`/dashboard/projects/${projectId}`}
-            className="rounded-full border-2 border-zinc-200 px-6 py-2 text-sm font-bold text-zinc-600 transition hover:border-zinc-400"
-          >
-            Cancel
-          </Link>
         </div>
       </form>
     </div>

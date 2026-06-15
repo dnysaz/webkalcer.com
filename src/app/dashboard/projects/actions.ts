@@ -39,11 +39,16 @@ export async function createTask(formData: FormData) {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return { error: "Unauthorized" };
 
-  const projectId = formData.get("project_id") as string;
-  const name = formData.get("name") as string;
-  const detail = formData.get("detail") as string;
-  const status = (formData.get("status") as string) || "Pending";
-  const dueDate = formData.get("due_date") as string;
+  const rawProjectId = formData.get("project_id");
+  const rawName = formData.get("name");
+  const projectId = typeof rawProjectId === "string" ? rawProjectId : "";
+  const name = typeof rawName === "string" ? rawName : "";
+  const detail = typeof formData.get("detail") === "string" ? (formData.get("detail") as string) : "";
+  const status = typeof formData.get("status") === "string" ? (formData.get("status") as string) : "Started";
+  const dueDate = typeof formData.get("due_date") === "string" ? (formData.get("due_date") as string) : "";
+
+  if (!projectId) return { error: "Project ID is required" };
+  if (!name.trim()) return { error: "Task name is required" };
 
   const { data: tasks } = await supabase
     .from("tasks")
@@ -74,23 +79,26 @@ export async function updateTask(id: string, formData: FormData) {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return { error: "Unauthorized" };
 
-  const name = formData.get("name") as string;
-  const detail = formData.get("detail") as string;
-  const status = formData.get("status") as string;
-  const dueDate = formData.get("due_date") as string;
+  const rawName = formData.get("name");
+  const name = typeof rawName === "string" ? rawName : "";
+  const detail = typeof formData.get("detail") === "string" ? (formData.get("detail") as string) : "";
+  const status = typeof formData.get("status") === "string" ? (formData.get("status") as string) : "";
+  const dueDate = typeof formData.get("due_date") === "string" ? (formData.get("due_date") as string) : "";
+
+  if (!name.trim()) return { error: "Task name is required" };
 
   const updates: Record<string, unknown> = {
     updated_at: new Date().toISOString(),
   };
-  if (name) updates.name = name;
-  if (detail !== undefined) updates.detail = detail;
+  updates.name = name;
+  updates.detail = detail;
   if (status) updates.status = status;
   updates.due_date = dueDate || null;
 
   const { error } = await supabase.from("tasks").update(updates).eq("id", id);
   if (error) return { error: error.message };
 
-  revalidatePath(`/dashboard/projects/*`);
+  revalidatePath("/dashboard/projects", "layout");
   return { success: true };
 }
 
@@ -105,7 +113,7 @@ export async function updateTaskStatus(id: string, status: string) {
     .eq("id", id);
 
   if (error) return { error: error.message };
-  revalidatePath(`/dashboard/projects/*`);
+  revalidatePath("/dashboard/projects", "layout");
   return { success: true };
 }
 
@@ -116,7 +124,7 @@ export async function deleteTask(id: string) {
 
   const { error } = await supabase.from("tasks").delete().eq("id", id);
   if (error) throw new Error(error.message);
-  revalidatePath(`/dashboard/projects/*`);
+  revalidatePath("/dashboard/projects", "layout");
 }
 
 export async function getTaskById(id: string) {
@@ -167,12 +175,31 @@ export async function createColumn(projectId: string, name: string) {
   return { success: true };
 }
 
+export async function deleteColumn(projectId: string, name: string) {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) throw new Error("Unauthorized");
+
+  // Delete all tasks in this column first
+  await supabase.from("tasks").delete().eq("project_id", projectId).eq("status", name);
+
+  // Then delete the column
+  const { error } = await supabase
+    .from("project_columns")
+    .delete()
+    .eq("project_id", projectId)
+    .eq("name", name);
+
+  if (error) throw new Error(error.message);
+  revalidatePath(`/dashboard/projects/${projectId}`);
+}
+
 export async function reorderTasks(updates: { id: string; status?: string; sort_order: number }[]) {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return { error: "Unauthorized" };
 
-  await Promise.all(
+  const results = await Promise.allSettled(
     updates.map(({ id, status, sort_order }) => {
       const data: Record<string, unknown> = {
         sort_order,
@@ -183,6 +210,12 @@ export async function reorderTasks(updates: { id: string; status?: string; sort_
     })
   );
 
-  revalidatePath(`/dashboard/projects/*`);
+  const rejected = results.filter((r) => r.status === "rejected");
+  if (rejected.length > 0) {
+    const msg = (rejected[0] as PromiseRejectedResult).reason?.message || "Failed to reorder some tasks";
+    return { error: msg };
+  }
+
+  revalidatePath("/dashboard/projects", "layout");
   return { success: true };
 }

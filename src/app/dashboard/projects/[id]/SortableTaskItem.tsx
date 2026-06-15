@@ -12,6 +12,7 @@ interface TaskData {
   detail: string;
   status: string;
   due_date: string | null;
+  sort_order: number;
 }
 
 const STATUS_LABELS: Record<string, string> = {
@@ -70,13 +71,19 @@ export default function SortableTaskItem({
           </span>
           <div className="flex-1 min-w-0">
             <div className="flex items-start justify-between gap-2">
-              <p className="text-sm font-bold text-dark">{task.name}</p>
+              <p className="text-sm font-bold text-dark">
+                <span className="mr-1.5 inline-flex h-5 w-5 items-center justify-center rounded-full bg-zinc-100 text-[10px] font-black text-zinc-500">
+                  {task.sort_order + 1}
+                </span>
+                {task.name}
+              </p>
               <button
                 onClick={(e) => {
                   e.stopPropagation();
                   setConfirmOpen(true);
                 }}
-                className="shrink-0 rounded p-1 text-zinc-200 opacity-0 transition hover:bg-red-50 hover:text-red-500 group-hover:opacity-100"
+                className="shrink-0 rounded p-1 text-zinc-300 transition hover:bg-red-50 hover:text-red-500"
+                title="Delete task"
               >
                 <Trash2 size={13} />
               </button>

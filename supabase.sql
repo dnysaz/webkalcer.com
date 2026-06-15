@@ -381,7 +381,14 @@ DROP POLICY IF EXISTS "Public read proposals" ON proposals;
 CREATE POLICY "Public read proposals" ON proposals FOR SELECT USING (TRUE);
 
 -- 12. PROJECTS & TASKS (UUID)
--- Drop old BIGINT tables first if re-running (safe for dev)
+-- ⚠️ Safety guard: prevent destructive re-run in production
+DO $$
+BEGIN
+  IF EXISTS (SELECT 1 FROM projects LIMIT 1) THEN
+    RAISE EXCEPTION 'ABORTED: projects table already has data. Remove this guard manually only if you intend to DROP and recreate.';
+  END IF;
+END $$;
+
 DROP TABLE IF EXISTS project_columns CASCADE;
 DROP TABLE IF EXISTS tasks CASCADE;
 DROP TABLE IF EXISTS projects CASCADE;
