@@ -379,3 +379,59 @@ DROP POLICY IF EXISTS "Auth all proposal_items" ON proposal_items;
 CREATE POLICY "Auth all proposal_items" ON proposal_items FOR ALL TO authenticated USING (TRUE) WITH CHECK (TRUE);
 DROP POLICY IF EXISTS "Public read proposals" ON proposals;
 CREATE POLICY "Public read proposals" ON proposals FOR SELECT USING (TRUE);
+
+-- 12. PROJECTS & TASKS (UUID)
+-- Drop old BIGINT tables first if re-running (safe for dev)
+DROP TABLE IF EXISTS project_columns CASCADE;
+DROP TABLE IF EXISTS tasks CASCADE;
+DROP TABLE IF EXISTS projects CASCADE;
+
+CREATE TABLE IF NOT EXISTS projects (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  name TEXT NOT NULL,
+  description TEXT DEFAULT '',
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS tasks (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  project_id UUID NOT NULL REFERENCES projects(id) ON DELETE CASCADE,
+  name TEXT NOT NULL,
+  detail TEXT DEFAULT '',
+  status TEXT DEFAULT 'Pending',
+  due_date DATE,
+  sort_order INT DEFAULT 0,
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE TABLE IF NOT EXISTS project_columns (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  project_id UUID NOT NULL REFERENCES projects(id) ON DELETE CASCADE,
+  name TEXT NOT NULL,
+  sort_order INT DEFAULT 0,
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+ALTER TABLE projects ENABLE ROW LEVEL SECURITY;
+ALTER TABLE tasks ENABLE ROW LEVEL SECURITY;
+ALTER TABLE project_columns ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "Auth all projects" ON projects;
+CREATE POLICY "Auth all projects" ON projects FOR ALL TO authenticated USING (TRUE) WITH CHECK (TRUE);
+
+DROP POLICY IF EXISTS "Auth all tasks" ON tasks;
+CREATE POLICY "Auth all tasks" ON tasks FOR ALL TO authenticated USING (TRUE) WITH CHECK (TRUE);
+
+DROP POLICY IF EXISTS "Public read projects" ON projects;
+CREATE POLICY "Public read projects" ON projects FOR SELECT USING (TRUE);
+
+DROP POLICY IF EXISTS "Public read tasks" ON tasks;
+CREATE POLICY "Public read tasks" ON tasks FOR SELECT USING (TRUE);
+
+DROP POLICY IF EXISTS "Auth all project_columns" ON project_columns;
+CREATE POLICY "Auth all project_columns" ON project_columns FOR ALL TO authenticated USING (TRUE) WITH CHECK (TRUE);
+
+DROP POLICY IF EXISTS "Public read project_columns" ON project_columns;
+CREATE POLICY "Public read project_columns" ON project_columns FOR SELECT USING (TRUE);

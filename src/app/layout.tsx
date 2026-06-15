@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Baloo_Bhai_2 } from "next/font/google";
 import "./globals.css";
 import PwaRegister from "@/components/PwaRegister";
+import ChunkErrorHandler from "@/components/ChunkErrorHandler";
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 
@@ -120,6 +121,7 @@ export default async function RootLayout({
       <body className="min-h-full flex flex-col bg-white text-zinc-900 font-sans">
         <a className="skip-link" href="#main">Lewati ke konten</a>
         <PwaRegister />
+        <ChunkErrorHandler />
         <main id="main" className="flex-1">
           {children}
         </main>

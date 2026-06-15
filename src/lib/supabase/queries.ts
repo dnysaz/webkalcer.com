@@ -267,3 +267,48 @@ export function parseProposalSlug(slug: string): string | null {
   const match = slug.match(/^(PRO-\d{8}-\d{4})/);
   return match ? match[1] : null;
 }
+
+// ─── PROJECTS ───────────────────────────────────────────────────────────
+
+export async function getAllProjects() {
+  const supabase = await createClient();
+  const { data } = await supabase
+    .from("projects")
+    .select("*, tasks(count)")
+    .order("created_at", { ascending: false });
+  return data ?? [];
+}
+
+export async function getProject(id: string) {
+  const supabase = await createClient();
+  const { data } = await supabase.from("projects").select("*").eq("id", id).single();
+  return data;
+}
+
+export async function getTasks(projectId: string) {
+  const supabase = await createClient();
+  const { data } = await supabase
+    .from("tasks")
+    .select("*")
+    .eq("project_id", projectId)
+    .order("sort_order", { ascending: true });
+  return data ?? [];
+}
+
+export async function getProjectColumns(projectId: string) {
+  const supabase = await createClient();
+  const { data } = await supabase
+    .from("project_columns")
+    .select("name")
+    .eq("project_id", projectId)
+    .order("sort_order", { ascending: true });
+  return (data ?? []).map((c) => c.name);
+}
+
+export async function getProjectWithTasks(id: string) {
+  const project = await getProject(id);
+  if (!project) return null;
+  const tasks = await getTasks(id);
+  const columns = await getProjectColumns(id);
+  return { ...project, tasks, columns };
+}

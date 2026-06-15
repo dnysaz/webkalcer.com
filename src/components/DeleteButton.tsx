@@ -5,14 +5,14 @@ import { useRouter } from "next/navigation";
 import ConfirmModal from "@/components/ConfirmModal";
 import Toast, { type ToastMessage } from "@/components/Toast";
 
-export default function DeleteButton({
+export default function DeleteButton<T extends string | number>({
   id,
   label,
   action,
 }: {
-  id: number;
+  id: T;
   label: string;
-  action: (id: number) => Promise<void>;
+  action: (id: T) => Promise<void>;
 }) {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
