@@ -162,48 +162,7 @@ ALTER TABLE seo_settings ADD COLUMN IF NOT EXISTS proposal_intro2_en TEXT DEFAUL
 ALTER TABLE seo_settings ADD COLUMN IF NOT EXISTS proposal_package_desc_id TEXT DEFAULT '';
 ALTER TABLE seo_settings ADD COLUMN IF NOT EXISTS proposal_package_desc_en TEXT DEFAULT '';
 
--- Add VA payment columns to invoices (for manual VA payments)
-ALTER TABLE invoices ADD COLUMN IF NOT EXISTS va_bank TEXT;
-ALTER TABLE invoices ADD COLUMN IF NOT EXISTS va_number TEXT;
-ALTER TABLE invoices ADD COLUMN IF NOT EXISTS tax_percentage NUMERIC(5,2) NOT NULL DEFAULT 0;
-ALTER TABLE invoice_items ADD COLUMN IF NOT EXISTS package_id BIGINT REFERENCES packages(id) ON DELETE SET NULL;
-ALTER TABLE invoices ADD COLUMN IF NOT EXISTS paid_at TIMESTAMPTZ;
-UPDATE invoices SET paid_at = updated_at WHERE status = 'paid' AND paid_at IS NULL;
-
--- 7. INVOICES
-CREATE TABLE IF NOT EXISTS invoices (
-  id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-  invoice_number TEXT UNIQUE NOT NULL,
-  customer_name TEXT NOT NULL,
-  customer_email TEXT,
-  customer_phone TEXT,
-  subtotal NUMERIC(12,2) NOT NULL DEFAULT 0,
-  discount NUMERIC(12,2) NOT NULL DEFAULT 0,
-  tax NUMERIC(12,2) NOT NULL DEFAULT 0,
-  grand_total NUMERIC(12,2) NOT NULL DEFAULT 0,
-  status TEXT DEFAULT 'draft',
-  midtrans_order_id TEXT,
-  midtrans_transaction_id TEXT,
-  midtrans_snap_token TEXT,
-  va_bank TEXT,
-  va_number TEXT,
-  tax_percentage NUMERIC(5,2) NOT NULL DEFAULT 0,
-  notes TEXT,
-  paid_at TIMESTAMPTZ,
-  created_at TIMESTAMPTZ DEFAULT NOW(),
-  updated_at TIMESTAMPTZ DEFAULT NOW()
-);
-
--- 8. INVOICE ITEMS
-CREATE TABLE IF NOT EXISTS invoice_items (
-  id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-  invoice_id BIGINT NOT NULL REFERENCES invoices(id) ON DELETE CASCADE,
-  description TEXT NOT NULL,
-  price NUMERIC(12,2) NOT NULL DEFAULT 0,
-  package_id BIGINT REFERENCES packages(id) ON DELETE SET NULL
-);
-
--- 9. PACKAGES (catalog packages for clients)
+-- 7. PACKAGES (catalog packages for clients)
 CREATE TABLE IF NOT EXISTS packages (
   id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   name TEXT NOT NULL,
@@ -269,6 +228,47 @@ DROP POLICY IF EXISTS "Public insert visits" ON page_visits;
 CREATE POLICY "Public insert visits" ON page_visits FOR INSERT WITH CHECK (TRUE);
 DROP POLICY IF EXISTS "Public insert events" ON analytics_events;
 CREATE POLICY "Public insert events" ON analytics_events FOR INSERT WITH CHECK (TRUE);
+
+-- 8. INVOICES
+CREATE TABLE IF NOT EXISTS invoices (
+  id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  invoice_number TEXT UNIQUE NOT NULL,
+  customer_name TEXT NOT NULL,
+  customer_email TEXT,
+  customer_phone TEXT,
+  subtotal NUMERIC(12,2) NOT NULL DEFAULT 0,
+  discount NUMERIC(12,2) NOT NULL DEFAULT 0,
+  tax NUMERIC(12,2) NOT NULL DEFAULT 0,
+  grand_total NUMERIC(12,2) NOT NULL DEFAULT 0,
+  status TEXT DEFAULT 'draft',
+  midtrans_order_id TEXT,
+  midtrans_transaction_id TEXT,
+  midtrans_snap_token TEXT,
+  va_bank TEXT,
+  va_number TEXT,
+  tax_percentage NUMERIC(5,2) NOT NULL DEFAULT 0,
+  notes TEXT,
+  paid_at TIMESTAMPTZ,
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- 9. INVOICE ITEMS
+CREATE TABLE IF NOT EXISTS invoice_items (
+  id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  invoice_id BIGINT NOT NULL REFERENCES invoices(id) ON DELETE CASCADE,
+  description TEXT NOT NULL,
+  price NUMERIC(12,2) NOT NULL DEFAULT 0,
+  package_id BIGINT REFERENCES packages(id) ON DELETE SET NULL
+);
+
+-- Migrations: add missing columns to invoices (safe to re-run)
+ALTER TABLE invoices ADD COLUMN IF NOT EXISTS va_bank TEXT;
+ALTER TABLE invoices ADD COLUMN IF NOT EXISTS va_number TEXT;
+ALTER TABLE invoices ADD COLUMN IF NOT EXISTS tax_percentage NUMERIC(5,2) NOT NULL DEFAULT 0;
+ALTER TABLE invoice_items ADD COLUMN IF NOT EXISTS package_id BIGINT REFERENCES packages(id) ON DELETE SET NULL;
+ALTER TABLE invoices ADD COLUMN IF NOT EXISTS paid_at TIMESTAMPTZ;
+UPDATE invoices SET paid_at = updated_at WHERE status = 'paid' AND paid_at IS NULL;
 
 -- RLS for packages
 ALTER TABLE packages ENABLE ROW LEVEL SECURITY;
@@ -384,8 +384,10 @@ CREATE POLICY "Public read proposals" ON proposals FOR SELECT USING (TRUE);
 -- ⚠️ Safety guard: prevent destructive re-run in production
 DO $$
 BEGIN
-  IF EXISTS (SELECT 1 FROM projects LIMIT 1) THEN
-    RAISE EXCEPTION 'ABORTED: projects table already has data. Remove this guard manually only if you intend to DROP and recreate.';
+  IF EXISTS (SELECT 1 FROM information_schema.tables WHERE table_name = 'projects' AND table_schema = 'public') THEN
+    IF EXISTS (SELECT 1 FROM projects LIMIT 1) THEN
+      RAISE EXCEPTION 'ABORTED: projects table already has data. Remove this guard manually only if you intend to DROP and recreate.';
+    END IF;
   END IF;
 END $$;
 
