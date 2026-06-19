@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useCallback } from "react";
+import { resetSnapToken } from "../actions";
 
 interface Invoice {
   id: number;
@@ -22,6 +23,7 @@ declare global {
 export default function InvoiceActions({ invoice }: { invoice: Invoice }) {
   const [loading, setLoading] = useState(false);
   const [checking, setChecking] = useState(false);
+  const [resetting, setResetting] = useState(false);
   const [message, setMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
 
   const refreshAndClose = useCallback(() => {
@@ -109,6 +111,19 @@ export default function InvoiceActions({ invoice }: { invoice: Invoice }) {
             className="rounded-full bg-pink px-6 py-2.5 text-sm font-bold text-white transition hover:bg-pink-dark disabled:opacity-50"
           >
             {loading ? "Processing..." : invoice.midtrans_snap_token ? "Continue Payment" : "Create Payment"}
+          </button>
+        )}
+        {invoice.status === "pending" && invoice.midtrans_snap_token && (
+          <button
+            onClick={async () => {
+              setResetting(true);
+              await resetSnapToken(invoice.id);
+              window.location.reload();
+            }}
+            disabled={resetting}
+            className="rounded-full border-2 border-zinc-200 px-6 py-2.5 text-sm font-bold text-zinc-600 transition hover:border-yellow hover:text-yellow-800 disabled:opacity-50"
+          >
+            {resetting ? "..." : "Change Payment Method"}
           </button>
         )}
         {invoice.status === "pending" && invoice.midtrans_order_id && (

@@ -161,6 +161,26 @@ export async function checkPaymentStatus(invoiceId: number) {
   }
 }
 
+export async function resetSnapToken(invoiceId: number) {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) throw new Error("Unauthorized");
+
+  const { error } = await supabase
+    .from("invoices")
+    .update({
+      midtrans_snap_token: null,
+      midtrans_order_id: null,
+      midtrans_transaction_id: null,
+      status: "draft",
+      updated_at: new Date().toISOString(),
+    })
+    .eq("id", invoiceId);
+
+  if (error) throw new Error(error.message);
+  revalidatePath("/dashboard/invoices");
+}
+
 export async function deleteInvoice(id: number) {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
